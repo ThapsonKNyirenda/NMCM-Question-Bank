@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSecurityController;
 use App\Http\Controllers\ProfileSignatureController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\TeamMemberController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\QuestionsController; // Add this line to import the QuestionsController
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -53,7 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/signature', [ProfileSignatureController::class, 'edit'])->name('profile.signature.edit');
         Route::patch('/signature', [ProfileSignatureController::class, 'update'])->name('profile.signature.update');
         Route::delete('/signature', [ProfileSignatureController::class, 'destroy'])->name('profile.signature.destroy');
-        Route::get('/signature/show', [ProfileSignatureController::class, 'show'])->name('profile.signature.show');
+        Route::get('/signature/show', [ProfileSignatureController::class, 'how'])->name('profile.signature.show');
     });
 
     Route::get('email-templates/{email_template_module}/modules', EmailTemplateModuleController::class)->name('email-templates.modules.index');
@@ -61,14 +63,12 @@ Route::middleware('auth')->group(function () {
     Route::singleton('profile', ProfileController::class);
     Route::singleton('profile-security', ProfileSecurityController::class);
 
-    Route::resource('roles.permissions', RolePermissionController::class)->only(['create', 'store']);
-    Route::resource('permissions.roles', PermissionRoleController::class)->only(['create', 'store']);
-    Route::resource('users.permissions', UserPermissionController::class)->only(['create', 'store']);
-    Route::resource('users.roles', UserRoleController::class)->only(['create', 'store']);
-    Route::resource('customers.contacts', CustomerContactController::class)->only(['index', 'store', 'update']);
+    Route::resource('roles.permissions', RolePermissionController::class)->only(['create', 'tore']);
+    Route::resource('permissions.roles', PermissionRoleController::class)->only(['create', 'tore']);
+    Route::resource('users.permissions', UserPermissionController::class)->only(['create', 'tore']);
+    Route::resource('users.roles', UserRoleController::class)->only(['create', 'tore']);
+    Route::resource('customers.contacts', CustomerContactController::class)->only(['index', 'tore', 'update']);
     Route::resource('teams.users', TeamMemberController::class)->only(['index','store','destroy']);
-
-
 
     Route::resources([
         'roles' => RoleController::class,
@@ -80,7 +80,9 @@ Route::middleware('auth')->group(function () {
         'channels'=>ChannelController::class,
         'teams'=> TeamController::class,
         'contracts'=> ContractController::class,
-        'email-templates' => EmailTemplateController::class
+        'email-templates' => EmailTemplateController::class,
+        'questions' => QuestionController::class,
+       
     ]);
 
 });

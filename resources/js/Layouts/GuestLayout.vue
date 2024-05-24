@@ -15,19 +15,22 @@ defineProps({
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-main-blue">
+    <div class="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-main-blue">
 
         <div
-            class="w-full mt-6 px-6 py-4 bg-login-card shadow-md overflow-hidden sm:rounded-lg" :class="loginCardClasses"
+            class="w-full px-6 py-4 mt-6 overflow-hidden shadow-md bg-login-card sm:rounded-lg" :class="loginCardClasses"
         >
             <div class="flex" :class="logoClasses">
+               <span>
                 <Link href="/">
-                    <ApplicationLogo class="h-20 fill-current text-gray-500" />
+                    <ApplicationLogo class="h-20 text-gray-500 fill-current" />
                 </Link>
+               </span> 
+               
             </div>
 
             <slot />
         </div>
-        <div class="w-full text-center text-xs text-gray-400 mt-8">Copyright &copy; Malawi Research and Education Network | All rights reserved</div>
+        <div class="w-full mt-8 text-xs text-center text-gray-400">Copyright &copy; Nurses and Midwifery Council of Malawi | All rights reserved</div>
     </div>
 </template>

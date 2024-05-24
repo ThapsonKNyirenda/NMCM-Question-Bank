@@ -24,7 +24,6 @@ class Contract extends Model
         'billing_cycle',
         'charge_rate',
         'status'
-
     ];
     public array $searchable = [
         'service',

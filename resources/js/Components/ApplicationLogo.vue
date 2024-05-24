@@ -1,3 +1,3 @@
 <template>
-    <img src="/images/maren-logo.png" alt="NMCM LOGO">
+    <img src="/images/logo2.png" alt="NMCM LOGO">
 </template>

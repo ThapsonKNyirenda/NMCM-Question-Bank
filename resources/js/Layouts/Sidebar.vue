@@ -1,19 +1,25 @@
 <template>
-    <div class="app-sidebar flex-col" :class="{ 'drawer drawer-start':addDrawerClasses, 'w-80 drawer-on': store.showSidebar}" id="app-sidebar">
-        <div class="app-sidebar-logo hidden lg:flex justify-between items-center shrink-0 px-8">
+    <div class="flex-col app-sidebar" :class="{ 'drawer drawer-start':addDrawerClasses, 'w-80 drawer-on': store.showSidebar}" id="app-sidebar">
+        <div class="items-center justify-between hidden px-8 app-sidebar-logo lg:flex shrink-0">
             <Link :href="route('dashboard')">
-                <ApplicationLogo class="h-12" />
+                <ApplicationLogo class="h-20" />
             </Link>
-            <SidebarSettingsDropdown />
         </div>
         <div class="separator"></div>
-        <div class="app-sidebar-menu hover-scroll-y my-5 mx-3">
-            <div class="menu menu-column menu-sub-indention menu-active-bg font-medium">
+        <div class="mx-3 my-5 app-sidebar-menu hover-scroll-y">
+            <div class="font-medium menu menu-column menu-sub-indention menu-active-bg">
                 <SidebarMenuItem
                     :href="route('dashboard')"
                     :is-active="$page.props.activeMenu === 'Dashboard'">
                     <template #icon><i class="ri-pie-chart-2-fill"></i></template>
                     Dashboard
+                </SidebarMenuItem>
+
+                <SidebarMenuItem
+                    :href="route('questions.index')"
+                    :is-active="$page.props.activeMenu === 'Questions'">
+                    <template #icon></template>
+                    Questions
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
@@ -30,7 +36,7 @@
                     Categories
                 </SidebarMenuItem> -->
 
-                <SidebarDropdown
+                <!-- <SidebarDropdown
                     title="User Management"
                     icon-class="ri-user-settings-fill"
                     v-if="$page.props.auth.can.view_user_management_tab"
@@ -56,29 +62,29 @@
                     >
                         Users</sidebar-dropdown-menu-item>
 
-                </SidebarDropdown>
-                
+                </SidebarDropdown> -->
+
             </div>
         </div>
-        <div class="app-sidebar-user flex justify-center items-center py-5 px-8">
+        <div class="flex items-center justify-center px-8 py-5 app-sidebar-user">
             <div class="flex mr-5">
                 <div class="mr-5">
-                    <div class="symbol symbol-40px cursor-pointer">
-                        <lozad-image class="h-10 w-auto sidebar-avatar" :src="$page.props.auth.user.photo_url" :data-src="$page.props.auth.user.photo_url" alt="avatar" />
+                    <div class="cursor-pointer symbol symbol-40px">
+                        <lozad-image class="w-auto h-10 sidebar-avatar" :src="$page.props.auth.user.photo_url" :data-src="$page.props.auth.user.photo_url" alt="avatar" />
                     </div>
                 </div>
                 <div class="mr-2">
                     <!--begin::Username-->
-                    <Link href="#" class="app-sidebar-username text-gray-800 text-hover-primary text-lg font-medium leading-0">{{ $page.props.auth.user.name }}</Link>
+                    <Link href="#" class="text-lg font-medium text-gray-800 app-sidebar-username text-hover-primary leading-0">{{ $page.props.auth.user.name }}</Link>
                     <!--end::Username-->
 
                     <!--begin::Description-->
-                    <span class="app-sidebar-deckription text-gray-500 font-medium block text-sm">{{ $page.props.auth.user.email }}</span>
+                    <span class="block text-sm font-medium text-gray-500 app-sidebar-deckription">{{ $page.props.auth.user.email }}</span>
                     <!--end::Description-->
                 </div>
             </div>
             <Link :href="route('logout')" method="post" as="button" class="btn btn-icon btn-active-color-primary btn-icon-custom-color text-muted mr-[-1rem]">
-                <i class="ri-logout-box-r-line font-medium text-2xl"></i>
+                <i class="text-2xl font-medium ri-logout-box-r-line"></i>
             </Link>
         </div>
     </div>
