@@ -52,11 +52,11 @@ class QuestionController extends Controller
      * @param  \App\Http\Requests\StoreQuestionRequest  $request
      * @return RedirectResponse
      */
-    public function store(StoreQuestionRequest $request)
-    {
-        Question::create($request->validated());
-        return redirect()->route('.index')->with('success', ' successfully created');
-    }
+    public function store(StoreQuestionRequest $request): RedirectResponse
+{
+    Question::create($request->validated());
+    return redirect()->route('.index')->with('success', ' successfully created');
+}
 
     /**
      * Display the specified resource.
@@ -89,7 +89,7 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request, Question $question)
     {
        $question->update($request->validated());
-       return redirect()->route('.index')->with('success', ' successfully updated');
+       return redirect()->route('questions.index')->with('success', ' successfully updated');
     }
 
     /**

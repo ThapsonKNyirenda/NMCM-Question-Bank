@@ -12,35 +12,35 @@
             @submit.prevent.stop="submit(inertiaSubmit, 'add the question?')">
             <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
 
-            <base-form-select label="Select a Cadre" v-model="form.Cadre" id="cadre" name="cadre"
+            <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
                 placeholders="Choose a cadre" :options="Cadre" required />
 
-            <base-form-select label="Select a Nursing Process" v-model="form.nurseProcess" id="nurseProcess"
-                name="nurseProcess" placeholders="Choose a Nursing Process" :options="nurseProcess" required />
+            <base-form-select label="Select a Nursing Process" v-model="form.nursing_process" id="nurseProcess"
+                name="nursing_process" placeholders="Choose a Nursing Process" :options="nurseProcess" required />
 
-            <base-form-select label="Select a Disease Area" v-model="form.diseaseArea" id="diseaseArea"
-                name="diseaseArea" placeholders="Choose a Disease Area" :options="diseaseArea" required />
+            <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
+                name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required />
 
-            <base-form-select label="Select a Syllabus" v-model="form.Syllabus" id="Syllabus" name="Syllabus"
+            <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
 
-            <base-form-textarea label="Question Description" name="description" id="description" rows="5"
-                v-model="form.description" />
+            <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
+                v-model="form.question_description" />
 
-            <base-form-input type="text" label="Choice A" id="Choice_A" name="Choice_A" v-model="form.Choice_A"
+            <base-form-input type="text" label="Choice A" id="Choice_A" name="choice_a" v-model="form.choice_a"
                 required />
 
-            <base-form-input type="text" label="Choice B" id="Choice_B" name="Choice_B" v-model="form.Choice_B"
+            <base-form-input type="text" label="Choice B" id="Choice_B" name="choice_b" v-model="form.choice_b"
                 required />
 
-            <base-form-input type="text" label="Choice C" id="Choice_C" name="Choice_C" v-model="form.Choice_C"
+            <base-form-input type="text" label="Choice C" id="Choice_C" name="choice_c" v-model="form.choice_c"
                 required />
 
-            <base-form-input type="text" label="Choice D" id="Choice_D" name="Choice_D" v-model="form.Choice_D"
+            <base-form-input type="text" label="Choice D" id="Choice_D" name="choice_d" v-model="form.choice_d"
                 required />
 
-            <base-form-select label="Select a Correct Answer" v-model="form.correctAnswer" id="correctAnswer"
-                name="correctAnswer" placeholders="Choose a Correct Asnwer" :options="correctAnswer" required />
+            <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"
+                name="correct_answer" placeholders="Choose a Correct Asnwer" :options="correctAnswer" required />
 
             <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Add
                 Question</base-button-submit>
@@ -57,26 +57,27 @@ import { useForm, Head } from "@inertiajs/vue3";
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'Add Question';
-store.setBreadCrumb({ Categories: route('questions.index'), 'Add question': null });
+store.setBreadCrumb({ Questions: route('questions.index'), 'Add question': null });
 
 const form = useForm({
-    Cadre: null,
-    nurseProcess: null,
     title: null,
-    diseaseArea: null,
-    Syllabus: null,
-    correctAnswer: null,
-    Choice_A: null,
-    Choice_B: null,
-    Choice_C: null,
-    Choice_D: null,
-    status: null,
+    cadre: null,
+    nursing_process: null,
+    disease_area: null,
+    syllabus: null,
+    question_description: null,
+    choice_a: null,
+    choice_b: null,
+    choice_c: null,
+    choice_d: null,
+    correct_answer: null,
+    status: "Unvetted",
 });
 
 const Cadre = {
-    registeredNurse: "Registered Nurse",
-    licensedPracticalNurse: "Licensed Practical Nurse",
-    nursePractitioner: "Nurse Practitioner"
+    "Registered Nurse": "Registered Nurse",
+    "Licensed Practical Nurse": "Licensed Practical Nurse",
+    "Nurse Practitioner": "Nurse Practitioner"
 }
 
 const nurseProcess = {
@@ -96,8 +97,8 @@ const diseaseArea = {
 }
 
 const Syllabus = {
-    2022_2023: "2022-2023",
-    2023_2024: "2023-2024",
+    "2022-2023": "2022-2023",
+    "2023-2024": "2023-2024",
 }
 
 const correctAnswer = {
@@ -109,7 +110,7 @@ const correctAnswer = {
 
 const inertiaSubmit = () => {
     console.log(JSON.stringify(form, null, 2));
-    // form.post(route('questions.store'), form.data);
+    form.post(route('questions.store'));
 };
 
 

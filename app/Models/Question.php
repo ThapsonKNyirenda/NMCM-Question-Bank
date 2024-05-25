@@ -13,12 +13,13 @@ class Question extends Model
     use Searchable;
     use HasUuid;
 
+    
     protected $fillable = [
         'uuid',
         'title',
         'cadre',
         'nursing_process',
-        'Disease_area',
+        'disease_area',
         'syllabus',
         'question_description',
         'choice_a',
@@ -30,11 +31,6 @@ class Question extends Model
     ];
 
     public array $searchable = [
-        'title',
-        'cadre',
-        'nursing_process',
-        'Disease_area',
-        'syllabus',
-        'question_description',
+        'title'
     ];
 }

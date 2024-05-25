@@ -22,19 +22,19 @@ class StoreQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        'title' => 'string',
-        'cadre'=> 'string',
-        'nursing_process' => 'string',
-        'Disease_area' => 'string',
-        'syllabus' => 'string',
-        'question_description' => 'string',
-        'choice_a' => 'string',
-        'choice_b' => 'string',
-        'choice_c' => 'string',
-        'choice_d' => 'string',
-        'correct_answer' => 'string',
-        'status' => 'nullable'
+            'title' => 'string',
+            'cadre' => 'string',
+            'nursing_process' => 'string',
+            'disease_area' => 'string',
+            'syllabus' => 'string',
+            'question_description' => 'string',
+            'choice_a' => 'string',
+            'choice_b' => 'string',
+            'choice_c' => 'string',
+            'choice_d' => 'string',
+            'correct_answer' => 'string',
+            'status' => 'nullable',
         ];
     }
+
 }
