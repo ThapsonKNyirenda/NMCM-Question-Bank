@@ -23,7 +23,8 @@ class UnvettedQuestionController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('UnvettedQuestion/Index', [
-            'questions' => Question::whenSearch($request->input('search'))
+            'questions' => Question::where('status', 'Unvetted')
+                ->whenSearch($request->input('search'))
                 ->paginate(10)
                 ->withQueryString(),
             'filters' => $request->only(['search']) ?? [],
@@ -49,10 +50,10 @@ class UnvettedQuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    // public function show(string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -66,6 +67,50 @@ class UnvettedQuestionController extends Controller
             'question' => $question
         ]);
     }
+
+    /**
+ * Update the status of the specified resource to "Vetted".
+ * @param  string  $uuid
+ * @return \Inertia\Response
+ */
+public function show($uuid)
+{
+    // Retrieve the question using the UUID
+    $question = Question::whereUuid($uuid)->firstOrFail();
+
+    // Update the status to "Vetted"
+    $question->status = 'Vetted';
+
+    // Save the changes to the database
+    $question->save();
+
+    // Redirect to the index page using Inertia
+    return Inertia::render('UnvettedQuestion/Index', [
+        'questions' => Question::all()  // Adjust this to fit your index page data requirements
+    ]);
+}
+
+
+/**
+ * Update the status of the specified resource to "Vetted".
+ * @param  string  $uuid
+ * @return \Inertia\Response
+ */
+public function vet($uuid)
+{
+    // Retrieve the question using the UUID
+    $question = Question::whereUuid($uuid)->firstOrFail();
+
+    // Update the status to "Vetted"
+    $question->status = 'Vetted';
+
+    // Save the changes to the database
+    $question->save();
+
+    // Redirect to the index page using Inertia
+    return redirect()->route('unvettedquestions.index');
+}
+
 
     /**
      * Update the specified resource in storage.
