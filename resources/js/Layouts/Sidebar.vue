@@ -18,37 +18,37 @@
                 <SidebarMenuItem
                     :href="route('questions.index')"
                     :is-active="$page.props.activeMenu === 'Questions'">
-                    <template #icon></template>
+                    <template #icon><i class="ri-question-mark"></i> </template>
                     Questions
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
-                    :href="route('unvettedquestions.index')"
-                    :is-active="$page.props.activeMenu === 'Unvetted Questions'">
-                    <template #icon></template>
-                    Unvetted Questions
-                </SidebarMenuItem>
+    :href="route('unvettedquestions.index')"
+    :is-active="$page.props.activeMenu === 'Unvetted Questions'">
+    <template #icon> <i class="ri-flag-fill"></i></template>
+    Unvetted Questions
+</SidebarMenuItem>
 
                 <SidebarMenuItem
                     :href="route('vettedquestions.index')"
                     :is-active="$page.props.activeMenu === 'Vetted Questions'">
-                    <template #icon></template>
+                    <template #icon><i class="ri-checkbox-fill"></i></template>
                     Vetted Questions
                 </SidebarMenuItem>
 
                   <SidebarMenuItem
                     :href="route('questionbank.index')"
                     :is-active="$page.props.activeMenu === 'Questions Bank'">
-                    <template #icon></template>
+                    <template #icon> <i class="ri-folder-2-fill"></i></template>
                     Questions Bank
                 </SidebarMenuItem>
 
-                <SidebarMenuItem
+                <!--<SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Category'">
                     <template #icon><i class="ri-list-check"></i></template>
                     Categories
-                </SidebarMenuItem>
+                </SidebarMenuItem>-->
                 <!-- <SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Categories'"
