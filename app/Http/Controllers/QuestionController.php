@@ -29,7 +29,8 @@ class QuestionController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Question/Index', [
-            'questions' => Question::whenSearch($request->input('search'))
+            'questions' => Question:: where('status','Unvetted')
+            ->whenSearch($request->input('search'))
                 ->paginate(8)
                 ->withQueryString(),
             'filters' => $request->only(['search']) ?? [],
