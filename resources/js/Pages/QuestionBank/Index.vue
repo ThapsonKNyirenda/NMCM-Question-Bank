@@ -5,7 +5,7 @@
             <div class="w-1/2 card-title">
                 <div class="relative flex items-center w-full my-1 mr-5">
                     <base-search placeholder="Search Questions"
-                                 :href="route('questionbank.index')"
+                                 :href="route('unvettedquestions.index')"
                                  :search="filters.search"
                                  class="w-full"
                     />
@@ -43,9 +43,10 @@
                             <td>{{ new Date(question.created_at).toLocaleDateString() }}</td>
                             <td class="text-right">  
                                 <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
-                                    title="Edit"
+                                    :href="route('questionbank.view', [question.uuid])"
+                                    title="View Question"
                                     class="p-1 pl-2 ml-1 btn-primary"
+                                    method='POST'
                                     >
                                     View
                                 </base-button-link>

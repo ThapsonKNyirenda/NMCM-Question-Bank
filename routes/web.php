@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('customers.contacts', CustomerContactController::class)->only(['index', 'tore', 'update']);
     Route::resource('teams.users', TeamMemberController::class)->only(['index','store','destroy']);
     Route::post('vettedquestions/{uuid}/unvet', [VettedQuestionController::class, 'unvet'])->name('vettedquestions.unvet');
+    Route::post('questionbank/{uuid}/view', [QuestionBankController::class, 'view'])->name('questionbank.view');
     Route::post('unvettedquestions/{uuid}/vet', [UnvettedQuestionController::class, 'vet'])->name('unvettedquestions.vet');    
 
     

@@ -20,7 +20,8 @@ class QuestionBankController extends Controller
      public function index(Request $request)
      {
          return Inertia::render('QuestionBank/Index', [
-             'questions' => Question::whenSearch($request->input('search'))
+             'questions' => Question:: where('status','Submitted')
+             ->whenSearch($request->input('search'))
                  ->paginate(10)
                  ->withQueryString(),
              'filters' => $request->only(['search']) ?? [],
@@ -46,10 +47,15 @@ class QuestionBankController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function view($uuid)
     {
         //
+        $question = Question::whereUuid($uuid)->firstOrFail();
+        return Inertia::render('QuestionBank/View', [
+            'question' => $question
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -74,4 +80,5 @@ class QuestionBankController extends Controller
     {
         //
     }
+
 }

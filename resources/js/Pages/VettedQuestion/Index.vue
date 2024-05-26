@@ -58,9 +58,10 @@
                                     Unvet
                                 </base-button-link>
                                 <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
+                                    :href="route('vettedquestions.submit', [question.uuid])"
                                     title="Submit question"
-                                    class="p-1 pl-2 ml-1 btn-primary" 
+                                   class="p-1 pl-2 ml-1 btn-primary" :class="question.status == 'Submitted' ? 'disabled' : ''"
+                                    method="POST"
                                     >
                                     Submit
                                 </base-button-link>
