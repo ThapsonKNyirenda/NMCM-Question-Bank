@@ -24,8 +24,12 @@
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
 
-            <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
-                v-model="form.question_description" />
+            <!-- <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
+                v-model="form.question_description" /> -->
+            <label class="form-label required" >Question Description</label>
+            <div class="mandatory-fields">
+                <quill-input v-model="form.question_description" :placeholders="placeholders" />
+            </div>
 
             <base-form-input type="text" label="Option A" id="Choice_A" name="choice_a" v-model="form.choice_a"
                 required />
@@ -53,6 +57,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import { store } from "@/store.js";
 import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
+import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 
 defineOptions({ layout: AuthenticatedLayout });
 

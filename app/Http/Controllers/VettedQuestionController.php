@@ -10,7 +10,7 @@ class VettedQuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-
+    
      public function __construct()
      {
           Inertia::share('activeMenu', 'Vetted Questions');
