@@ -18,14 +18,15 @@ class VettedQuestionController extends Controller
      }
      public function index(Request $request)
      {
-         return Inertia::render('VettedQuestions/Index', [
-             'questions' => Question::whenSearch($request->input('search'))
+         return Inertia::render('VettedQuestion/Index', [
+             'questions' => Question:: where('status', 'Vetted')
+             ->whenSearch($request->input('search'))
                  ->paginate(10)
                  ->withQueryString(),
              'filters' => $request->only(['search']) ?? [],
          ]);
      }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -45,17 +46,18 @@ class VettedQuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+   
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function show($uuid)
     {
         //
+        $question = Question::whereUuid($uuid)->firstOrFail();
+        return Inertia::render('VettedQuestion/View', [
+            'question' => $question
+        ]);
     }
 
     /**
@@ -73,4 +75,19 @@ class VettedQuestionController extends Controller
     {
         //
     }
+
+    public function unvet($uuid)
+{
+    // Retrieve the question using the UUID
+    $question = Question::whereUuid($uuid)->firstOrFail();
+
+    // Update the status to "Vetted"
+    $question->status = 'Unvetted';
+
+    // Save the changes to the database
+    $question->save();
+
+    // Redirect to the index page using Inertia
+    return redirect()->route('vettedquestions.index');
+}
 }

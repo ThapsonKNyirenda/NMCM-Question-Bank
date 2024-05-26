@@ -5,7 +5,7 @@
             <div class="w-1/2 card-title">
                 <div class="relative flex items-center w-full my-1 mr-5">
                     <base-search placeholder="Search Questions"
-                                 :href="route('unvettedquestions.index')"
+                                 :href="route('questionbank.index')"
                                  :search="filters.search"
                                  class="w-full"
                     />
