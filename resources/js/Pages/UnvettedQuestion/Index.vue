@@ -53,9 +53,10 @@
                                     Edit
                                 </base-button-link>
                                 <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
-                                    title="Edit"
-                                    class="p-1 pl-2 ml-1 btn-yellow"
+                                    :href="route('unvettedquestions.vet', [question.uuid])"
+                                    title="Vet"
+                                    class="p-1 pl-2 ml-1 btn-yellow" :class="question.status == 'Vetted' ? 'disabled' : ''"
+                                    method="POST"
                                 >
                                     Vet
                                 </base-button-link>
@@ -111,13 +112,13 @@ watch(() => filterBy.per_page, (newVal) => {
     color: white;
 }
 
-.btn-green {
-    background-color: rgb(35, 221, 38);
-    color: white;
-}
+    .btn-green:hover{
+        background-color: rgb(0, 255, 136);
+        color: white; 
+    }
 
-.btn-green:hover {
-    background-color: rgb(0, 255, 136);
-    color: white;
-}
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 </style>
