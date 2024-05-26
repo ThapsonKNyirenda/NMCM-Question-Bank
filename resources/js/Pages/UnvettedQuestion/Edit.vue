@@ -5,7 +5,7 @@
         <template #header>
             <div class="flex-col card-title flex-column">
                 <h2 class="mb-1 text-xl font-semibold">Edit Question</h2>
-                <div class="text-base fw-semibold text-muted">Edit a question in the question</div>
+                <div class="text-base fw-semibold text-muted"></div>
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"

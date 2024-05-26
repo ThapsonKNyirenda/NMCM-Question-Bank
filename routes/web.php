@@ -31,6 +31,7 @@ use App\Http\Controllers\QuestionsController; // Add this line to import the Que
 use App\Http\Controllers\UnvettedQuestionController;
 use App\Http\Controllers\VettedQuestionController;
 use App\Http\Controllers\QuestionBankController;
+use App\Http\Controllers\QuestionPaper;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -92,6 +93,7 @@ Route::middleware('auth')->group(function () {
         'unvettedquestions' => UnvettedQuestionController::class,
         'vettedquestions' => VettedQuestionController::class,
         'questionbank' => QuestionBankController::class,
+        'questionpapers' => QuestionPaper::class,
        
     ]);
 

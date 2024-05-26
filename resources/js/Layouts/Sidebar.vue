@@ -43,12 +43,12 @@
                     Questions Bank
                 </SidebarMenuItem>
 
-                <!--<SidebarMenuItem
-                    :href="route('categories.index')"
-                    :is-active="$page.props.activeMenu === 'Category'">
+                <SidebarMenuItem
+                    :href="route('questionpapers.index')"
+                    :is-active="$page.props.activeMenu === 'Question Papers'">
                     <template #icon><i class="ri-list-check"></i></template>
-                    Categories
-                </SidebarMenuItem>-->
+                    Question Papers
+                </SidebarMenuItem>
                 <!-- <SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Categories'"

@@ -108,7 +108,7 @@ public function vet($uuid)
     $question->save();
 
     // Redirect to the index page using Inertia
-    return redirect()->route('unvettedquestions.index');
+    return redirect()->route('unvettedquestions.index')->with('success', 'Question successfully Vetted');
 }
 
 
