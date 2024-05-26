@@ -30,6 +30,20 @@
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
+                    :href="route('vettedquestions.index')"
+                    :is-active="$page.props.activeMenu === 'Vetted Questions'">
+                    <template #icon></template>
+                    Vetted Questions
+                </SidebarMenuItem>
+
+                  <SidebarMenuItem
+                    :href="route('questionbank.index')"
+                    :is-active="$page.props.activeMenu === 'Questions Bank'">
+                    <template #icon></template>
+                    Questions Bank
+                </SidebarMenuItem>
+
+                <SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Category'">
                     <template #icon><i class="ri-list-check"></i></template>
