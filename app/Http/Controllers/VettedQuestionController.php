@@ -90,4 +90,18 @@ class VettedQuestionController extends Controller
     // Redirect to the index page using Inertia
     return redirect()->route('vettedquestions.index')->with('success', 'Question successfully Unvetted');
 }
+public function submit($uuid)
+{
+    // Retrieve the question using the UUID
+    $question = Question::whereUuid($uuid)->firstOrFail();
+
+    // Update the status to "Vetted"
+    $question->status = 'Submitted';
+
+    // Save the changes to the database
+    $question->save();
+
+    // Redirect to the index page using Inertia
+    return redirect()->route('vettedquestions.index')->with('success', 'Question successfully submitted to Question Bank');
+}
 }

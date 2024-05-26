@@ -58,9 +58,10 @@
                                     Unvet
                                 </base-button-link>
                                 <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
+                                    :href="route('vettedquestions.submit', [question.uuid])"
                                     title="Submit question"
                                     class="p-1 pl-2 ml-1 btn-primary" 
+                                    method="POST"
                                     >
                                     Submit
                                 </base-button-link>
@@ -69,7 +70,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="grid grid-cols-5 gap-4">
                 <div class="flex items-center justify-center md:justify-start">
                     <base-select-page v-model="filterBy.per_page" />
