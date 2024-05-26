@@ -45,7 +45,7 @@
                                 <base-button-link
                                     :href="route('unvettedquestions.edit', [question.uuid])"
                                     title="Edit"
-                                    class="p-1 pl-2 ml-1 btn-primary"
+                                    class="p-1 pl-2 ml-1 btn-yellow"
                                     >
                                     View
                                 </base-button-link>
