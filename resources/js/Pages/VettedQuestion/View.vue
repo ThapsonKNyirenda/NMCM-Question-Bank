@@ -1,49 +1,45 @@
 <template>
-
-    <Head title="Edit Question" />
+    <Head title="Vetted Questions" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
                 <h2 class="mb-1 text-xl font-semibold">Edit Question</h2>
-                <div class="text-base fw-semibold text-muted"></div>
+                <div class="text-base fw-semibold text-muted">Edit a question in the question</div>
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'Edit the question?')">
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
+            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required readonly />
 
             <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
-                placeholders="Choose a cadre" :options="Cadre" required />
+                placeholders="Choose a cadre" :options="Cadre" required disabled />
 
             <base-form-select label="Select a Nursing Process" v-model="form.nursing_process" id="nurseProcess"
-                name="nursing_process" placeholders="Choose a Nursing Process" :options="nurseProcess" required />
+                name="nursing_process" placeholders="Choose a Nursing Process" :options="nurseProcess" required disabled />
 
             <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
-                name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required />
+                name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required disabled />
 
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
-                placeholders="Choose a Syllabus" :options="Syllabus" required />
+                placeholders="Choose a Syllabus" :options="Syllabus" required disabled />
 
             <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
-                v-model="form.question_description" />
+                v-model="form.question_description" readonly />
 
             <base-form-input type="text" label="Option A" id="Choice_A" name="choice_a" v-model="form.choice_a"
-                required />
+                required readonly />
 
             <base-form-input type="text" label="Option B" id="Choice_B" name="choice_b" v-model="form.choice_b"
-                required />
+                required readonly />
 
             <base-form-input type="text" label="Option C" id="Choice_C" name="choice_c" v-model="form.choice_c"
-                required />
+                required readonly />
 
             <base-form-input type="text" label="Option D" id="Choice_D" name="choice_d" v-model="form.choice_d"
-                required />
+                required readonly />
 
             <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"
-                name="correct_answer" placeholders="Choose a Correct Asnwer" :options="correctAnswer" required />
-
-            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Edit
-                Question</base-button-submit>
+                name="correct_answer" placeholders="Choose a Correct Answer" :options="correctAnswer" required disabled />           
         </form>
     </base-card-main>
 </template>
@@ -60,7 +56,7 @@ const props = defineProps({
     question: Object
 });
 
-store.pageTitle = 'Edit Question';
+store.pageTitle = 'Vetted Questions';
 store.setBreadCrumb({ Questions: route('unvettedquestions.index'), 'Edit question': null });
 
 const form = useForm(
@@ -105,10 +101,5 @@ const correctAnswer = {
 //     console.log(JSON.stringify(form, null, 2));
 //     form.post(route('questions.store'));
 // };
-
-const inertiaSubmit = () => {
-    form.patch(route('questions.update', { question: props.question.uuid }));
-};
-
 
 </script>

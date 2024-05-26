@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('users.roles', UserRoleController::class)->only(['create', 'tore']);
     Route::resource('customers.contacts', CustomerContactController::class)->only(['index', 'tore', 'update']);
     Route::resource('teams.users', TeamMemberController::class)->only(['index','store','destroy']);
+    Route::post('vettedquestions/{uuid}/unvet', [VettedQuestionController::class, 'unvet'])->name('vettedquestions.unvet');
     Route::post('unvettedquestions/{uuid}/vet', [UnvettedQuestionController::class, 'vet'])->name('unvettedquestions.vet');    
 
     

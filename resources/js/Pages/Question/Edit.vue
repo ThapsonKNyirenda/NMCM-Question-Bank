@@ -27,16 +27,16 @@
             <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
                 v-model="form.question_description" />
 
-            <base-form-input type="text" label="Choice A" id="Choice_A" name="choice_a" v-model="form.choice_a"
+            <base-form-input type="text" label="Option A" id="Choice_A" name="choice_a" v-model="form.choice_a"
                 required />
 
-            <base-form-input type="text" label="Choice B" id="Choice_B" name="choice_b" v-model="form.choice_b"
+            <base-form-input type="text" label="Option B" id="Choice_B" name="choice_b" v-model="form.choice_b"
                 required />
 
-            <base-form-input type="text" label="Choice C" id="Choice_C" name="choice_c" v-model="form.choice_c"
+            <base-form-input type="text" label="Option C" id="Choice_C" name="choice_c" v-model="form.choice_c"
                 required />
 
-            <base-form-input type="text" label="Choice D" id="Choice_D" name="choice_d" v-model="form.choice_d"
+            <base-form-input type="text" label="Option D" id="Choice_D" name="choice_d" v-model="form.choice_d"
                 required />
 
             <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"

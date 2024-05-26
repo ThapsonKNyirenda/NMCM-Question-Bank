@@ -5,7 +5,7 @@
             <div class="w-1/2 card-title">
                 <div class="relative flex items-center w-full my-1 mr-5">
                     <base-search placeholder="Search Questions"
-                                 :href="route('unvettedquestions.index')"
+                                 :href="route('vettedquestions.index')"
                                  :search="filters.search"
                                  class="w-full"
                     />
@@ -43,23 +43,24 @@
                             <td>{{ new Date(question.created_at).toLocaleDateString() }}</td>
                             <td class="text-right">  
                                  <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
-                                    title="Edit"
+                                    :href="route('vettedquestions.show', [question.uuid])"
+                                    title="View Question"
                                     class="p-1 pl-2 ml-1 btn-green"
                                     >
                                     View
                                 </base-button-link>
                                 <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
-                                    title="Edit"
-                                    class="p-1 pl-2 ml-1 btn-yellow"
+                                    :href="route('vettedquestions.unvet', [question.uuid])"
+                                    title="Unvett Question"
+                                    class="p-1 pl-2 ml-1 btn-yellow" :class="question.status == 'Unvetted' ? 'disabled' : ''"
+                                    method="POST"
                                     >
                                     Unvet
                                 </base-button-link>
                                 <base-button-link
                                     :href="route('unvettedquestions.edit', [question.uuid])"
-                                    title="Edit"
-                                    class="p-1 pl-2 ml-1 btn-primary"
+                                    title="Submit question"
+                                    class="p-1 pl-2 ml-1 btn-primary" 
                                     >
                                     Submit
                                 </base-button-link>
@@ -150,5 +151,10 @@ const vetQuestion = (uuid) => {
     .btn-primary:hover{
         background-color: rgb(25, 70, 192);
         color: white; 
+    }
+
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 </style>
