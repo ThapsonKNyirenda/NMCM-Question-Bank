@@ -28,12 +28,12 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('Question/Index',[
+        return Inertia::render('Question/Index', [
             'questions' => Question::whenSearch($request->input('search'))
-            ->paginate(8)
-            ->withQueryString(),
-        'filters' => $request->only(['search']) ?? []
-        ]); 
+                ->paginate(8)
+                ->withQueryString(),
+            'filters' => $request->only(['search']) ?? [],
+        ]);
     }
 
     /**
@@ -55,7 +55,7 @@ class QuestionController extends Controller
     public function store(StoreQuestionRequest $request): RedirectResponse
 {
     Question::create($request->validated());
-    return redirect()->route('.index')->with('success', ' successfully created');
+    return redirect()->route('questions.index')->with('success', ' successfully created');
 }
 
     /**
@@ -86,7 +86,7 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return RedirectResponse
      */
-    public function update(UpdateQuestionRequest $request, Question $question)
+    public function update(UpdateQuestionRequest $request, Question $question): RedirectResponse
     {
        $question->update($request->validated());
        return redirect()->route('questions.index')->with('success', ' successfully updated');
@@ -97,6 +97,8 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+
+        return redirect()->back()->with('success', 'Question successfully deleted');
     }
 }

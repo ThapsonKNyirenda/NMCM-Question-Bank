@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="Edit Question" />
+    <Head title="View Question" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">

@@ -2,8 +2,8 @@
     <Head title="Roles List" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6" >
         <template #header>
-            <div class="card-title w-1/2">
-                <div class="flex items-center relative my-1 mr-5 w-full">
+            <div class="w-1/2 card-title">
+                <div class="relative flex items-center w-full my-1 mr-5">
                     <base-search placeholder="Search Roles"
                                  :href="route('roles.index')"
                                  :search="filters.search"
@@ -17,14 +17,14 @@
         </template>
         <div class="relative">
             <div class="table-responsive">
-                <table class="table align-middle table-row-dashed fs-6 mb-0 dataTable no-footer gy-3">
+                <table class="table mb-0 align-middle table-row-dashed fs-6 dataTable no-footer gy-3">
                     <thead>
-                    <tr class="text-left text-gray-500 font-semibold fs-7 uppercase ">
+                    <tr class="font-semibold text-left text-gray-500 uppercase fs-7 ">
                         <th></th>
                         <th>Name</th>
                         <th>Description</th>
                         <th></th>
-                        <th class="text-right w-32"></th>
+                        <th class="w-32 text-right"></th>
                     </tr>
                     </thead>
                     <tbody class="=font-medium text-gray-600" >
@@ -39,14 +39,14 @@
                             <base-button-link
                                 :href="route('roles.permissions.create', { role: role.uuid })"
                                 title="Permissions"
-                                class="btn-warning p-2 pl-2 px-3"
+                                class="p-2 px-3 pl-2 btn-warning"
                             >
                                 <font-awesome-icon  class="text-lg" icon="fa-solid fa-list-check" /> </base-button-link>
                             <base-button-link
                                 :href="route('roles.edit', [role.uuid])"
                                 title="Edit"
-                                class="btn-primary ml-1 p-1 pl-2"
-                                icon-class="ri-pencil-fill text-lg"
+                                class="p-1 pl-2 ml-1 btn-primary"
+                                icon-class="text-lg ri-pencil-fill"
                             ></base-button-link>
                         </td>
                     </tr>
@@ -57,7 +57,7 @@
                 <div class="flex items-center justify-center md:justify-start">
                     <base-select-page v-model="filterBy.per_page" />
                 </div>
-                <div class="col-span-4 flex items-center justify-center md:justify-end">
+                <div class="flex items-center justify-center col-span-4 md:justify-end">
                     <base-pagination :paginator="roles" :key="roles.total" />
                 </div>
             </div>

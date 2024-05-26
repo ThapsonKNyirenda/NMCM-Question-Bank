@@ -25,7 +25,7 @@ defineProps({
                 <Link href="/">
                     <ApplicationLogo class="h-20 text-gray-500 fill-current" />
                 </Link>
-               </span> 
+               </span>
                
             </div>
 

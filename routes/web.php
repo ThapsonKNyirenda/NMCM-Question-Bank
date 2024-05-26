@@ -28,6 +28,7 @@ use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\QuestionsController; // Add this line to import the QuestionsController
+use App\Http\Controllers\UnvettedQuestionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -82,6 +83,7 @@ Route::middleware('auth')->group(function () {
         'contracts'=> ContractController::class,
         'email-templates' => EmailTemplateController::class,
         'questions' => QuestionController::class,
+        'unvettedquestions' => UnvettedQuestionController::class,
        
     ]);
 

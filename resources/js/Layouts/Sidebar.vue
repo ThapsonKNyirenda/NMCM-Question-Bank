@@ -23,6 +23,13 @@
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
+                    :href="route('unvettedquestions.index')"
+                    :is-active="$page.props.activeMenu === 'Unvetted Questions'">
+                    <template #icon></template>
+                    Unvetted Questions
+                </SidebarMenuItem>
+
+                <SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Category'">
                     <template #icon><i class="ri-list-check"></i></template>
