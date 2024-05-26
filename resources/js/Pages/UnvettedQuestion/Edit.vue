@@ -1,11 +1,11 @@
 <template>
 
-    <Head title="View Question" />
+    <Head title="Edit Question" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
                 <h2 class="mb-1 text-xl font-semibold">Edit Question</h2>
-                <div class="text-base fw-semibold text-muted">Edit a question in the question bank</div>
+                <div class="text-base fw-semibold text-muted">Edit a question in the question</div>
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
@@ -61,7 +61,7 @@ const props = defineProps({
 });
 
 store.pageTitle = 'Edit Question';
-store.setBreadCrumb({ Questions: route('questions.index'), 'Edit question': null });
+store.setBreadCrumb({ Questions: route('unvettedquestions.index'), 'Edit question': null });
 
 const form = useForm(
     props.question,

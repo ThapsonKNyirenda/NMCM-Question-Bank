@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use App\Models\UnvettedQuestion;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,9 +59,10 @@ class UnvettedQuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return Response
      */
-    public function edit(Question $question)
+    public function edit($uuid)
     {
-        return Inertia::render('Question/Edit', [
+        $question = Question::whereUuid($uuid)->firstOrFail();
+        return Inertia::render('UnvettedQuestion/Edit', [
             'question' => $question
         ]);
     }
