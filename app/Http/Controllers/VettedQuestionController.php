@@ -88,6 +88,6 @@ class VettedQuestionController extends Controller
     $question->save();
 
     // Redirect to the index page using Inertia
-    return redirect()->route('vettedquestions.index');
+    return redirect()->route('vettedquestions.index')->with('success', 'Question successfully Unvetted');
 }
 }
