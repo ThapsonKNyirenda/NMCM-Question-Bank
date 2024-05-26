@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\QuestionsController; // Add this line to import the QuestionsController
 use App\Http\Controllers\UnvettedQuestionController;
+use App\Http\Controllers\VettedQuestionController;
+use App\Http\Controllers\QuestionBankController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -84,6 +86,8 @@ Route::middleware('auth')->group(function () {
         'email-templates' => EmailTemplateController::class,
         'questions' => QuestionController::class,
         'unvettedquestions' => UnvettedQuestionController::class,
+        'vettedquestions' => VettedQuestionController::class,
+        'questionbank' => QuestionBankController::class,
        
     ]);
 
