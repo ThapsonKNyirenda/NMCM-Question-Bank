@@ -45,4 +45,8 @@ class PermissionController extends Controller
             'filters' => $request->only(['search','permission_group','role_id','per_page']) ?? [],
         ]);
     }
+
+    public function create(Request $request): Response{
+        return Inertia::render('Permission/Create');
+    }
 }

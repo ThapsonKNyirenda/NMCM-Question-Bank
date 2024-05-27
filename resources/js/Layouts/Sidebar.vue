@@ -57,7 +57,7 @@
                     Categories
                 </SidebarMenuItem> -->
 
-                <!-- <SidebarDropdown
+                <SidebarDropdown
                     title="User Management"
                     icon-class="ri-user-settings-fill"
                     v-if="$page.props.auth.can.view_user_management_tab"
@@ -83,7 +83,7 @@
                     >
                         Users</sidebar-dropdown-menu-item>
 
-                </SidebarDropdown> -->
+                </SidebarDropdown>
 
             </div>
         </div>
