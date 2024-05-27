@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class QuestionPaper extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
-
+    public function __construct()
+     {
+          Inertia::share('activeMenu', 'Question Papers');
+         //  $this->authorizeResource( Question ::class, '');
+     }
+     public function index(Request $request)
+     {
+         return Inertia::render('QuestionPaper/Index');
+     }
     /**
      * Show the form for creating a new resource.
      */
