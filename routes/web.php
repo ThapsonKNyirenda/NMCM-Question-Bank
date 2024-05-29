@@ -67,12 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::singleton('profile', ProfileController::class);
     Route::singleton('profile-security', ProfileSecurityController::class);
 
-    Route::resource('roles.permissions', RolePermissionController::class)->only(['create', 'tore']);
-    Route::resource('permissions.roles', PermissionRoleController::class)->only(['create', 'tore']);
-    Route::resource('users.permissions', UserPermissionController::class)->only(['create', 'tore']);
-    Route::resource('users.roles', UserRoleController::class)->only(['create', 'tore']);
-    Route::resource('customers.contacts', CustomerContactController::class)->only(['index', 'tore', 'update']);
-    Route::resource('teams.users', TeamMemberController::class)->only(['index','store','destroy']);
+    Route::resource('roles.permissions', RolePermissionController::class)->only(['create', 'store']);
+    Route::resource('permissions.roles', PermissionRoleController::class)->only(['create', 'store']);
+    Route::resource('users.permissions', UserPermissionController::class)->only(['create', 'store']);
+    Route::resource('users.roles', UserRoleController::class)->only(['create', 'store']);
+    Route::resource('customers.contacts', CustomerContactController::class)->only(['index', 'store', 'update']);
+    Route::resource('teams.users', TeamMemberController::class)->only(['index','sstore','destroy']);
     Route::post('vettedquestions/{uuid}/unvet', [VettedQuestionController::class, 'unvet'])->name('vettedquestions.unvet');
     Route::post('vettedquestions/{uuid}/submit', [VettedQuestionController::class, 'submit'])->name('vettedquestions.submit');
     Route::post('questionbank/{uuid}/view', [QuestionBankController::class, 'view'])->name('questionbank.view');

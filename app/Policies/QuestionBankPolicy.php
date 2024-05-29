@@ -2,26 +2,27 @@
 
 namespace App\Policies;
 
-use App\Models\Category;
+use App\Models\Question;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class CategoryPolicy
+class QuestionBankPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->canAny(['Add ticket categories', 'Update ticket categories', 'View ticket categories', 'Delete ticket categories']);
+        //
+        return $user->can("Manage question bank");
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Category $category): bool
+    public function view(User $user, Question $question): bool
     {
-        return $user->can('Manage categories');
+        //
     }
 
     /**
@@ -29,29 +30,29 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Add ticket categories');
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Category $category): bool
+    public function update(User $user, Question $question): bool
     {
-        return $user->can('Update ticket categories');
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user, Question $question): bool
     {
-        return $user->can('Delete ticket categories');
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Category $category): bool
+    public function restore(User $user, Question $question): bool
     {
         //
     }
@@ -59,7 +60,7 @@ class CategoryPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete(User $user, Question $question): bool
     {
         //
     }

@@ -17,42 +17,53 @@
 
                 <SidebarMenuItem
                     :href="route('questions.index')"
-                    :is-active="$page.props.activeMenu === 'Questions'">
+                    :is-active="$page.props.activeMenu === 'Questions'"
+                    v-if="can('Manage questions')"
+                    >
                     <template #icon><i class="ri-question-mark"></i> </template>
                     Questions
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
-    :href="route('unvettedquestions.index')"
-    :is-active="$page.props.activeMenu === 'Unvetted Questions'">
-    <template #icon> <i class="ri-flag-fill"></i></template>
-    Unvetted Questions
-</SidebarMenuItem>
+                    :href="route('unvettedquestions.index')"
+                    :is-active="$page.props.activeMenu === 'Unvetted Questions'"
+                    v-if="can('Manage unvetted questions')"
+                    >
+                    <template #icon> <i class="ri-flag-fill"></i></template>
+                    Unvetted Questions
+                </SidebarMenuItem>
 
                 <SidebarMenuItem
                     :href="route('vettedquestions.index')"
-                    :is-active="$page.props.activeMenu === 'Vetted Questions'">
+                    :is-active="$page.props.activeMenu === 'Vetted Questions'"
+                    v-if="can('Manage vetted questions')"
+                    >
                     <template #icon><i class="ri-checkbox-fill"></i></template>
                     Vetted Questions
                 </SidebarMenuItem>
 
                   <SidebarMenuItem
                     :href="route('questionbank.index')"
-                    :is-active="$page.props.activeMenu === 'Questions Bank'">
+                    :is-active="$page.props.activeMenu === 'Questions Bank'"
+                    v-if="can('Manage question bank')"
+                    >
                     <template #icon> <i class="ri-folder-2-fill"></i></template>
-                    Questions Bank
+                    Question Bank
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
                     :href="route('questionpapers.index')"
-                    :is-active="$page.props.activeMenu === 'Question Papers'">
+                    :is-active="$page.props.activeMenu === 'Question Papers'"
+                    v-if="can('Manage question papers')"
+                    >
                     <template #icon><i class="ri-list-check"></i></template>
                     Question Papers
                 </SidebarMenuItem>
                 <!-- <SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Categories'"
-                    v-if="canany(['Add ticket categories', 'Update ticket categories', 'View ticket categories', 'Delete ticket categories'])">
+                    v-if="can('Manage categories')"
+                    >
                     <template #icon><font-awesome-icon :icon="['fas', 'list']" /></template>
                     Categories
                 </SidebarMenuItem> -->
