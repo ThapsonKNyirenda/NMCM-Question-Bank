@@ -1,37 +1,3 @@
-<script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { validateForm } from "@/helpers/form_helpers.js";
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
-
-const submit = () => {
-    if (validateForm('needs-validation')) {
-        form.post(route('login'), {
-            onFinish: () => form.reset('password'),
-        });
-    }
-};
-</script>
-
 <template>
     <GuestLayout>
         <Head title="Log in" />
@@ -39,16 +5,27 @@ const submit = () => {
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
+        
+        
 
-        <div class="grid w-full grid-cols-5 gap-4 mt-10" >
-            <div class="flex items-center justify-center col-span-3">
-                <img src="/images/Question Bank (1).png" alt="Login image">
+        <div class="flex items-center justify-center h-screen">
+            <div class="w-full max-w-md p-4">
+                <div class="flex" :class="logoClasses">
+            <span>
+            <Link href="/">
+                <ApplicationLogo2 class="text-gray-500 fill-current " />
+            </Link>
+            </span>
+            
+        </div>
+        <br>
+        <h1 class="mt-4 mb-6 text-3xl font-bold text-center text-green-600 uppercase">
+                    NMCM Question Bank System
+                </h1><br>
                 
-            </div>
-            <div class="col-span-2">
-                <h1 class="mb-6 text-2xl font-semibold text-login-green" >NMCM Question Bank Log In</h1>
-                <form class="w-3/4 needs-validation" @submit.prevent="submit" novalidate>
+                <form class="w-full needs-validation" @submit.prevent="submit" novalidate>
                     <div>
+                        
                         <InputLabel for="email" value="Email" />
 
                         <TextInput
@@ -79,6 +56,12 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 
+                    
+                    <div class="flex items-center justify-center mt-10">
+                        <PrimaryButton class="w-full text-center rounded-0" style="color: #fff" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Log in
+                        </PrimaryButton>
+                    </div>
                     <div class="flex justify-between mt-6">
                         <label class="flex items-center">
                             <Checkbox name="remember" v-model:checked="form.remember" />
@@ -92,13 +75,53 @@ const submit = () => {
                             Forgot your password?
                         </Link>
                     </div>
-                    <div class="flex items-center justify-center mt-10">
-                        <PrimaryButton class="w-full text-center rounded-0" style="color: #fff" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Log in
-                        </PrimaryButton>
-                    </div>
                 </form>
             </div>
         </div>
     </GuestLayout>
 </template>
+
+<script setup>
+import Checkbox from '@/Components/Checkbox.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { validateForm } from "@/helpers/form_helpers.js";
+
+import ApplicationLogo2 from '@/Components/ApplicationLogo2.vue';
+
+
+defineProps({
+    canResetPassword: {
+        type: Boolean,
+    },
+    status: {
+        type: String,
+    },
+    loginCardClasses: {
+        type: String,
+        default: 'sm:max-w-7xl'
+    },
+    logoClasses: {
+        type: String,
+        default: 'justify-center'
+    }
+});
+
+const form = useForm({
+    email: '',
+    password: '',
+    remember: false,
+});
+
+const submit = () => {
+    if (validateForm('needs-validation')) {
+        form.post(route('login'), {
+            onFinish: () => form.reset('password'),
+        });
+    }
+};
+</script>

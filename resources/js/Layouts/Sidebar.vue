@@ -96,29 +96,27 @@
 
                 </SidebarDropdown>
 
-            </div>
-        </div>
-        <div class="flex items-center justify-center px-8 py-5 app-sidebar-user">
-            <div class="flex mr-5">
-                <div class="mr-5">
-                    <div class="cursor-pointer symbol symbol-40px">
-                        <lozad-image class="w-auto h-10 sidebar-avatar" :src="$page.props.auth.user.photo_url" :data-src="$page.props.auth.user.photo_url" alt="avatar" />
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <!--begin::Username-->
-                    <Link href="#" class="text-lg font-medium text-gray-800 app-sidebar-username text-hover-primary leading-0">{{ $page.props.auth.user.name }}</Link>
-                    <!--end::Username-->
+                <SidebarMenuItem
+                    :href="route('profile.edit')"
+                    :is-active="$page.props.activeMenu === 'My Profile'"
+                    
+                    >
+                    <template #icon><i class="ri-user-line"></i></template>
+                    My Profile
+                </SidebarMenuItem>
 
-                    <!--begin::Description-->
-                    <span class="block text-sm font-medium text-gray-500 app-sidebar-deckription">{{ $page.props.auth.user.email }}</span>
-                    <!--end::Description-->
-                </div>
+                <SidebarMenuItem
+                    :href="route('logout')"
+                    :is-active="$page.props.activeMenu === 'Logout'"
+                    
+                    >
+                    <template #icon><i class="ri-logout-box-r-line"></i></template>
+                    Logout
+                </SidebarMenuItem>
+
             </div>
-            <Link :href="route('logout')" method="post" as="button" class="btn btn-icon btn-active-color-primary btn-icon-custom-color text-muted mr-[-1rem]">
-                <i class="text-2xl font-medium ri-logout-box-r-line"></i>
-            </Link>
         </div>
+        
     </div>
     <teleport to="body">
         <div style="z-index: 105;" class="drawer-overlay" v-if="store.showSidebar" @click="store.removeSidebar()">

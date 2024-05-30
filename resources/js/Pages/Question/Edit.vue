@@ -12,6 +12,11 @@
             @submit.prevent.stop="submit(inertiaSubmit, 'Edit the question?')">
             <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
 
+            <label class="form-label required" >Question Description</label>
+            <div class="mandatory-fields">
+                <quill-input v-model="form.question_description" :placeholders="placeholders" />
+            </div>
+            
             <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
                 placeholders="Choose a cadre" :options="Cadre" required />
 
@@ -26,11 +31,7 @@
 
             <!-- <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
                 v-model="form.question_description" /> -->
-            <label class="form-label required" >Question Description</label>
-            <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholders="placeholders" />
-            </div>
-
+            
             <base-form-input type="text" label="Option A" id="Choice_A" name="choice_a" v-model="form.choice_a"
                 required />
 

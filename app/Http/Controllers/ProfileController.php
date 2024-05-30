@@ -17,7 +17,7 @@ class ProfileController extends Controller
 
     public function __construct()
     {
-        Inertia::share('activeMenu', 'Dashboard');
+        Inertia::share('activeMenu', 'My Profile');
     }
 
     /**
