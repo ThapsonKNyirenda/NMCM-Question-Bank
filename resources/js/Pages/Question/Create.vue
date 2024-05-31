@@ -27,6 +27,9 @@
             <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
                 name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required />
 
+            <base-form-select label="Select Taxonomy Level" id="taxonomy"
+                placeholders="Choose taxonomy" :options="taxonomy"/>
+
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
 
@@ -95,6 +98,15 @@ const nurseProcess = {
     Planning: "Planning",
     Implementation: "Implementation",
     Evaluation: "Evaluation"
+}
+
+const taxonomy = {
+    Knowledge: "Knowledge",
+    Comprehension : "Comprehension",
+    Application : "Application",
+    Analysis : "Analysis",
+    Synthesis : "Synthesis",
+    Evaluation :"Evaluation"
 }
 
 const diseaseArea = {

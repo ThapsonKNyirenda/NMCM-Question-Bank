@@ -108,7 +108,7 @@
                 <SidebarMenuItem
                     :href="route('logout')"
                     :is-active="$page.props.activeMenu === 'Logout'"
-                    
+                    method="POST"
                     >
                     <template #icon><i class="ri-logout-box-r-line"></i></template>
                     Logout
