@@ -23,6 +23,9 @@
                 <table class="table mb-0 align-middle table-row-dashed fs-6 dataTable no-footer gy-3">
                     <thead>
                         <tr>
+                            <th class="pl-4">
+                                <input type="checkbox" @change="toggleSelectAll($event)" />
+                            </th>
                             <th>C.No</th>
                             <th>Title</th>
                             <th>Cadre</th>
@@ -36,6 +39,9 @@
                     </thead>
                     <tbody class="font-medium text-gray-600">
                         <tr v-for="(question, index) in questions.data" :key="question.uuid">
+                            <td class="pl-4">
+                                <input type="checkbox" v-model="selectedQuestions" :value="question.uuid" />
+                            </td>
                             <td v-text="index + 1"></td>
                             <td>{{ question.title }}</td>
                             <td>{{ question.cadre }}</td>
@@ -76,7 +82,7 @@
 import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { store } from "@/store.js";
-import { reactive, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 
 defineOptions({ layout: AuthenticatedLayout });
 
@@ -89,8 +95,13 @@ store.pageTitle = 'Questions Lists';
 store.setBreadCrumb({ Questions: null });
 
 const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
+const selectedQuestions = ref([]);
 
 watch(() => filterBy.per_page, (newVal) => {
     router.get(route('questions.index', { search: props.filters.search, ...filterBy }));
 });
+
+const toggleSelectAll = (event) => {
+    selectedQuestions.value = event.target.checked ? props.questions.data.map(q => q.uuid) : [];
+};
 </script>

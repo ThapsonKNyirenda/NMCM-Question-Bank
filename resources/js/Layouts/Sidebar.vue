@@ -17,42 +17,53 @@
 
                 <SidebarMenuItem
                     :href="route('questions.index')"
-                    :is-active="$page.props.activeMenu === 'Questions'">
+                    :is-active="$page.props.activeMenu === 'Questions'"
+                    v-if="can('Manage questions')"
+                    >
                     <template #icon><i class="ri-question-mark"></i> </template>
                     Questions
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
-    :href="route('unvettedquestions.index')"
-    :is-active="$page.props.activeMenu === 'Unvetted Questions'">
-    <template #icon> <i class="ri-flag-fill"></i></template>
-    Unvetted Questions
-</SidebarMenuItem>
+                    :href="route('unvettedquestions.index')"
+                    :is-active="$page.props.activeMenu === 'Unvetted Questions'"
+                    v-if="can('Manage unvetted questions')"
+                    >
+                    <template #icon> <i class="ri-flag-fill"></i></template>
+                    Unvetted Questions
+                </SidebarMenuItem>
 
                 <SidebarMenuItem
                     :href="route('vettedquestions.index')"
-                    :is-active="$page.props.activeMenu === 'Vetted Questions'">
+                    :is-active="$page.props.activeMenu === 'Vetted Questions'"
+                    v-if="can('Manage vetted questions')"
+                    >
                     <template #icon><i class="ri-checkbox-fill"></i></template>
                     Vetted Questions
                 </SidebarMenuItem>
 
                   <SidebarMenuItem
                     :href="route('questionbank.index')"
-                    :is-active="$page.props.activeMenu === 'Questions Bank'">
+                    :is-active="$page.props.activeMenu === 'Questions Bank'"
+                    v-if="can('Manage question bank')"
+                    >
                     <template #icon> <i class="ri-folder-2-fill"></i></template>
-                    Questions Bank
+                    Question Bank
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
                     :href="route('questionpapers.index')"
-                    :is-active="$page.props.activeMenu === 'Question Papers'">
+                    :is-active="$page.props.activeMenu === 'Question Papers'"
+                    v-if="can('Manage question papers')"
+                    >
                     <template #icon><i class="ri-list-check"></i></template>
                     Question Papers
                 </SidebarMenuItem>
                 <!-- <SidebarMenuItem
                     :href="route('categories.index')"
                     :is-active="$page.props.activeMenu === 'Categories'"
-                    v-if="canany(['Add ticket categories', 'Update ticket categories', 'View ticket categories', 'Delete ticket categories'])">
+                    v-if="can('Manage categories')"
+                    >
                     <template #icon><font-awesome-icon :icon="['fas', 'list']" /></template>
                     Categories
                 </SidebarMenuItem> -->
@@ -85,29 +96,27 @@
 
                 </SidebarDropdown>
 
-            </div>
-        </div>
-        <div class="flex items-center justify-center px-8 py-5 app-sidebar-user">
-            <div class="flex mr-5">
-                <div class="mr-5">
-                    <div class="cursor-pointer symbol symbol-40px">
-                        <lozad-image class="w-auto h-10 sidebar-avatar" :src="$page.props.auth.user.photo_url" :data-src="$page.props.auth.user.photo_url" alt="avatar" />
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <!--begin::Username-->
-                    <Link href="#" class="text-lg font-medium text-gray-800 app-sidebar-username text-hover-primary leading-0">{{ $page.props.auth.user.name }}</Link>
-                    <!--end::Username-->
+                <SidebarMenuItem
+                    :href="route('profile.edit')"
+                    :is-active="$page.props.activeMenu === 'My Profile'"
+                    
+                    >
+                    <template #icon><i class="ri-user-line"></i></template>
+                    My Profile
+                </SidebarMenuItem>
 
-                    <!--begin::Description-->
-                    <span class="block text-sm font-medium text-gray-500 app-sidebar-deckription">{{ $page.props.auth.user.email }}</span>
-                    <!--end::Description-->
-                </div>
+                <SidebarMenuItem
+                    :href="route('logout')"
+                    :is-active="$page.props.activeMenu === 'Logout'"
+                    
+                    >
+                    <template #icon><i class="ri-logout-box-r-line"></i></template>
+                    Logout
+                </SidebarMenuItem>
+
             </div>
-            <Link :href="route('logout')" method="post" as="button" class="btn btn-icon btn-active-color-primary btn-icon-custom-color text-muted mr-[-1rem]">
-                <i class="text-2xl font-medium ri-logout-box-r-line"></i>
-            </Link>
         </div>
+        
     </div>
     <teleport to="body">
         <div style="z-index: 105;" class="drawer-overlay" v-if="store.showSidebar" @click="store.removeSidebar()">
