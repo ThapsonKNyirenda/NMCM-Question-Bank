@@ -16,17 +16,18 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             
-            // [ 'name' => 'Manage questions', 'permission_group' => PermissionGroup::Questions, 'description' => 'Enable to view, add, edit and delete questions'],
+            [ 'name' => 'Manage questions', 'permission_group' => PermissionGroup::Questions, 'description' => 'Enable to view, add, edit and delete questions'],
             [ 'name' => 'Manage unvetted questions', 'permission_group' => PermissionGroup::Questions, 'description' => 'Enable to view, add, edit unvetted questions'],
             [ 'name' => 'Manage vetted questions', 'permission_group' => PermissionGroup::Questions, 'description' => 'Enable to view, add, edit vetted questions'],
             [ 'name' => 'Manage question bank', 'permission_group' => PermissionGroup::QuestionBank, 'description' => 'Enable to view questions in question bank'],
             [ 'name' => 'Manage question papers', 'permission_group' => PermissionGroup::QuestionBank, 'description' => 'Enable to view, add, edit and delete question papers'],
 
+            //User Management
+            [ 'name' => 'Assign permissions', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable to assign permissions to users or roles'],
+            [ 'name' => 'Assign roles', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable for assigning roles to users or permissions' ],
+            [ 'name' => 'Manage roles', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable to create, edit and view user roles' ],
+            [ 'name' => 'Manage users', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable to creat, edit and view user' ],
             
-            // [ 'name' => 'Assign permissions', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable to assign permissions to users or roles'],
-            // [ 'name' => 'Assign roles', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable for assigning roles to users or permissions' ],
-            // [ 'name' => 'Manage roles', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable to create, edit and view user roles' ],
-            // [ 'name' => 'Manage users', 'permission_group' => PermissionGroup::UserManagement, 'description' => 'Enable to creat, edit and view user' ],
             // //Customer Management
             // [ 'name' => 'Add contacts', 'permission_group' => PermissionGroup::CustomerManagement, 'description' => 'Enable to add contacts'],
             // [ 'name' => 'Update contacts', 'permission_group' => PermissionGroup::CustomerManagement, 'description' => 'Enable to edit contacts'],
