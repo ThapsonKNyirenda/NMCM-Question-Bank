@@ -46,7 +46,7 @@
                                     :href="route('questionbank.view', [question.uuid])"
                                     title="View Question"
                                     class="p-1 pl-2 ml-1 btn-primary"
-                                    method='POST'
+                                    method="POST"
                                     >
                                     View
                                 </base-button-link>
