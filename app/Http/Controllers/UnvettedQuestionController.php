@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateQuestionRequest;
 use App\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,19 @@ class UnvettedQuestionController extends Controller
                 ->withQueryString(),
             'filters' => $request->only(['search']) ?? [],
         ]);
+    }
+
+    public function bulkVet(Request $request)
+    {
+        $uuids = $request->input('uuids');
+
+        if (empty($uuids)) {
+            return response()->json(['message' => 'No questions selected'], 400);
+        }
+
+        Question::whereIn('uuid', $uuids)->update(['status' => 'Vetted']);
+
+        return redirect()->route('unvettedquestions.index')->with('success', ' successfully Vetted Selected questions');
     }
 
     /**
@@ -66,6 +80,12 @@ class UnvettedQuestionController extends Controller
         return Inertia::render('UnvettedQuestion/Edit', [
             'question' => $question
         ]);
+    }
+
+    public function update(UpdateQuestionRequest $request, Question $question): RedirectResponse
+    {
+       $question=Question::update($request->validated());
+       return redirect()->route('questions.index')->with('success', ' successfully updated');
     }
 
     /**
@@ -115,10 +135,6 @@ public function vet($uuid)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
