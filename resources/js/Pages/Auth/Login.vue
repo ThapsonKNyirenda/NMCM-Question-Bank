@@ -20,7 +20,7 @@
         </div>
         <br>
         <h1 class="mt-4 mb-6 text-3xl font-bold text-center text-green-600 uppercase">
-                    NMCM Question Bank System
+                    NMCM Question <br> Bank System
                 </h1><br>
                 
                 <form class="w-full needs-validation" @submit.prevent="submit" novalidate>

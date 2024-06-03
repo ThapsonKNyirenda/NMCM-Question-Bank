@@ -15,7 +15,7 @@ import { Head } from '@inertiajs/vue3';
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                     <!-- Card 1 -->
-                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-blue-400 to-purple-600">
+                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-green-400 to-blue-600">
                         <div class="p-6">
                             <h3 class="mb-3 text-lg font-semibold text-white">Registered Users</h3>
                             <p class="text-white"><span class="font-bold">34</span></p>
@@ -23,7 +23,7 @@ import { Head } from '@inertiajs/vue3';
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-pink-400 to-purple-600">
+                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-green-400 to-blue-600">
                         <div class="p-6">
                             <h3 class="mb-3 text-lg font-semibold text-white">Available Questions</h3>
                             <p class="text-white"><span class="font-bold">143</span></p>
@@ -31,7 +31,7 @@ import { Head } from '@inertiajs/vue3';
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-yellow-400 to-orange-600">
+                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-green-400 to-blue-600">
                         <div class="p-6">
                             <h3 class="mb-3 text-lg font-semibold text-white">Vetted Questions</h3>
                             <p class="text-white"><span class="font-bold">80</span></p>
@@ -47,7 +47,7 @@ import { Head } from '@inertiajs/vue3';
                     </div>
 
                     <!-- Card 5 -->
-                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-red-400 to-yellow-600">
+                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-green-400 to-blue-600">
                         <div class="p-6">
                             <h3 class="mb-3 text-lg font-semibold text-white">Question Bank</h3>
                             <p class="text-white"><span class="font-bold">320</span></p>
@@ -55,7 +55,7 @@ import { Head } from '@inertiajs/vue3';
                     </div>
 
                     <!-- Card 6 -->
-                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-indigo-400 to-pink-600">
+                    <div class="overflow-hidden rounded-lg shadow-sm bg-gradient-to-br from-green-400 to-blue-600">
                         <div class="p-6">
                             <h3 class="mb-3 text-lg font-semibold text-white">Question Papers</h3>
                             <p class="text-white"><span class="font-bold">20</span></p>

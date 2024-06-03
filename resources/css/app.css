@@ -316,7 +316,8 @@ form-group {
 
 .app-sidebar-menu .menu>.menu-item>.menu-link.active {
     transition: color .2s ease;
-    background-color: var(--bs-primary);
+    /* background-color: var(--bs-primary); */
+    background-color: green;
     color: var(--bs-primary-inverse);
 }
 
@@ -369,7 +370,7 @@ form-group {
 
 .app-sidebar-menu .menu>.menu-item .menu-item .menu-link.active {
     transition: color .2s ease;
-    background-color: var(--bs-primary);
+    background-color: green;
     color: var(--bs-primary-inverse);
 }
 

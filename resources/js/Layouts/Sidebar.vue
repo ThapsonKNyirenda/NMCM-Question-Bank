@@ -33,14 +33,14 @@
                     Unvetted Questions
                 </SidebarMenuItem>
 
-                <SidebarMenuItem
+                <!-- <SidebarMenuItem
                     :href="route('vettedquestions.index')"
                     :is-active="$page.props.activeMenu === 'Vetted Questions'"
                     v-if="can('Manage vetted questions')"
                     >
                     <template #icon><i class="ri-checkbox-fill"></i></template>
                     Vetted Questions
-                </SidebarMenuItem>
+                </SidebarMenuItem> -->
 
                   <SidebarMenuItem
                     :href="route('questionbank.index')"
