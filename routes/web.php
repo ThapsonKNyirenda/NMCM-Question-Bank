@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::post('vettedquestions/{uuid}/submit', [VettedQuestionController::class, 'submit'])->name('vettedquestions.submit');
     Route::post('questionbank/{uuid}/view', [QuestionBankController::class, 'view'])->name('questionbank.view');
     Route::post('unvettedquestions/{uuid}/vet', [UnvettedQuestionController::class, 'vet'])->name('unvettedquestions.vet');    
-
+    Route::post('unvettedquestions/bulkVet', [UnvettedQuestionController::class, 'bulkVet'])->name('unvettedquestions.bulkVet');
     
     Route::resources([
         'roles' => RoleController::class,

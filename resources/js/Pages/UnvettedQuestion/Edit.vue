@@ -122,7 +122,7 @@ const correctAnswer = {
 // };
 
 const inertiaSubmit = () => {
-    form.patch(route('questions.update', { question: props.question.uuid }));
+    form.patch(route('unvettedquestions.update', { question: props.question.uuid }));
 };
 
 
