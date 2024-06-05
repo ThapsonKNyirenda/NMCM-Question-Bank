@@ -106,17 +106,18 @@ const generateQuestionPaper = async () => {
     const numberOfQuestions = firstRow.number_of_questions;
 
     try {
-      // Query the database to get the total number of rows with the same cadre value
-      const response = await fetch(`/api/questions/count?cadre=${cadre}`);
+      // Query the database to get the question descriptions with the same cadre value
+      const response = await fetch(`/api/questions/descriptions?cadre=${cadre}`);
       const result = await response.json();
-      console.log(`Total number of questions with cadre "${cadre}": ${result.count}`);
+      console.log(`Question descriptions for cadre "${cadre}":`, result.descriptions);
     } catch (error) {
-      console.error('Error fetching question count:', error);
+      console.error('Error fetching question descriptions:', error);
     }
   } else {
     console.log('No data available in the table.');
   }
-}
+};
+
 
 store.pageTitle = 'Question Blueprints Lists';
 store.setBreadCrumb({ Blueprints: null });
