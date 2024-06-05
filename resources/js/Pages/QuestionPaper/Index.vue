@@ -64,6 +64,7 @@
                     </tbody>
                 </table>
             </div>
+            
             <div class="grid grid-cols-5 gap-4">
                 <div class="flex items-center justify-center md:justify-start">
                     <base-select-page v-model="filterBy.per_page" />
@@ -71,6 +72,14 @@
                 <div class="flex items-center justify-center col-span-4 md:justify-end">
                     <base-pagination :paginator="questionBlueprints" :key="questionBlueprints.total" />
                 </div>
+            </div>
+
+            <div class="card-toolbar">
+                <br>
+                <br>
+                <base-button-new class="btn-light-primary" @click="generateQuestionPaper">
+                    Generate Question Paper
+                </base-button-new>
             </div>
         </div>
     </base-card-main>
@@ -88,6 +97,26 @@ const props = defineProps({
     questionBlueprints: Object,
     filters: Object
 });
+
+// Function to generate question paper
+const generateQuestionPaper = async () => {
+  if (props.questionBlueprints.data.length > 0) {
+    const firstRow = props.questionBlueprints.data[0];
+    const cadre = firstRow.cadre;
+    const numberOfQuestions = firstRow.number_of_questions;
+
+    try {
+      // Query the database to get the total number of rows with the same cadre value
+      const response = await fetch(`/api/questions/count?cadre=${cadre}`);
+      const result = await response.json();
+      console.log(`Total number of questions with cadre "${cadre}": ${result.count}`);
+    } catch (error) {
+      console.error('Error fetching question count:', error);
+    }
+  } else {
+    console.log('No data available in the table.');
+  }
+}
 
 store.pageTitle = 'Question Blueprints Lists';
 store.setBreadCrumb({ Blueprints: null });

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('question_blueprints', function (Blueprint $table) {
             $table->id();
+            $table->string('cadre',200);
+            $table->string('nursing_process',200);
+            $table->string('disease_area',200);
+            $table->string('taxonomy_level',200);
+            $table->string('syllabus',200);
+            $table->integer('number_of_questions');
             $table->timestamps();
         });
     }
