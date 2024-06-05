@@ -1,27 +1,77 @@
 <template>
-    <Head title="Questions List" />
+    <Head title="Question Paper Blueprints List" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="w-1/2 card-title">
                 <div class="relative flex items-center w-full my-1 mr-5">
                     <base-search 
-                        placeholder="Search Question Papers"
-                        :href="route('questions.index')"
+                        placeholder="Search Questions"
+                        :href="route('questionblueprints.index')"
                         class="w-full"
                     />
                 </div>
             </div>
             <div class="card-toolbar">
-                <base-button-new class="btn-light-primary"> 
-                    New Question Paper 
+                <base-button-new class="btn-light-primary" :href="route('questionblueprints.create')"> 
+                    New Paper Blueprint
                 </base-button-new>
             </div>
         </template>
         <div class="relative">
             <div class="table-responsive">
-                
+                <table class="table mb-0 align-middle table-row-dashed fs-6 dataTable no-footer gy-3">
+                    <thead>
+                        <tr>
+                            <th class="pl-4">
+                                <input type="checkbox" @change="toggleSelectAll($event)" />
+                            </th>
+                            <th>C.No</th>
+                            <th>Cadre</th>
+                            <th>Nursing Process</th>
+                            <th>Disease Area</th>
+                            <th>Taxonomy Level</th>
+                            <th>Syllabus</th>
+                            <th>Number of Questions</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-medium text-gray-600">
+                        <tr v-for="(questionBlueprints, index) in questionBlueprints?.data" :key="questionBlueprints.uuid">
+                            <td class="pl-4">
+                                <input type="checkbox" v-model="selectedQuestions" :value="questionBlueprints.uuid" />
+                            </td>
+                            <td v-text="index + 1"></td>
+                            <td>{{ questionBlueprints.cadre }}</td>
+                            <td>{{ questionBlueprints.nursing_process }}</td>
+                            <td>{{ questionBlueprints.disease_area }}</td>
+                            <td>{{ questionBlueprints.taxonomy_level }}</td>
+                            <td>{{ questionBlueprints.syllabus }}</td>
+                            <td>{{ questionBlueprints.number_of_questions }}</td>
+                            <td class="text-right">
+                                <!-- <base-button-link
+                                    :href="route('questionblueprints.edit', [questionBlueprints.uuid])"
+                                    title="Edit"
+                                    class="p-1 pl-2 ml-1 btn-primary"
+                                    icon-class="text-lg ri-pencil-fill"
+                                ></base-button-link> -->
+                                
+                                <!-- <base-button-delete
+                                    :action="route('questions.destroy', { question: question.uuid })"
+                                    class="p-1 py-2 pl-2 btn-danger btn-sm"
+                                ></base-button-delete>  -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            
+            <div class="grid grid-cols-5 gap-4">
+                <div class="flex items-center justify-center md:justify-start">
+                    <base-select-page v-model="filterBy.per_page" />
+                </div>
+                <div class="flex items-center justify-center col-span-4 md:justify-end">
+                    <base-pagination :paginator="questionBlueprints" :key="questionBlueprints.total" />
+                </div>
+            </div>
         </div>
     </base-card-main>
 </template>
@@ -34,7 +84,22 @@ import { reactive, ref, watch } from "vue";
 
 defineOptions({ layout: AuthenticatedLayout });
 
-store.pageTitle = 'Question Papers Lists';
-store.setBreadCrumb({ Papers: null });
+const props = defineProps({
+    questionBlueprints: Object,
+    filters: Object
+});
 
+store.pageTitle = 'Question Blueprints Lists';
+store.setBreadCrumb({ Blueprints: null });
+
+const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
+const selectedQuestions = ref([]);
+
+watch(() => filterBy.per_page, (newVal) => {
+    router.get(route('questionblueprints.index', { search: props.filters.search, ...filterBy }));
+});
+
+const toggleSelectAll = (event) => {
+    selectedQuestions.value = event.target.checked ? props.questionBlueprints.data.map(q => q.uuid) : [];
+};
 </script>

@@ -51,7 +51,7 @@
                                 >
                                     Edit
                                 </base-button-link>
-                                <base-button-link
+                                <!-- <base-button-link
                                     :href="route('unvettedquestions.vet', [question.uuid])"
                                     title="Vet"
                                     class="p-1 pl-2 ml-1 btn-yellow"
@@ -59,7 +59,7 @@
                                     method="POST"
                                 >
                                     Vet
-                                </base-button-link>
+                                </base-button-link> -->
                             </td>
                         </tr>
                     </tbody>

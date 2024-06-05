@@ -18,7 +18,6 @@
                 <SidebarMenuItem
                     :href="route('questions.index')"
                     :is-active="$page.props.activeMenu === 'Questions'"
-                    v-if="can('Manage questions')"
                     >
                     <template #icon><i class="ri-question-mark"></i> </template>
                     Questions
@@ -42,17 +41,16 @@
                     Vetted Questions
                 </SidebarMenuItem> -->
 
-                  <SidebarMenuItem
+                <SidebarMenuItem
                     :href="route('questionbank.index')"
                     :is-active="$page.props.activeMenu === 'Questions Bank'"
-                    v-if="can('Manage question bank')"
                     >
                     <template #icon> <i class="ri-folder-2-fill"></i></template>
                     Question Bank
                 </SidebarMenuItem>
 
                 <SidebarMenuItem
-                    :href="route('questionpapers.index')"
+                    :href="route('questionblueprints.index')"
                     :is-active="$page.props.activeMenu === 'Question Papers'"
                     v-if="can('Manage question papers')"
                     >
