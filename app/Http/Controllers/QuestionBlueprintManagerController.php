@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\StoreQuestionBlueprintRequest;
 use App\Models\QuestionBlueprint;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class QuestionBlueprintController extends Controller
+class QuestionBlueprintManagerController extends Controller
 {
     public function __construct()
     {
@@ -49,10 +51,10 @@ class QuestionBlueprintController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreQuestionBlueprintRequest $request)
     {
         QuestionBlueprint::create($request->validated());
-        return redirect()->route('.index')->with('success', ' successfully created');
+        return redirect()->route('questionblueprints.index')->with('success', ' successfully created');
     }
 
     /**
@@ -63,10 +65,10 @@ class QuestionBlueprintController extends Controller
         //
     }
 
-    /**
+    /**s
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\QuestionBlueprint  $questionBlueprint
+     * @param  \App\Models\QuestionBlueprints  $questionBlueprint
      * @return Response
      */
     public function edit(QuestionBlueprint $questionBlueprint)
