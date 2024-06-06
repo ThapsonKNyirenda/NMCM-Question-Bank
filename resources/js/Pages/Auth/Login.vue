@@ -1,13 +1,10 @@
 <template>
     <GuestLayout>
-        <Head title="Log in" />
+        <Head title="Log in"/>
 
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
-        
-        
-
         <div class="flex items-center justify-center h-screen">
             <div class="w-full max-w-md p-4">
                 <div class="flex" :class="logoClasses">
@@ -90,7 +87,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { validateForm } from "@/helpers/form_helpers.js";
-
 import ApplicationLogo2 from '@/Components/ApplicationLogo2.vue';
 
 

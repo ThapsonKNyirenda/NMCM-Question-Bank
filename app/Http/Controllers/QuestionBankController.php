@@ -11,22 +11,22 @@ class QuestionBankController extends Controller
     /**
      * Display a listing of the resource.
      */
-  
-     public function __construct()
-     {
-          Inertia::share('activeMenu', 'Questions Bank');
-         //  $this->authorizeResource( Question ::class, '');
-     }
-     public function index(Request $request)
-     {
-         return Inertia::render('QuestionBank/Index', [
-             'questions' => Question:: where('status','Vetted')
-             ->whenSearch($request->input('search'))
-                 ->paginate(10)
-                 ->withQueryString(),
-             'filters' => $request->only(['search']) ?? [],
-         ]);
-     }
+
+    public function __construct()
+    {
+        Inertia::share('activeMenu', 'Questions Bank');
+        //  $this->authorizeResource( Question ::class, '');
+    }
+    public function index(Request $request)
+    {
+        return Inertia::render('QuestionBank/Index', [
+            'questions' => Question::where('status', 'Vetted')
+                ->whenSearch($request->input('search'))
+                ->paginate(10)
+                ->withQueryString(),
+            'filters' => $request->only(['search']) ?? [],
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.

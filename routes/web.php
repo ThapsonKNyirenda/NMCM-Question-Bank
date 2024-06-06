@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSecurityController;
 use App\Http\Controllers\ProfileSignatureController;
+use App\Http\Controllers\QuestionBlueprintsController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\VettedQuestionController;
 use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuestionBlueprintController;
 use App\Http\Controllers\QuestionPaper;
+use App\Http\Controllers\QuestionBlueprintManagerController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -79,7 +81,11 @@ Route::middleware('auth')->group(function () {
     Route::post('questionbank/{uuid}/view', [QuestionBankController::class, 'view'])->name('questionbank.view');
     Route::post('unvettedquestions/{uuid}/vet', [UnvettedQuestionController::class, 'vet'])->name('unvettedquestions.vet');    
     Route::post('unvettedquestions/bulkVet', [UnvettedQuestionController::class, 'bulkVet'])->name('unvettedquestions.bulkVet');
-    
+    //Route::resource('questionblueprints', QuestionBlueprintsController::class);
+    Route::resource('questionblueprints', QuestionBlueprintManagerController::class);
+    Route::get('/questionpaper', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionpaper.show');
+    Route::get('/api/questions/descriptions', [QuestionBlueprintManagerController::class, 'descriptionsByCadre']);
+
     Route::resources([
         'roles' => RoleController::class,
         'users' => UserController::class,
@@ -95,8 +101,8 @@ Route::middleware('auth')->group(function () {
         'unvettedquestions' => UnvettedQuestionController::class,
         'vettedquestions' => VettedQuestionController::class,
         'questionbank' => QuestionBankController::class,
-        'questionpapers' => QuestionPaper::class,
-        'questionblueprints' => QuestionBlueprintController::class
+        // 'questionpapers' => QuestionPaper::class,
+        
        
     ]);
 
