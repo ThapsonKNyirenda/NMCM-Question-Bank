@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\StoreQuestionBlueprintRequest;
+use App\Models\Question;
 use App\Models\QuestionBlueprint;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,21 @@ class QuestionBlueprintManagerController extends Controller
          Inertia::share('activeMenu', 'Question Papers');
         //  $this->authorizeResource( QuestionBlueprint ::class, '');
     }
+
+    public function descriptionsByCadre(Request $request)
+    {
+        $cadre = $request->query('cadre');
+        $questions = Question::where('cadre', $cadre)
+            ->get(['question_description', 'choice_a', 'choice_b', 'choice_c', 'choice_d']);
+        return response()->json(['questions' => $questions]);
+    }
+
+    public function showQuestionPaper(Request $request)
+    {
+        $questions = $request->input('questions');
+        return Inertia::render('QuestionPaper', ['questions' => $questions]);
+    }
+
 
 
     /**

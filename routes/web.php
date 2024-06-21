@@ -12,7 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSecurityController;
 use App\Http\Controllers\ProfileSignatureController;
 use App\Http\Controllers\QuestionBlueprintsController;
-use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionController1;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\TeamMemberController;
@@ -28,7 +28,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\QuestionsController; // Add this line to import the QuestionsController
+use App\Http\Controllers\QuestionsController; 
 use App\Http\Controllers\UnvettedQuestionController;
 use App\Http\Controllers\VettedQuestionController;
 use App\Http\Controllers\QuestionBankController;
@@ -83,7 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::post('unvettedquestions/bulkVet', [UnvettedQuestionController::class, 'bulkVet'])->name('unvettedquestions.bulkVet');
     //Route::resource('questionblueprints', QuestionBlueprintsController::class);
     Route::resource('questionblueprints', QuestionBlueprintManagerController::class);
-
+    Route::get('/questionpaper', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionpaper.show');
+    Route::get('/api/questions/descriptions', [QuestionBlueprintManagerController::class, 'descriptionsByCadre']);
 
     Route::resources([
         'roles' => RoleController::class,
@@ -96,11 +97,11 @@ Route::middleware('auth')->group(function () {
         'teams'=> TeamController::class,
         'contracts'=> ContractController::class,
         'email-templates' => EmailTemplateController::class,
-        'questions' => QuestionController::class,
+        'questions' => QuestionController1::class,
         'unvettedquestions' => UnvettedQuestionController::class,
         'vettedquestions' => VettedQuestionController::class,
         'questionbank' => QuestionBankController::class,
-        'questionpapers' => QuestionPaper::class,
+        // 'questionpapers' => QuestionPaper::class,
         
        
     ]);
