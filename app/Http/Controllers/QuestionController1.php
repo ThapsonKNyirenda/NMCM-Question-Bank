@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class QuestionController extends Controller
+class QuestionController1 extends Controller
 {
     public function __construct()
     {
