@@ -1,6 +1,6 @@
 <template>
     <div class="p-8 exam-paper">
-      <h1 class="mb-8 text-2xl font-bold text-center">Examination Paper</h1>
+      <h1 class="mb-8 text-2xl font-bold text-center">NMCM Exams</h1>
       <div v-for="(question, index) in filteredQuestions" :key="index" class="mb-8">
         <div>
           <p class="font-medium">{{ question.question_description}}</p>
