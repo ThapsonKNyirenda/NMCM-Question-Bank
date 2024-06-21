@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Requests\UpdateQuestionBlueprintRequest;
 
 class QuestionBlueprintManagerController extends Controller
 {
@@ -71,25 +72,28 @@ class QuestionBlueprintManagerController extends Controller
      * @param  \App\Models\QuestionBlueprints  $questionBlueprint
      * @return Response
      */
-    public function edit(QuestionBlueprint $questionBlueprint)
-    {
-        return Inertia::render('QuestionBlueprint/Edit', [
-            'questionBlueprint' => $questionBlueprint
-        ]);
-    }
+    public function edit(QuestionBlueprint $questionBlueprint): Response
+{
+    return Inertia::render('QuestionBlueprint/Edit', [
+        'blueprint' => $questionBlueprint
+    ]);
+}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\QuestionBlueprint  $questionBlueprint
-     * @return RedirectResponse
-     */
-    public function update(Request $request, QuestionBlueprint $questionBlueprint)
-    {
-       $questionBlueprint->update($request->validated());
-       return redirect()->route('.index')->with('success', ' successfully updated');
-    }
+public function update(UpdateQuestionBlueprintRequest $request, QuestionBlueprint $questionBlueprint): RedirectResponse
+{
+    $validated = $request->validate([
+        'cadre' => 'required|string',
+        'nursing_process' => 'required|string',
+        'disease_area' => 'required|string',
+        'taxonomy' => 'required|string',
+        'syllabus' => 'required|string',
+        'number_of_questions' => 'required|integer'
+    ]);
+
+    $questionBlueprint->update($validated);
+
+    return redirect()->route('questionblueprints.index')->with('success', 'Blueprint successfully updated');
+}
 
     /**
      * Remove the specified resource from storage.
