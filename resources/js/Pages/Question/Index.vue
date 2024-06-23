@@ -16,6 +16,9 @@
                 <base-button-new class="btn-light-primary" :href="route('questions.create')"> 
                     New Question 
                 </base-button-new>
+                <base-button-new class="btn-light-danger ml-2" @click="submitSelected">
+                    Submit Selected
+                </base-button-new>
             </div>
         </template>
         <div class="relative">
@@ -104,4 +107,12 @@ watch(() => filterBy.per_page, (newVal) => {
 const toggleSelectAll = (event) => {
     selectedQuestions.value = event.target.checked ? props.questions.data.map(q => q.uuid) : [];
 };
+
+const submitSelected = () => {
+    if (selectedQuestions.value.length > 0) {
+        router.post(route('questions.submitSelected'), { uuids: selectedQuestions.value });
+    }
+};
 </script>
+
+

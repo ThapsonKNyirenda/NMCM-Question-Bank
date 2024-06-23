@@ -1,5 +1,4 @@
 <template>
-
     <Head title="Add Question" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
@@ -10,13 +9,6 @@
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'add the question?')">
-                        
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
-            
-            <label class="form-label required" >Question Description</label>
-            <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholders="placeholders" />
-            </div>
             
             <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
                 placeholders="Choose a cadre" :options="Cadre" required />
@@ -27,31 +19,26 @@
             <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
                 name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required />
 
-            <base-form-select label="Select Taxonomy Level" id="taxonomy"
-                placeholders="Choose taxonomy" :options="taxonomy"/>
+            <base-form-select label="Select Taxonomy Level" v-model="form.taxonomy" id="taxonomy" name="taxonomy"
+                placeholders="Choose taxonomy" :options="taxonomy" required/>
 
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
 
-            <!-- <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
-                v-model="form.question_description" /> -->
+            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
 
-           
+            <label class="form-label required">Question Description</label>
+            <div class="mandatory-fields">
+                <quill-input v-model="form.question_description" :placeholders="placeholders" />
+            </div>
 
-            <base-form-input type="text" label="Option A" id="Choice_A" name="choice_a" v-model="form.choice_a"
-                required />
-
-            <base-form-input type="text" label="Option B" id="Choice_B" name="choice_b" v-model="form.choice_b"
-                required />
-
-            <base-form-input type="text" label="Option C" id="Choice_C" name="choice_c" v-model="form.choice_c"
-                required />
-
-            <base-form-input type="text" label="Option D" id="Choice_D" name="choice_d" v-model="form.choice_d"
-                required />
+            <base-form-input type="text" label="Answer Option A" id="Choice_A" name="choice_a" v-model="form.choice_a" required />
+            <base-form-input type="text" label="Answer Option B" id="Choice_B" name="choice_b" v-model="form.choice_b" required />
+            <base-form-input type="text" label="Answer Option C" id="Choice_C" name="choice_c" v-model="form.choice_c" required />
+            <base-form-input type="text" label="Answer Option D" id="Choice_D" name="choice_d" v-model="form.choice_d" required />
 
             <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"
-                name="correct_answer" placeholders="Choose a Correct Asnwer" :options="correctAnswer" required />
+                name="correct_answer" placeholders="Choose a Correct Answer" :options="correctAnswer" required />
 
             <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Add
                 Question</base-button-submit>
@@ -76,6 +63,7 @@ const form = useForm({
     cadre: null,
     nursing_process: null,
     disease_area: null,
+    taxonomy: null, // Add taxonomy field here
     syllabus: null,
     question_description: null,
     choice_a: null,
@@ -102,11 +90,11 @@ const nurseProcess = {
 
 const taxonomy = {
     Knowledge: "Knowledge",
-    Comprehension : "Comprehension",
-    Application : "Application",
-    Analysis : "Analysis",
-    Synthesis : "Synthesis",
-    Evaluation :"Evaluation"
+    Comprehension: "Comprehension",
+    Application: "Application",
+    Analysis: "Analysis",
+    Synthesis: "Synthesis",
+    Evaluation: "Evaluation"
 }
 
 const diseaseArea = {
@@ -133,6 +121,4 @@ const inertiaSubmit = () => {
     console.log(JSON.stringify(form, null, 2));
     form.post(route('questions.store'));
 };
-
-
 </script>

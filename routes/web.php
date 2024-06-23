@@ -46,7 +46,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/user_created', function (){
-
     return new \App\Mail\UserCreatedMailable(request()->user());
 });
 
@@ -56,7 +55,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/{user}/photo', UploadUserPhotoController::class)->name('users.photo.upload');
     Route::post('/customers/{customer}/photo', UploadCustomerPhotoController::class)->name('customers.photo.upload');
     Route::post('/contacts/{contact}/photo', UploadContactPhotoController::class)->name('customers.contacts.photo.upload');
-
 
     Route::prefix('profile')->group(function () {
         Route::get('/signature', [ProfileSignatureController::class, 'edit'])->name('profile.signature.edit');
@@ -106,6 +104,7 @@ Route::middleware('auth')->group(function () {
        
     ]);
 
+    Route::post('questions/submitSelected', [QuestionController1::class, 'submitSelected'])->name('questions.submitSelected');
 });
 
 require __DIR__.'/auth.php';
