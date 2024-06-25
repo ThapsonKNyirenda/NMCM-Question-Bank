@@ -47,15 +47,21 @@
                     v-if="can('Manage question papers')"
                     >
                     <template #icon><i class="ri-list-check"></i></template>
+                    Paper Blueprints
+                </SidebarMenuItem>
+
+                <SidebarMenuItem
+                    
+                    >
+                    <template #icon><i class="ri-list-check"></i></template>
                     Question Papers
                 </SidebarMenuItem>
                 <!-- <SidebarMenuItem
-                    :href="route('categories.index')"
-                    :is-active="$page.props.activeMenu === 'Categories'"
-                    v-if="can('Manage categories')"
+                    :href="route('questionp.index')"
+                    :is-active="$page.props.activeMenu === 'Questionp'"
                     >
                     <template #icon><font-awesome-icon :icon="['fas', 'list']" /></template>
-                    Categories
+                    Question Papers
                 </SidebarMenuItem> -->
 
                 <SidebarDropdown
