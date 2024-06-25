@@ -3,7 +3,7 @@
         <template #header>
             <div class="card-title w-1/2 lg:w-8/12 ">
                 <div class="flex items-center relative my-1 mr-5 w-full">
-                    <slot name="search" />
+                    <slot name="search"/>
                 </div>
             </div>
             <div class="card-toolbar">
