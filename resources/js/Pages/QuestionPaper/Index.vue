@@ -22,7 +22,7 @@
               <th class="pl-4">
                 <input type="checkbox" @change="toggleSelectAll($event)" />
               </th>
-              <th>C.No</th>
+              <th>#</th>
               <th>Cadre</th>
               <th>Nursing Process</th>
               <th>Disease Area</th>
@@ -46,6 +46,16 @@
               <td>{{ questionBlueprints.number_of_questions }}</td>
               <td class="text-right">
                 <!-- Actions Buttons -->
+                <base-button-link
+                    :href="route('questionblueprints.edit', [questionBlueprints.uuid])"
+                    title="Edit"
+                    class="p-1 pl-2 ml-1 btn-primary"
+                    icon-class="text-lg ri-pencil-fill"
+                ></base-button-link>
+                <!-- <base-button-delete
+                    :action="route('questionblueprints.destroy', {questionBlueprints: questionBlueprints.id })"
+                    class="p-1 py-2 pl-2 btn-danger btn-sm"
+                ></base-button-delete> -->
               </td>
             </tr>
           </tbody>

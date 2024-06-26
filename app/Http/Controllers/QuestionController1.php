@@ -60,8 +60,7 @@ class QuestionController1 extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Question $question
-     * @return Response
+     
      */
     public function edit(Question $question)
     {

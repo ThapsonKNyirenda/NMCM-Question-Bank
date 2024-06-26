@@ -82,18 +82,13 @@ class QuestionBlueprintManagerController extends Controller
         //
     }
 
-    /**s
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\QuestionBlueprints  $questionBlueprint
-     * @return Response
-     */
-    public function edit(QuestionBlueprint $questionBlueprint): Response
-{
-    return Inertia::render('QuestionBlueprint/Edit', [
-        'blueprint' => $questionBlueprint
-    ]);
-}
+    public function edit($uuid): Response
+    {
+        $questionBlueprint = QuestionBlueprint::where('uuid', $uuid)->first();
+        return Inertia::render('QuestionPaper/Edit', [
+            'blueprint' => $questionBlueprint
+        ])->with('blueprint', $questionBlueprint);
+    }
 
 public function update(UpdateQuestionBlueprintRequest $request, QuestionBlueprint $questionBlueprint): RedirectResponse
 {
