@@ -82,12 +82,14 @@ class UnvettedQuestionController extends Controller
         ]);
     }
 
-    public function update(UpdateQuestionRequest $request, Question $question): RedirectResponse
+    public function update(UpdateQuestionRequest $request, $uuid): RedirectResponse
     {
-       $question=Question::update($request->validated());
-       return redirect()->route('questions.index')->with('success', ' successfully updated');
+        $question = Question::whereUuid($uuid)->firstOrFail();
+        $question->update($request->validated());
+    
+        return redirect()->route('unvettedquestions.index')->with('success', 'Question successfully updated');
     }
-
+    
     /**
  * Update the status of the specified resource to "Vetted".
  * @param  string  $uuid
