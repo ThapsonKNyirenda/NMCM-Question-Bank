@@ -76,8 +76,7 @@
                         v-if="canany(['Manage roles', 'Assign roles'])"
                     >
                         Roles</sidebar-dropdown-menu-item>
-
-                    <sidebar-dropdown-menu-item
+                        <sidebar-dropdown-menu-item
                         :href="route('permissions.index')"
                         :class="{ active: route().current('permissions.*')  }"
                         v-if="can('Assign permissions')"
