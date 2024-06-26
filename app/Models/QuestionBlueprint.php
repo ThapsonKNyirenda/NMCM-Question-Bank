@@ -18,6 +18,7 @@ class QuestionBlueprint extends Model
         'disease_area',
         'taxonomy',
         'syllabus',
-        'number_of_questions'
+        'number_of_questions',
+        'question_paper_code'
     ];
 }

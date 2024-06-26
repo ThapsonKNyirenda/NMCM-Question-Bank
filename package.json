@@ -24,6 +24,7 @@
         "@fortawesome/free-regular-svg-icons": "^6.5.1",
         "@fortawesome/free-solid-svg-icons": "^6.5.1",
         "@fortawesome/vue-fontawesome": "^3.0.6",
+        "@inertiajs/inertia": "^0.11.1",
         "@tiptap/pm": "^2.3.0",
         "@tiptap/starter-kit": "^2.3.0",
         "@tiptap/vue-3": "^2.3.0",
@@ -39,6 +40,7 @@
         "remixicon": "^4.2.0",
         "select2": "^4.1.0-rc.0",
         "signature_pad": "^4.2.0",
-        "sweetalert2": "^11.10.6"
+        "sweetalert2": "^11.10.6",
+        "vue3-datepicker": "^0.4.0"
     }
 }

@@ -1,6 +1,5 @@
 <template>
-
-    <Head title="Add Question PAper Blueprint" />
+    <Head title="Add Question Paper Blueprint" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
@@ -10,7 +9,17 @@
         </template>
         <form method="POST" :action="route('questionblueprints.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'add blueprint?')">
-            
+
+            <base-form-input
+            label="Year"
+            v-model="currentYear"
+            id="year"
+            name="year"
+            disabled
+            />
+
+            <base-form-select label="Select Month" v-model="form.month" id="month" name="month" :options="months" required />
+
             <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
                 placeholders="Choose a cadre" :options="Cadre" required />
 
@@ -27,9 +36,6 @@
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
 
-            <!-- <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
-                v-model="form.question_description" /> -->
-            
             <base-form-input label="Number of Questions" v-model="form.number_of_questions" id="number_of_questions" name="number_of_questions" type="number" required />
 
             <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Add
@@ -43,7 +49,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import { store } from "@/store.js";
 import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
-import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 
 defineOptions({ layout: AuthenticatedLayout });
 
@@ -57,9 +62,29 @@ const form = useForm({
     disease_area: null,
     taxonomy: null,
     syllabus: null,
-    number_of_questions:null,
-    
+    year: null,
+    month: null,
+    number_of_questions: null,
+    question_paper_code: null,
 });
+
+const currentYear = new Date().getFullYear();
+form.year=currentYear;
+
+const months = {
+    'January': 'January',
+    'February': 'February',
+    'March': 'March',
+    'April': 'April',
+    'May': 'May',
+    'June': 'June',
+    'July': 'July',
+    'August': 'August',
+    'September': 'September',
+    'October': 'October',
+    'November': 'November',
+    'December': 'December'
+};
 
 const Cadre = {
     "Registered Nurse": "Registered Nurse",
@@ -77,11 +102,11 @@ const nurseProcess = {
 
 const taxonomy = {
     Knowledge: "Knowledge",
-    Comprehension : "Comprehension",
-    Application : "Application",
-    Analysis : "Analysis",
-    Synthesis : "Synthesis",
-    Evaluation :"Evaluation"
+    Comprehension: "Comprehension",
+    Application: "Application",
+    Analysis: "Analysis",
+    Synthesis: "Synthesis",
+    Evaluation: "Evaluation"
 }
 
 const diseaseArea = {
@@ -98,9 +123,10 @@ const Syllabus = {
 }
 
 const inertiaSubmit = () => {
+    form.question_paper_code = `${form.year}-${form.month}-${form.cadre}`;
     console.log(JSON.stringify(form, null, 2));
+    // console.log(form.question_paper_code);
     form.post(route('questionblueprints.store'));
 };
-
 
 </script>
