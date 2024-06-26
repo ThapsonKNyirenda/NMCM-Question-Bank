@@ -10,12 +10,7 @@
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'Edit the question?')">
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
-
-            <label class="form-label required" >Question Description</label>
-            <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholders="placeholders" />
-            </div>
+            
             
             <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
                 placeholders="Choose a cadre" :options="Cadre" required />
@@ -28,6 +23,14 @@
 
             <base-form-select label="Select Taxonomy Level" id="taxonomy"
                 placeholders="Choose taxonomy" :options="taxonomy"/>
+
+
+                <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
+
+            <label class="form-label required" >Question Description</label>
+            <div class="mandatory-fields">
+                <quill-input v-model="form.question_description" :placeholders="placeholders" />
+            </div>
                 
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
