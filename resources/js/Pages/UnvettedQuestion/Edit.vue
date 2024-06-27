@@ -1,5 +1,4 @@
 <template>
-
     <Head title="Edit Question" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
@@ -8,14 +7,8 @@
                 <div class="text-base fw-semibold text-muted"></div>
             </div>
         </template>
-        <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
-            @submit.prevent.stop="submit(inertiaSubmit, 'Edit the question?')">
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
-
-            <label class="form-label required" >Question Description</label>
-            <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholders="placeholders" />
-            </div>
+        <form :action="route('questions.update', props.question.uuid)" method="POST" @submit.prevent="submitForm">
+         
             
             <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
                 placeholders="Choose a cadre" :options="Cadre" required />
@@ -28,6 +21,13 @@
 
             <base-form-select label="Select Taxonomy Level" id="taxonomy"
                 placeholders="Choose taxonomy" :options="taxonomy"/>
+
+            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
+
+            <label class="form-label required">Question Description</label>
+            <div class="mandatory-fields">
+                <quill-input v-model="form.question_description" :placeholders="placeholders" />
+            </div>
                 
             <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
                 placeholders="Choose a Syllabus" :options="Syllabus" required />
@@ -45,33 +45,29 @@
                 required />
 
             <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"
-                name="correct_answer" placeholders="Choose a Correct Asnwer" :options="correctAnswer" required />
+                name="correct_answer" placeholders="Choose a Correct Answer" :options="correctAnswer" required />
 
-            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Save
-                </base-button-submit>
+            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Save</base-button-submit>
         </form>
     </base-card-main>
 </template>
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
-import { store } from "@/store.js";
-import { submit } from "@/helpers/form_helpers.js";
-import { useForm, Head } from "@inertiajs/vue3";
+import { useForm, Head } from "@inertiajs/vue3"
 import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
+import { store } from "@/store.js"
 
-defineOptions({ layout: AuthenticatedLayout });
+defineOptions({ layout: AuthenticatedLayout })
 
 const props = defineProps({
     question: Object
-});
+})
 
-store.pageTitle = 'Edit Question';
-store.setBreadCrumb({ Questions: route('unvettedquestions.index'), 'Edit question': null });
+store.pageTitle = 'Edit Question'
+store.setBreadCrumb({ Questions: route('unvettedquestions.index'), 'Edit question': null })
 
-const form = useForm(
-    props.question,
-);
+const form = useForm(props.question)
 
 const Cadre = {
     "Registered Nurse": "Registered Nurse",
@@ -106,7 +102,7 @@ const taxonomy = {
 
 const Syllabus = {
     "2022-2023": "2022-2023",
-    "2023-2024": "2023-2024",
+    "2023-2024": "2023-2024"
 }
 
 const correctAnswer = {
@@ -116,14 +112,11 @@ const correctAnswer = {
     D: "D"
 }
 
-// const inertiaSubmit = () => {
-//     console.log(JSON.stringify(form, null, 2));
-//     form.post(route('questions.store'));
-// };
-
-const inertiaSubmit = () => {
-    form.patch(route('unvettedquestions.update', { question: props.question.uuid }));
-};
-
-
+const submitForm = () => {
+    form.patch(route('unvettedquestions.update', props.question.uuid), {
+        onSuccess: () => {
+            window.location.href = route('unvettedquestions.index')
+        }
+    })
+}
 </script>
