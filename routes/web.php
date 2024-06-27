@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::post('unvettedquestions/{uuid}/vet', [UnvettedQuestionController::class, 'vet'])->name('unvettedquestions.vet');    
     Route::post('unvettedquestions/bulkVet', [UnvettedQuestionController::class, 'bulkVet'])->name('unvettedquestions.bulkVet');
     //Route::resource('questionblueprints', QuestionBlueprintsController::class);
-    Route::resource('questionblueprints', QuestionBlueprintManagerController::class);
+    // Route::resource('questionblueprints', QuestionBlueprintManagerController::class);
     Route::get('/questionpaper', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionpaper.show');
     Route::get('/api/questions/descriptions', [QuestionBlueprintManagerController::class, 'descriptionsByCadre']);
     Route::get('/questionblueprints/{uuid}/edit', [QuestionBlueprintManagerController::class, 'edit']);
@@ -100,7 +100,7 @@ Route::middleware('auth')->group(function () {
         'unvettedquestions' => UnvettedQuestionController::class,
         'vettedquestions' => VettedQuestionController::class,
         'questionbank' => QuestionBankController::class,
-        // 'questionpapers' => QuestionPaper::class,
+        'questionblueprints' => QuestionBlueprintManagerController::class,
         
        
     ]);

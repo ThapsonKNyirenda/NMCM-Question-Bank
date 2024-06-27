@@ -24,6 +24,7 @@
               </th>
               <th>#</th>
               <th>Cadre</th>
+              <th>Taxonomy</th>
               <th>Nursing Process</th>
               <th>Disease Area</th>
               <!-- <th>Taxonomy Level</th> -->
@@ -39,6 +40,7 @@
               </td>
               <td v-text="index + 1"></td>
               <td>{{ questionBlueprints.cadre }}</td>
+              <td>{{ questionBlueprints.taxonomy }}</td>
               <td>{{ questionBlueprints.nursing_process }}</td>
               <td>{{ questionBlueprints.disease_area }}</td>
               <!-- <td>{{ questionBlueprints.taxonomy_level }}</td> -->
@@ -52,10 +54,10 @@
                     class="p-1 pl-2 ml-1 btn-primary"
                     icon-class="text-lg ri-pencil-fill"
                 ></base-button-link>
-                <!-- <base-button-delete
-                    :action="route('questionblueprints.destroy', {questionBlueprints: questionBlueprints.id })"
+                <base-button-delete
+                    :action="route('questionblueprints.destroy', {questionblueprint: questionBlueprints.uuid })"
                     class="p-1 py-2 pl-2 btn-danger btn-sm"
-                ></base-button-delete> -->
+                ></base-button-delete>
               </td>
             </tr>
           </tbody>

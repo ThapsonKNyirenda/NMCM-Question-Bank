@@ -28,6 +28,7 @@ class UpdateQuestionBlueprintRequest extends FormRequest
             'syllabus' => 'string',
            'taxonomy'=> 'string',
            'number_of_questions'=> 'int',
+           'question_paper_code' => 'string'
         ];
     }
 }

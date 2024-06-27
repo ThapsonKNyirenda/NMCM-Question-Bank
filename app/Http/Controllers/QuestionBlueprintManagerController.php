@@ -90,27 +90,38 @@ class QuestionBlueprintManagerController extends Controller
         ])->with('blueprint', $questionBlueprint);
     }
 
-public function update(UpdateQuestionBlueprintRequest $request, QuestionBlueprint $questionBlueprint): RedirectResponse
+// public function update(UpdateQuestionBlueprintRequest $request, QuestionBlueprint $questionBlueprint): RedirectResponse
+// {
+//     $validated = $request->validate([
+//         'cadre' => 'required|string',
+//         'nursing_process' => 'required|string',
+//         'disease_area' => 'required|string',
+//         'taxonomy' => 'required|string',
+//         'syllabus' => 'required|string',
+//         'number_of_questions' => 'required|integer',
+//         'question_paper_code' => 'required|string',
+//     ]);
+
+//     $questionBlueprint->update($validated);
+
+//     return redirect()->route('questionblueprints.index')->with('success', 'Blueprint successfully updated');
+// }
+
+
+public function update(UpdateQuestionBlueprintRequest $request, $uuid): RedirectResponse
 {
-    $validated = $request->validate([
-        'cadre' => 'required|string',
-        'nursing_process' => 'required|string',
-        'disease_area' => 'required|string',
-        'taxonomy' => 'required|string',
-        'syllabus' => 'required|string',
-        'number_of_questions' => 'required|integer'
-    ]);
-
-    $questionBlueprint->update($validated);
-
+    $questionBlueprint = QuestionBlueprint::where('uuid', $uuid)->first();
+    $questionBlueprint->update($request->validated());
     return redirect()->route('questionblueprints.index')->with('success', 'Blueprint successfully updated');
 }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(QuestionBlueprint $questionBlueprint)
-    {
-        //
-    }
+    public function destroy(QuestionBlueprint $questionBlueprint, $uuid)
+{
+    $questionBlueprint = QuestionBlueprint::where('uuid', $uuid)->first();
+    $questionBlueprint->delete();
+    return redirect()->route('questionblueprints.index')->with('success', 'Blueprint successfully deleted');
+}
 }
