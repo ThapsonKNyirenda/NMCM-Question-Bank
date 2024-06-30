@@ -76,7 +76,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import { store } from "@/store.js";
 import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
-import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 
 defineOptions({ layout: AuthenticatedLayout });
 
