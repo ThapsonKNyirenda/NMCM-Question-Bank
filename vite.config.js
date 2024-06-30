@@ -17,7 +17,7 @@ export default defineConfig({
             },
         }),
     ],
-    optimizeDeps: {
-        exclude: ['select2']
-    }
+    // optimizeDeps: {
+    //     exclude: ['vue-select']
+    // }
 });

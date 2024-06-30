@@ -9,27 +9,52 @@
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'add the question?')">
-            
-            <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
-                placeholders="Choose a cadre" :options="Cadre" required />
+  
+            <div class="mb-4">
+                <label for="cadre" class="form-label">Select a Cadre</label>
+                <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
+                    <option disabled value="">Choose a cadre</option>
+                    <option v-for="(value, key) in Cadre" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Nursing Process" v-model="form.nursing_process" id="nurseProcess"
-                name="nursing_process" placeholders="Choose a Nursing Process" :options="nurseProcess" required />
+            <div class="mb-4">
+                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
+                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
+                    <option disabled value="">Choose a Nursing Process</option>
+                    <option v-for="(value, key) in nurseProcess" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
-                name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required />
+            <div class="mb-4">
+                <label for="diseaseArea" class="form-label">Select a Disease Area</label>
+                <select v-model="form.disease_area" id="diseaseArea" name="disease_area" class="form-select" required>
+                    <option disabled value="">Choose a Disease Area</option>
+                    <option v-for="(value, key) in diseaseArea" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select Taxonomy Level" v-model="form.taxonomy" id="taxonomy" name="taxonomy"
-                placeholders="Choose taxonomy" :options="taxonomy" required/>
+            <div class="mb-4">
+                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
+                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
+                    <option disabled value="">Choose taxonomy</option>
+                    <option v-for="(value, key) in taxonomy" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
-                placeholders="Choose a Syllabus" :options="Syllabus" required />
+            <div class="mb-4">
+                <label for="syllabus" class="form-label">Select a Syllabus</label>
+                <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
+                    <option disabled value="">Choose a Syllabus</option>
+                    <option v-for="(value, key) in Syllabus" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
             <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
 
             <label class="form-label required">Question Description</label>
             <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholders="placeholders" />
+                <quill-input v-model="form.question_description" :placeholder="placeholders" />
             </div>
 
             <base-form-input type="text" label="Answer Option A" id="Choice_A" name="choice_a" v-model="form.choice_a" required />
@@ -37,8 +62,13 @@
             <base-form-input type="text" label="Answer Option C" id="Choice_C" name="choice_c" v-model="form.choice_c" required />
             <base-form-input type="text" label="Answer Option D" id="Choice_D" name="choice_d" v-model="form.choice_d" required />
 
-            <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"
-                name="correct_answer" placeholders="Choose a Correct Answer" :options="correctAnswer" required />
+            <div class="mb-4">
+                <label for="correctAnswer" class="form-label">Select a Correct Answer</label>
+                <select v-model="form.correct_answer" id="correctAnswer" name="correct_answer" class="form-select" required>
+                    <option disabled value="">Choose a Correct Answer</option>
+                    <option v-for="(value, key) in correctAnswer" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
             <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Add
                 Question</base-button-submit>
@@ -63,7 +93,7 @@ const form = useForm({
     cadre: null,
     nursing_process: null,
     disease_area: null,
-    taxonomy: null, // Add taxonomy field here
+    taxonomy: null,
     syllabus: null,
     question_description: null,
     choice_a: null,
@@ -71,7 +101,7 @@ const form = useForm({
     choice_c: null,
     choice_d: null,
     correct_answer: null,
-    status: "Unvetted",
+    status: "Unsubmitted",
 });
 
 const Cadre = {
@@ -122,3 +152,19 @@ const inertiaSubmit = () => {
     form.post(route('questions.store'));
 };
 </script>
+
+<style scoped>
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+</style>

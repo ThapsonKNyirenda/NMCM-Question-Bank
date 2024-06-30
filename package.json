@@ -38,7 +38,6 @@
         "lozad": "^1.16.0",
         "quill": "^2.0.0-rc.5",
         "remixicon": "^4.2.0",
-        "select2": "^4.1.0-rc.0",
         "signature_pad": "^4.2.0",
         "sweetalert2": "^11.10.6",
         "vue3-datepicker": "^0.4.0"

@@ -23,6 +23,7 @@
                 <input type="checkbox" @change="toggleSelectAll($event)" />
               </th>
               <th>#</th>
+              <th>Paper Code</th>
               <th>Cadre</th>
               <th>Taxonomy</th>
               <th>Nursing Process</th>
@@ -39,6 +40,7 @@
                 <input type="checkbox" v-model="selectedQuestions" :value="questionBlueprints.uuid" />
               </td>
               <td v-text="index + 1"></td>
+              <td>{{ questionBlueprints.question_paper_code }}</td>
               <td>{{ questionBlueprints.cadre }}</td>
               <td>{{ questionBlueprints.taxonomy }}</td>
               <td>{{ questionBlueprints.nursing_process }}</td>

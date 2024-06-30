@@ -18,23 +18,53 @@
             disabled
             />
 
-            <base-form-select label="Select Month" v-model="form.month" id="month" name="month" :options="months" required />
+            <div class="mb-4">
+                <label for="month" class="form-label">Select Month</label>
+                <select v-model="form.month" id="month" name="month" class="form-select" required>
+                    <option disabled value="">Choose a month</option>
+                    <option v-for="(value, key) in months" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
-                placeholders="Choose a cadre" :options="Cadre" required />
+            <div class="mb-4">
+                <label for="cadre" class="form-label">Select a Cadre</label>
+                <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
+                    <option disabled value="">Choose a cadre</option>
+                    <option v-for="(value, key) in Cadre" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Nursing Process" v-model="form.nursing_process" id="nurseProcess"
-                name="nursing_process" placeholders="Choose a Nursing Process" :options="nurseProcess" required />
+            <div class="mb-4">
+                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
+                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
+                    <option disabled value="">Choose a Nursing Process</option>
+                    <option v-for="(value, key) in nurseProcess" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
-                name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required />
+            <div class="mb-4">
+                <label for="diseaseArea" class="form-label">Select a Disease Area</label>
+                <select v-model="form.disease_area" id="diseaseArea" name="disease_area" class="form-select" required>
+                    <option disabled value="">Choose a Disease Area</option>
+                    <option v-for="(value, key) in diseaseArea" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select Taxonomy Level" v-model="form.taxonomy" id="taxonomy"
-                name="taxonomy"
-                placeholders="Choose taxonomy" :options="taxonomy" required/>
+            <div class="mb-4">
+                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
+                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
+                    <option disabled value="">Choose taxonomy</option>
+                    <option v-for="(value, key) in taxonomy" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
-                placeholders="Choose a Syllabus" :options="Syllabus" required />
+            <div class="mb-4">
+                <label for="syllabus" class="form-label">Select a Syllabus</label>
+                <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
+                    <option disabled value="">Choose a Syllabus</option>
+                    <option v-for="(value, key) in Syllabus" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
             <base-form-input label="Number of Questions" v-model="form.number_of_questions" id="number_of_questions" name="number_of_questions" type="number" required />
 
@@ -69,7 +99,7 @@ const form = useForm({
 });
 
 const currentYear = new Date().getFullYear();
-form.year=currentYear;
+form.year = currentYear;
 
 const months = {
     'January': 'January',
@@ -125,8 +155,22 @@ const Syllabus = {
 const inertiaSubmit = () => {
     form.question_paper_code = `${form.year}-${form.month}-${form.cadre}`;
     console.log(JSON.stringify(form, null, 2));
-    // console.log(form.question_paper_code);
     form.post(route('questionblueprints.store'));
 };
-
 </script>
+
+<style scoped>
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+</style>
