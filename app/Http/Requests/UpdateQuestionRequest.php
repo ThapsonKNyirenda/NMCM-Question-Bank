@@ -26,6 +26,7 @@ class UpdateQuestionRequest extends FormRequest
             'cadre' => 'string',
             'nursing_process' => 'string',
             'disease_area' => 'string',
+            'taxonomy' => 'string',
             'syllabus' => 'string',
             'question_description' => 'string',
             'choice_a' => 'string',

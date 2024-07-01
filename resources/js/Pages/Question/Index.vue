@@ -16,7 +16,7 @@
                 <base-button-new class="btn-light-primary" :href="route('questions.create')"> 
                     New Question 
                 </base-button-new>
-                <base-button-new class="btn-light-danger ml-2" @click="submitSelected">
+                <base-button-new class="ml-2 btn-light-danger" @click="submitSelected">
                     Submit Selected
                 </base-button-new>
             </div>
@@ -34,6 +34,7 @@
                             <th>Cadre</th>
                             <th>Nursing Process</th>
                             <th>Disease Area</th>
+                            <th>Taxonomy</th>
                             <th>Syllabus</th>
                             <th>Status</th>
                             <th>Date created</th>
@@ -50,6 +51,7 @@
                             <td>{{ question.cadre }}</td>
                             <td>{{ question.nursing_process }}</td>
                             <td>{{ question.disease_area }}</td>
+                            <td>{{ question.taxonomy }}</td>
                             <td>{{ question.syllabus }}</td>
                             <td>{{ question.status }}</td>
                             <td>{{ new Date(question.created_at).toLocaleDateString() }}</td>

@@ -25,6 +25,7 @@
                             <th>Cadre</th>
                             <th>Nursing Process</th>
                             <th>Disease Area</th>
+                            <th>Taxonomy</th>
                             <th>Syllabus</th>
                             <th>Status</th>
                             <th>Date Created</th>
@@ -38,6 +39,7 @@
                             <td>{{ question.cadre }}</td>
                             <td>{{ question.nursing_process }}</td>
                             <td>{{ question.disease_area }}</td>
+                            <td>{{ question.taxonomy }}</td>
                             <td>{{ question.syllabus }}</td>
                             <td>{{ question.status }}</td>
                             <td>{{ new Date(question.created_at).toLocaleDateString() }}</td>

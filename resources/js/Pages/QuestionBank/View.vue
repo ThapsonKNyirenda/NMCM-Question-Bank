@@ -8,47 +8,69 @@
             </div>
         </template>
         <form novalidate class="w-3/4 mx-auto needs-validation"
-            @submit.prevent.stop="submit(inertiaSubmit, 'Edit the question?')">
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required readonly />
-            
-            <label class="form-label required" >Question Description</label>
-            <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholders="placeholders" readonly/>
-            </div>
-            
-            <base-form-select label="Select a Cadre" v-model="form.cadre" id="cadre" name="cadre"
-                placeholders="Choose a cadre" :options="Cadre" required disabled />
+    @submit.prevent.stop="submit(inertiaSubmit, 'Edit the question?')">
+    <div class="mb-4">
+        <label for="cadre" class="form-label">Select a Cadre</label>
+        <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required disabled>
+            <option disabled value="">Choose a cadre</option>
+            <option v-for="(value, key) in Cadre" :key="key" :value="key">{{ value }}</option>
+        </select>
+    </div>
 
-            <base-form-select label="Select a Nursing Process" v-model="form.nursing_process" id="nurseProcess"
-                name="nursing_process" placeholders="Choose a Nursing Process" :options="nurseProcess" required disabled />
+    <div class="mb-4">
+        <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
+        <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required disabled>
+            <option disabled value="">Choose a Nursing Process</option>
+            <option v-for="(value, key) in nurseProcess" :key="key" :value="key">{{ value }}</option>
+        </select>
+    </div>
 
-            <base-form-select label="Select a Disease Area" v-model="form.disease_area" id="diseaseArea"
-                name="disease_area" placeholders="Choose a Disease Area" :options="diseaseArea" required disabled />
-            
-            <base-form-select label="Select Taxonomy Level" id="taxonomy"
-                placeholders="Choose taxonomy" :options="taxonomy"/>
-                
-            <base-form-select label="Select a Syllabus" v-model="form.syllabus" id="syllabus" name="syllabus"
-                placeholders="Choose a Syllabus" :options="Syllabus" required disabled />
+    <div class="mb-4">
+        <label for="diseaseArea" class="form-label">Select a Disease Area</label>
+        <select v-model="form.disease_area" id="diseaseArea" name="disease_area" class="form-select" required disabled>
+            <option disabled value="">Choose a Disease Area</option>
+            <option v-for="(value, key) in diseaseArea" :key="key" :value="key">{{ value }}</option>
+        </select>
+    </div>
 
-            <!-- <base-form-textarea label="Question Description" name="question_description" id="description" rows="5"
-                v-model="form.question_description" readonly /> -->
+    <div class="mb-4">
+        <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
+        <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required disabled>
+            <option disabled value="">Choose taxonomy</option>
+            <option v-for="(value, key) in taxonomy" :key="key" :value="key">{{ value }}</option>
+        </select>
+    </div>
 
-            <base-form-input type="text" label="Option A" id="Choice_A" name="choice_a" v-model="form.choice_a"
-                required readonly />
+    <div class="mb-4">
+        <label for="syllabus" class="form-label">Select a Syllabus</label>
+        <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required disabled>
+            <option disabled value="">Choose a Syllabus</option>
+            <option v-for="(value, key) in Syllabus" :key="key" :value="key">{{ value }}</option>
+        </select>
+    </div>
 
-            <base-form-input type="text" label="Option B" id="Choice_B" name="choice_b" v-model="form.choice_b"
-                required readonly />
+    <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required disabled />
 
-            <base-form-input type="text" label="Option C" id="Choice_C" name="choice_c" v-model="form.choice_c"
-                required readonly />
+    <label class="form-label required">Question Description</label>
+    <div class="mandatory-fields">
+        <quill-input v-model="form.question_description" :placeholder="placeholders" :readonly="true" />
+    </div>
 
-            <base-form-input type="text" label="Option D" id="Choice_D" name="choice_d" v-model="form.choice_d"
-                required readonly />
+    <base-form-input type="text" label="Answer Option A" id="Choice_A" name="choice_a" v-model="form.choice_a" required disabled />
+    <base-form-input type="text" label="Answer Option B" id="Choice_B" name="choice_b" v-model="form.choice_b" required disabled />
+    <base-form-input type="text" label="Answer Option C" id="Choice_C" name="choice_c" v-model="form.choice_c" required disabled />
+    <base-form-input type="text" label="Answer Option D" id="Choice_D" name="choice_d" v-model="form.choice_d" required disabled />
 
-            <base-form-select label="Select a Correct Answer" v-model="form.correct_answer" id="correctAnswer"
-                name="correct_answer" placeholders="Choose a Correct Answer" :options="correctAnswer" required disabled />           
-        </form>
+    <div class="mb-4">
+        <label for="correctAnswer" class="form-label">Correct Answer</label>
+        <select v-model="form.correct_answer" id="correctAnswer" name="correct_answer" class="form-select" required disabled>
+            <option disabled value="">Correct Answer</option>
+            <option v-for="(value, key) in correctAnswer" :key="key" :value="key">{{ value }}</option>
+        </select>
+    </div>
+   
+</form>
+
     </base-card-main>
 </template>
 

@@ -20,6 +20,7 @@ class UnvettedQuestion extends Model
         'cadre',
         'nursing_process',
         'disease_area',
+        'taxonomy',
         'syllabus',
         'question_description',
         'choice_a',
@@ -31,6 +32,18 @@ class UnvettedQuestion extends Model
     ];
 
     public array $searchable = [
-        'title'
+        'title',
+        'cadre',
+        'nursing_process',
+        'disease_area',
+        'taxonomy',
+        'syllabus',
+        'question_description',
+        'choice_a',
+        'choice_b',
+        'choice_c',
+        'choice_d',
+        'correct_answer',
+        'status'
     ];
 }

@@ -26,6 +26,7 @@
                             <th>Cadre</th>
                             <th>Nursing Process</th>
                             <th>Disease Area</th>
+                            <th>Taxonomy</th>
                             <th>Syllabus</th>
                             <th>Status</th>
                             <th>Date created</th>
@@ -39,6 +40,7 @@
                             <td>{{ question.title }}</td>
                             <td>{{ question.cadre }}</td>
                             <td>{{ question.nursing_process }}</td>
+                            <td>{{ question.taxonomy }}</td>
                             <td>{{ question.disease_area }}</td>
                             <td>{{ question.syllabus }}</td>
                             <td>{{ question.status }}</td>
