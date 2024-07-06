@@ -1,5 +1,4 @@
 <template>
-
   <Head title="Question Paper Blueprints List" />
   <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
     <template #header>
@@ -117,30 +116,11 @@ const toggleSelectAll = (event) => {
 
 // Function to generate question paper
 const generateQuestionPaper = async () => {
-  if (props.questionBlueprints.data.length > 0) {
-    const firstRow = props.questionBlueprints.data[0];
-    const cadre = firstRow.cadre;
-
-    try {
-      // Query the database to get the questions with the same cadre value
-      const response = await fetch(`/api/questions/descriptions?cadre=${cadre}`);
-      const result = await response.json();
-      const questions = result.questions.map(q => ({
-        question_description: stripHtmlTags(q.question_description),
-        choice_a: q.choice_a,
-        choice_b: q.choice_b,
-        choice_c: q.choice_c,
-        choice_d: q.choice_d
-      }));
-      router.visit(route('questionpaper.show'), {
-        method: 'get',
-        data: { questions }
-      });
-    } catch (error) {
-      console.error('Error fetching question descriptions:', error);
-    }
-  } else {
-    console.log('No data available in the table.');
+  if (selectedQuestions.value.length > 0) {
+    console.log('Selected Question IDs:', selectedQuestions.value);
+    
+    const firstRow = props.questionBlueprints.data.find(bp => selectedQuestions.value.includes(bp.uuid));
+    const cadre = firstRow?.cadre;
   }
 };
 
