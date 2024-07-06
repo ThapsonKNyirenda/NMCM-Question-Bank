@@ -117,10 +117,26 @@ const toggleSelectAll = (event) => {
 // Function to generate question paper
 const generateQuestionPaper = async () => {
   if (selectedQuestions.value.length > 0) {
-    console.log('Selected Question UUIDs:', selectedQuestions.value);
+    console.log('Selected Question IDs:', selectedQuestions.value);
     
-    const firstRow = props.questionBlueprints.data.find(bp => selectedQuestions.value.includes(bp.uuid));
-    const cadre = firstRow?.cadre;
+    const selectedData = props.questionBlueprints.data
+      .filter(bp => selectedQuestions.value.includes(bp.uuid))
+      .map(bp => ({
+        cadre: bp.cadre,
+        nursing_process: bp.nursing_process,
+        disease_area: bp.disease_area,
+        taxonomy: bp.taxonomy
+      }));
+
+    console.log('Selected Data:', selectedData);
+
+    try {
+      // Assuming you want to do something with this data, like making an API request
+    } catch (error) {
+      console.error('Error processing selected data:', error);
+    }
+  } else {
+    console.log('No data available in the table.');
   }
 };
 
