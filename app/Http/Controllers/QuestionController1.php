@@ -7,6 +7,7 @@ use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -35,6 +36,44 @@ class QuestionController1 extends Controller
         ]);
     }
 
+    public function fetchQuestions(Request $request)
+    {
+        // Log the incoming request data for debugging
+        Log::info('Request Data:', $request->all());
+
+        try {
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+                'cadre' => 'required|string',
+                'nursing_process' => 'required|string',
+                'disease_area' => 'required|string',
+                'taxonomy' => 'required|string',
+            ]);
+
+            // Log the validated data
+            Log::info('Validated Data:', $validatedData);
+
+            // Query the questions table based on the criteria
+            $questions = Question::where('cadre', $validatedData['cadre'])
+                ->where('nursing_process', $validatedData['nursing_process'])
+                ->where('disease_area', $validatedData['disease_area'])
+                ->where('taxonomy', $validatedData['taxonomy'])
+                ->get();
+
+            // Convert the collection to an array before logging
+            Log::info('Retrieved Questions:', $questions->toArray());
+
+            // Return the results as a JSON response
+            return response()->json(['questions' => $questions]);
+        } catch (\Exception $e) {
+            // Log any exception that occurs
+            Log::error('Error fetching questions:', ['exception' => $e]);
+
+            // Return a 500 error response
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

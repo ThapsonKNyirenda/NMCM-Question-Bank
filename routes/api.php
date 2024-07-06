@@ -6,11 +6,14 @@ use App\Http\Controllers\API\CustomerTagController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Question;
+
 // routes/api.php
 
-Route::get('questions/descriptions', [QuestionController::class, 'descriptionsByCadre']);
+// Route::get('questions/descriptions', [QuestionController::class, 'descriptionsByCadre']);
 
-use App\Models\Question;
+Route::post('/questions', [QuestionController1::class, 'fetchQuestions']);
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();

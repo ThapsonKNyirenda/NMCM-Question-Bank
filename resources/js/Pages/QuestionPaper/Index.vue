@@ -115,10 +115,11 @@ const toggleSelectAll = (event) => {
 };
 
 // Function to generate question paper
+// Function to generate question paper
 const generateQuestionPaper = async () => {
   if (selectedQuestions.value.length > 0) {
     console.log('Selected Question IDs:', selectedQuestions.value);
-    
+
     const selectedData = props.questionBlueprints.data
       .filter(bp => selectedQuestions.value.includes(bp.uuid))
       .map(bp => ({
@@ -130,15 +131,47 @@ const generateQuestionPaper = async () => {
 
     console.log('Selected Data:', selectedData);
 
-    try {
-      // Assuming you want to do something with this data, like making an API request
-    } catch (error) {
-      console.error('Error processing selected data:', error);
-    }
+    // Create a function to fetch questions based on the selected data
+    const fetchQuestions = async (data) => {
+      try {
+        const response = await fetch(`/api/questions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+        return [];
+      }
+    };
+
+    // Fetch questions for each set of selected data
+    const questionsPromises = selectedData.map(data => fetchQuestions(data));
+    const questionsResults = await Promise.all(questionsPromises);
+
+    // Combine the questions into a single array
+    const combinedQuestions = questionsResults.flat();
+
+    console.log('Fetched Questions:', combinedQuestions);
+
+    // Process or navigate to another page with the fetched questions
+    router.visit(route('questionpaper.show'), {
+      method: 'get',
+      data: { questions: combinedQuestions },
+    });
   } else {
     console.log('No data available in the table.');
   }
 };
+
 
 // Function to strip HTML tags from a string
 const stripHtmlTags = (str) => {
