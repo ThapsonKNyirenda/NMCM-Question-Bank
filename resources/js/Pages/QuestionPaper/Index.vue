@@ -117,7 +117,7 @@ const toggleSelectAll = (event) => {
 // Function to generate question paper
 const generateQuestionPaper = async () => {
   if (selectedQuestions.value.length > 0) {
-    console.log('Selected Question IDs:', selectedQuestions.value);
+    console.log('Selected Question UUIDs:', selectedQuestions.value);
     
     const firstRow = props.questionBlueprints.data.find(bp => selectedQuestions.value.includes(bp.uuid));
     const cadre = firstRow?.cadre;
