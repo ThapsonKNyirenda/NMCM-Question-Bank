@@ -30,13 +30,3 @@ Route::name('api.')->middleware('auth:sanctum')->group(function (){
     Route::get('contact-tags', ContactTagController::class)->name('contact-tags.index');
 
 });
-
-class QuestionController extends Controller
-{
-    public function descriptionsByCadre(Request $request)
-    {
-        $cadre = $request->query('cadre');
-        $descriptions = Question::where('cadre', $cadre)->pluck('question_description');
-        return response()->json(['descriptions' => $descriptions]);
-    }
-}

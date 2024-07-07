@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\QuestionBlueprint;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\UpdateQuestionBlueprintRequest;
@@ -31,7 +32,11 @@ class QuestionBlueprintManagerController extends Controller
     public function showQuestionPaper(Request $request)
     {
         $questions = $request->input('questions');
-        return Inertia::render('QuestionPaper', ['questions' => $questions]);
+
+        // Log the questions data
+        Log::info('Questions From Function: ', ['questions' => $questions]);
+
+        //return Inertia::render('QuestionPaper', ['questions' => $questions]);
     }
 
 
