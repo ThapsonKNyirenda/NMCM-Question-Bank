@@ -1,5 +1,6 @@
 <template>
 
+    
     <Head title="Edit Blueprint" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
