@@ -32,12 +32,25 @@ class QuestionBlueprintManagerController extends Controller
     public function showQuestionPaper(Request $request)
     {
         $questions = $request->input('questions');
-
-        // Log the questions data
-        Log::info('Questions From Function: ', ['questions' => $questions]);
-
-        //return Inertia::render('QuestionPaper', ['questions' => $questions]);
+    
+        // Check if questions array is present and extract it
+        if (!empty($questions) && is_array($questions)) {
+            foreach ($questions as $questionSet) {
+                if (isset($questionSet['questions']) && is_array($questionSet['questions'])) {
+                    foreach ($questionSet['questions'] as $question) {
+                        // Log individual question
+                        Log::info('Question:', $question);
+                    }
+                }
+            }
+        } else {
+            Log::info('No questions found.');
+        }
+    
+        return Inertia::render('QuestionPaper/View', ['questions' => $questions]);
     }
+        
+    
 
 
 

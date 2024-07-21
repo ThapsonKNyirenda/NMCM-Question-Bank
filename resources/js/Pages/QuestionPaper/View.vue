@@ -1,44 +1,28 @@
 <template>
-    <div class="p-8 exam-paper">
-      <h1 class="mb-8 text-2xl font-bold text-center">Examination Paper</h1>
-      <div v-for="(question, index) in descriptions" :key="index" class="mb-4">
-        <p class="font-medium">Question {{ index + 1 }}:</p>
-        <p v-html="question"></p>
-      </div>
-      <button @click="printPage" class="px-4 py-2 mt-4 text-white bg-blue-500 rounded">
-        Print Question Paper
-      </button>
+  <div>
+    <h1>Question Paper</h1>
+    <div v-for="question in questions" :key="question.id">
+      <h2>{{ question.title }}</h2>
+      <p v-if="question.question_description" v-html="question.question_description"></p>
+      <ul>
+        <li v-if="question.choice_a">A: {{ question.choice_a }}</li>
+        <li v-if="question.choice_b">B: {{ question.choice_b }}</li>
+        <li v-if="question.choice_c">C: {{ question.choice_c }}</li>
+        <li v-if="question.choice_d">D: {{ question.choice_d }}</li>
+      </ul>
+      <p v-if="question.correct_answer">Correct Answer: {{ question.correct_answer }}</p>
+      <p v-if="question.status">Status: {{ question.status }}</p>
     </div>
-  </template>
-  
-  <script setup>
-  import { defineProps } from 'vue';
-  import { Head } from '@inertiajs/vue3';
-  
-  const props = defineProps({
-    descriptions: Array
-  });
-  
-  const printPage = () => {
-    window.print();
-  };
-  </script>
-  
-  <style scoped>
-  .exam-paper {
-    max-width: 800px;
-    margin: auto;
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  @media print {
-    .exam-paper {
-      border: none;
-      box-shadow: none;
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    questions: {
+      type: Array,
+      required: true
     }
   }
-  </style>
-  
+}
+</script>
