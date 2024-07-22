@@ -165,10 +165,7 @@ const generateQuestionPaper = async () => {
     console.log('Fetched Questions JSON:', JSON.stringify(combinedQuestions, null, 2));
 
     // Process or navigate to another page with the fetched questions
-    router.visit(route('questionpaper.show'), {
-      method: 'get',
-      data: { questions: combinedQuestions },
-    });
+    router.visit(route('question.show', { uuid: combinedQuestions[0].uuid }));
   } else {
     console.log('No data available in the table.');
   }

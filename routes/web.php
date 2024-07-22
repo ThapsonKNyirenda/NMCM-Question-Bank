@@ -81,9 +81,11 @@ Route::middleware('auth')->group(function () {
     Route::post('unvettedquestions/bulkVet', [UnvettedQuestionController::class, 'bulkVet'])->name('unvettedquestions.bulkVet');
     //Route::resource('questionblueprints', QuestionBlueprintsController::class);
     // Route::resource('questionblueprints', QuestionBlueprintManagerController::class);
-    Route::get('/questionpaper', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionpaper.show');
     Route::get('/api/questions/descriptions', [QuestionBlueprintManagerController::class, 'descriptionsByCadre']);
     Route::get('/questionblueprints/{uuid}/edit', [QuestionBlueprintManagerController::class, 'edit']);
+    
+    //Testing routes
+    Route::get('/question/{uuid}', 'QuestionBlueprintManagerController@show');
     
     Route::resources([
         'roles' => RoleController::class,

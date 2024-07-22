@@ -83,10 +83,13 @@ class QuestionBlueprintManagerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(QuestionBlueprint $questionBlueprint)
-    {
-        //
-    }
+    public function show($uuid)
+{
+    $question = Question::where('uuid', $uuid)->first();
+    return Inertia::render('QuestionPaper/View', [
+        'question' => $question
+    ]);
+}
 
     public function edit($uuid): Response
     {
