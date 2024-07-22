@@ -160,7 +160,9 @@ const generateQuestionPaper = async () => {
     // Combine the questions into a single array
     const combinedQuestions = questionsResults.flat();
 
+    console.log('Fetched Questions Type:', typeof combinedQuestions);
     console.log('Fetched Questions:', combinedQuestions);
+    console.log('Fetched Questions JSON:', JSON.stringify(combinedQuestions, null, 2));
 
     // Process or navigate to another page with the fetched questions
     router.visit(route('questionpaper.show'), {
@@ -171,6 +173,7 @@ const generateQuestionPaper = async () => {
     console.log('No data available in the table.');
   }
 };
+
 
 
 // Function to strip HTML tags from a string
