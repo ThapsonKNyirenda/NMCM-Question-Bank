@@ -85,7 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/questionblueprints/{uuid}/edit', [QuestionBlueprintManagerController::class, 'edit']);
     
     //Testing routes
-    Route::get('/question/{uuid}', 'QuestionBlueprintManagerController@show');
+    Route::get('/question/{uuid}', [QuestionBlueprintManagerController::class, 'show'])->name('paper.show');
     
     Route::resources([
         'roles' => RoleController::class,
