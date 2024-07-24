@@ -83,9 +83,12 @@ Route::middleware('auth')->group(function () {
     // Route::resource('questionblueprints', QuestionBlueprintManagerController::class);
     Route::get('/api/questions/descriptions', [QuestionBlueprintManagerController::class, 'descriptionsByCadre']);
     Route::get('/questionblueprints/{uuid}/edit', [QuestionBlueprintManagerController::class, 'edit']);
+
     
     //Testing routes
-    Route::get('/question/{uuid}', [QuestionBlueprintManagerController::class, 'show'])->name('paper.show');
+    Route::get('/questionblueprints/show', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionblueprints.display');
+    Route::get('/api/questions/by-ids', [QuestionController1::class, 'getQuestionsByIds']);
+
     
     Route::resources([
         'roles' => RoleController::class,

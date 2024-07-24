@@ -58,6 +58,7 @@ class QuestionController1 extends Controller
                 ->where('nursing_process', $validatedData['nursing_process'])
                 ->where('disease_area', $validatedData['disease_area'])
                 ->where('taxonomy', $validatedData['taxonomy'])
+                ->select('id')
                 ->get();
 
             // Convert the collection to an array before logging
@@ -73,6 +74,16 @@ class QuestionController1 extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+
+    // getting questions by ids
+public function getQuestionsByIds(Request $request)
+{
+    $questionIds = $request->query('ids', []);
+    $questions = Question::whereIn('id', $questionIds)->get();
+    return response()->json($questions);
+}
+
     
     /**
      * Show the form for creating a new resource.

@@ -115,7 +115,6 @@ const toggleSelectAll = (event) => {
 };
 
 // Function to generate question paper
-// Function to generate question paper
 const generateQuestionPaper = async () => {
   if (selectedQuestions.value.length > 0) {
     console.log('Selected Question IDs:', selectedQuestions.value);
@@ -157,15 +156,14 @@ const generateQuestionPaper = async () => {
     const questionsPromises = selectedData.map(data => fetchQuestions(data));
     const questionsResults = await Promise.all(questionsPromises);
 
-    // Combine the questions into a single array
+    // Combine the questions into a single array and extract IDs
     const combinedQuestions = questionsResults.flat();
+    const questionIds = combinedQuestions.flatMap(item => item.questions.map(q => q.id));
 
-    console.log('Fetched Questions Type:', typeof combinedQuestions);
-    console.log('Fetched Questions:', combinedQuestions);
-    console.log('Fetched Questions JSON:', JSON.stringify(combinedQuestions, null, 2));
+    console.log('Fetched Question IDs:', questionIds);
 
-    // Process or navigate to another page with the fetched questions
-    
+    // Navigate to the new page with the selected IDs
+    router.get(route('questionblueprints.display', { ids: questionIds }));
   } else {
     console.log('No data available in the table.');
   }

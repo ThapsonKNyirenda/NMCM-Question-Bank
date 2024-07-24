@@ -30,13 +30,13 @@ class QuestionBlueprintManagerController extends Controller
     }
 
     public function showQuestionPaper(Request $request)
-    {
-        $questions = $request->input('questions', []);
+{
+    $questionIds = $request->query('ids', []);
     return Inertia::render('QuestionPaper/View', [
-        'questions' => $questions
+        'questionIds' => $questionIds
     ]);
-    
-    }
+}
+
         
     
 
