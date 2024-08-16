@@ -11,7 +11,7 @@
           <li class="choice-item">B. {{ question.choice_b }}</li>
           <li class="choice-item">C. {{ question.choice_c }}</li>
           <li class="choice-item">D. {{ question.choice_d }}</li>
-        </ul>
+        </ul> 
       </li>
     </ul>
   </div>
