@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Description;
+use App\Models\Cadre;
+use App\Models\NursingProcess;
+use App\Models\TaxonomyLevel;
+use App\Models\DiseaseArea;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -46,9 +50,19 @@ class DescriptionController extends Controller
      * @return Response
      */
     public function create()
-    {
-        
-    }
+{
+    $cadres = Cadre::pluck('name', 'id');
+    $nursingProcesses = NursingProcess::pluck('name', 'id');
+    $diseaseAreas = DiseaseArea::pluck('name', 'id');
+    $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+
+    return inertia('Description/Create', [
+        'cadres' => $cadres,
+        'nursingProcesses' => $nursingProcesses,
+        'diseaseAreas' => $diseaseAreas,
+        'taxonomyLevels' => $taxonomyLevels
+    ]);
+}
 
     /**
      * Store a newly created resource in storage.

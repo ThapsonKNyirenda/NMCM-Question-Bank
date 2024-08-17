@@ -11,6 +11,12 @@
                     />
                 </div>
             </div>
+            <div class="card-toolbar">
+                <base-button-new class="btn-light-primary" :href="route('descriptions.create')"> 
+                    New Description 
+                </base-button-new>
+                
+            </div>
         </template>
         <div class="relative">
             <div class="table-responsive">
