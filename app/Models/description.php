@@ -30,4 +30,9 @@ class description extends Model
         'taxonomy_level_id',
         'description'  
     ];
+
+    public function cadre()
+{
+    return $this->belongsTo(Cadre::class, 'cadre_id');
+}
 }

@@ -1,5 +1,5 @@
 <template>
-    <Head title="Queation Descriptions List" />
+    <Head title="Question Descriptions List" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="w-1/2 card-title">
@@ -11,7 +11,6 @@
                     />
                 </div>
             </div>
-            
         </template>
         <div class="relative">
             <div class="table-responsive">
@@ -30,10 +29,9 @@
                         </tr>
                     </thead>
                     <tbody class="font-medium text-gray-600">
-                        <tr v-for="(description, index) in descriptions.data" :key="descriptions.uuid">
-                            
+                        <tr v-for="(description, index) in descriptions.data" :key="description.uuid">
                             <td v-text="index + 1"></td>
-                            <td>{{ description.cadre_id}}</td>
+                            <td>{{ description.cadre.name }}</td>
                             <td>{{ description.nursing_process_id }}</td>
                             <td>{{ description.disease_area_id }}</td>
                             <td>{{ description.taxonomy_level_id }}</td>
@@ -41,7 +39,7 @@
                             <td>{{ description.status }}</td>
                             <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
                             <td class="text-right">
-                                
+                                <!-- Actions -->
                             </td>
                         </tr>
                     </tbody>
@@ -80,8 +78,4 @@ const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
 watch(() => filterBy.per_page, (newVal) => {
     router.get(route('descriptions.index', { search: props.filters.search, ...filterBy }));
 });
-
-
 </script>
-
-

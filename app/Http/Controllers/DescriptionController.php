@@ -25,15 +25,14 @@ class DescriptionController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request): Response
-    {
-        return Inertia::render('Description/Index',[
-            'descriptions' => Description::whenSearch($request->input('search'))
-                ->paginate(8)
-                ->withQueryString(),
-            'filters' => $request->only(['search']) ?? []
-        ]);
-    }
+    public function index(Request $request)
+{
+    $descriptions = Description::with('cadre')->paginate($request->get('per_page', 10));
+    return inertia('Description/Index', [
+        'descriptions' => $descriptions,
+        'filters' => $request->only(['search', 'per_page']),
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.

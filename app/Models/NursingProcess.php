@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUuid;
 use App\Traits\Searchable;
 
-class Cadre extends Model
+class NursingProcess extends Model
 {
     use HasFactory;
     use Searchable;
