@@ -29,19 +29,19 @@
                         </tr>
                     </thead>
                     <tbody class="font-medium text-gray-600">
-                        <tr v-for="(description, index) in descriptions.data" :key="description.uuid">
-                            <td v-text="index + 1"></td>
-                            <td>{{ description.cadre.name }}</td>
-                            <td>{{ description.nursing_process_id }}</td>
-                            <td>{{ description.disease_area_id }}</td>
-                            <td>{{ description.taxonomy_level_id }}</td>
-                            <td>{{ description.syllabus }}</td>
-                            <td>{{ description.status }}</td>
-                            <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
-                            <td class="text-right">
-                                <!-- Actions -->
-                            </td>
-                        </tr>
+                        <tr v-for="(description, index) in descriptions.data" :key="description.id">
+        <td v-text="index + 1"></td>
+        <td>{{ description.cadre ? description.cadre.name : 'N/A' }}</td>
+        <td>{{ description.nursing_process ? description.nursing_process.name : 'N/A' }}</td>
+        <td>{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
+        <td>{{ description.taxonomy_level ? description.taxonomy_level.name : 'N/A' }}</td>
+        <td>{{ description.syllabus }}</td>
+        <td>{{ description.status }}</td>
+        <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
+        <td class="text-right">
+            <!-- Actions -->
+        </td>
+    </tr>
                     </tbody>
                 </table>
             </div>

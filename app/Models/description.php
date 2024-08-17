@@ -32,7 +32,23 @@ class description extends Model
     ];
 
     public function cadre()
-{
-    return $this->belongsTo(Cadre::class, 'cadre_id');
-}
+    {
+        return $this->belongsTo(Cadre::class);
+    }
+
+    public function nursingProcess()
+    {
+        return $this->belongsTo(NursingProcess::class);
+    }
+
+    public function diseaseArea()
+    {
+        return $this->belongsTo(DiseaseArea::class);
+    }
+
+    public function taxonomyLevel()
+    {
+        return $this->belongsTo(TaxonomyLevel::class);
+    }
+    
 }

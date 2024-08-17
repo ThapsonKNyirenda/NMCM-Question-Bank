@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Collection;
 
 class DescriptionController extends Controller
 {
@@ -26,13 +27,18 @@ class DescriptionController extends Controller
      * @return Response
      */
     public function index(Request $request)
-{
-    $descriptions = Description::with('cadre')->paginate($request->get('per_page', 10));
-    return inertia('Description/Index', [
-        'descriptions' => $descriptions,
-        'filters' => $request->only(['search', 'per_page']),
-    ]);
-}
+    {
+        // Eager load related models
+        $descriptions = Description::with(['cadre', 'nursingProcess', 'diseaseArea', 'taxonomyLevel'])
+                            ->paginate($request->get('per_page', 10));
+
+    
+        return inertia('Description/Index', [
+            'descriptions' => $descriptions,
+            'filters' => $request->only(['search', 'per_page']),
+        ]);
+    }
+    
 
     /**
      * Show the form for creating a new resource.
