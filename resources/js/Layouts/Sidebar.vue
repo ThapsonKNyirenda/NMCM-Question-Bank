@@ -14,9 +14,14 @@
                     Dashboard
                 </SidebarMenuItem>
 
-                <SidebarMenuItem :href="route('questions.index')" :is-active="$page.props.activeMenu === 'Questions'" v-if="can('Manage questions')">
+                <!-- <SidebarMenuItem :href="route('questions.index')" :is-active="$page.props.activeMenu === 'Questions'" v-if="can('Manage questions')">
                     <template #icon><i class="ri-question-mark"></i> </template>
                     Questions
+                </SidebarMenuItem> -->
+
+                <SidebarMenuItem :href="route('descriptions.index')" >
+                    <template #icon><i class="ri-question-mark"></i> </template>
+                    Descriptions
                 </SidebarMenuItem>
 
                 <SidebarMenuItem :href="route('unvettedquestions.index')"

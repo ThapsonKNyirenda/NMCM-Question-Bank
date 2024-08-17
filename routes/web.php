@@ -35,6 +35,7 @@ use App\Http\Controllers\QuestionBankController;
 use App\Http\Controllers\QuestionBlueprintController;
 use App\Http\Controllers\QuestionPaper;
 use App\Http\Controllers\QuestionBlueprintManagerController;
+use App\Http\Controllers\DescriptionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -106,8 +107,8 @@ Route::middleware('auth')->group(function () {
         'vettedquestions' => VettedQuestionController::class,
         'questionbank' => QuestionBankController::class,
         'questionblueprints' => QuestionBlueprintManagerController::class,
-        
-       
+        'descriptions' => DescriptionController::class,
+           
     ]);
 
     Route::post('questions/submitSelected', [QuestionController1::class, 'submitSelected'])->name('questions.submitSelected');
