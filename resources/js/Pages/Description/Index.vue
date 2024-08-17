@@ -33,10 +33,10 @@
                         <tr v-for="(description, index) in descriptions.data" :key="descriptions.uuid">
                             
                             <td v-text="index + 1"></td>
-                            <td>{{ description.cadre }}</td>
-                            <td>{{ description.nursing_process }}</td>
-                            <td>{{ description.disease_area }}</td>
-                            <td>{{ description.taxonomy }}</td>
+                            <td>{{ description.cadre_id}}</td>
+                            <td>{{ description.nursing_process_id }}</td>
+                            <td>{{ description.disease_area_id }}</td>
+                            <td>{{ description.taxonomy_level_id }}</td>
                             <td>{{ description.syllabus }}</td>
                             <td>{{ description.status }}</td>
                             <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
@@ -82,11 +82,6 @@ watch(() => filterBy.per_page, (newVal) => {
 });
 
 
-const submitSelected = () => {
-    if (selectedQuestions.value.length > 0) {
-        router.post(route('questions.submitSelected'), { uuids: selectedQuestions.value });
-    }
-};
 </script>
 
 
