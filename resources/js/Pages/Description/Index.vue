@@ -45,7 +45,11 @@
                         <td>{{ description.status }}</td>
                         <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
                         <td class="text-right">
-                            <!-- Actions -->
+                            <td class="px-4 py-2 border-b">
+                                <!-- Add your action buttons here -->
+                                <button class="text-green-500 hover:text-blue-700">Edit</button>
+                                <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
+                            </td>
                         </td>
                     </tr>
                     </tbody>
@@ -82,8 +86,8 @@ const stripHtmlTags = (html) => {
     return doc.body.textContent || "";
 };
 
-store.pageTitle = 'Question Descriptions Lists';
-store.setBreadCrumb({ Questions: null });
+store.pageTitle = 'Question Descriptions List';
+store.setBreadCrumb({ Descriptions: null });
 
 const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
 

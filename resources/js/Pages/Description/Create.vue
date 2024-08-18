@@ -67,11 +67,11 @@
 
         <!-- Add Question Button -->
         <div class="card-toolbar">
-            <!-- Button only visible if descriptionId is set -->
+        <!-- Button only visible if description_id is set -->
             <base-button-new
                 v-if="description_id"
                 class="btn-light-primary"
-                :href="route('questions.create')"
+                :href="createQuestionUrl"
             >
                 New Question
             </base-button-new>
@@ -79,28 +79,34 @@
 
         <!-- Questions Table -->
         <div v-if="questions.length" class="mt-6">
-            <table class="w-full table-auto">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Choice A</th>
-                        <th>Choice B</th>
-                        <th>Choice C</th>
-                        <th>Choice D</th>
-                        <th>Correct Answer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="question in questions" :key="question.id">
-                        <td v-text="stripHtmlTags(question.title)"></td>
-                        <td v-text="stripHtmlTags(question.choice_a)"></td>
-                        <td v-text="stripHtmlTags(question.choice_b)"></td>
-                        <td v-text="stripHtmlTags(question.choice_c)"></td>
-                        <td v-text="stripHtmlTags(question.choice_d)"></td>
-                        <td v-text="stripHtmlTags(question.correct_answer)"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <table class="w-full bg-white border border-gray-200 rounded-lg shadow-sm table-auto">
+        <thead>
+            <tr class="text-gray-600 bg-gray-100">
+                <th class="px-4 py-2 border-b">Title</th>
+                <th class="px-4 py-2 border-b">Choice A</th>
+                <th class="px-4 py-2 border-b">Choice B</th>
+                <th class="px-4 py-2 border-b">Choice C</th>
+                <th class="px-4 py-2 border-b">Choice D</th>
+                <th class="px-4 py-2 border-b">Correct Answer</th>
+                <th class="px-4 py-2 border-b">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="question in questions" :key="question.id" class="hover:bg-gray-50">
+                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.title)"></td>
+                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_a)"></td>
+                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_b)"></td>
+                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_c)"></td>
+                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
+                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
+                <td class="px-4 py-2 border-b">
+                    <!-- Add your action buttons here -->
+                    <button class="text-blue-500 hover:text-blue-700">Edit</button>
+                    <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
         </div>
         <div v-else class="text-center text-muted">
             No questions added yet.
@@ -114,9 +120,13 @@ import { store } from "@/store.js";
 import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Components/QuillInput.vue"
+import { computed } from 'vue';
 
 // Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
+
+store.pageTitle = 'Question Description';
+store.setBreadCrumb({ Descriptions: route('descriptions.index') });
 
 const props = defineProps(['cadres', 'nursingProcesses', 'diseaseAreas', 'taxonomyLevels', 'questions', 'description_id']);
 
@@ -163,4 +173,12 @@ const inertiaSubmit = () => {
     // Submit the form
     form.post(route('descriptions.store'));
 };
+
+const createQuestionUrl = computed(() => {
+    if (props.description_id) {
+        return route('questions.create', { description_id: props.description_id });
+    }
+    return '#'; // Return a fallback URL if description_id is not available
+});
+
 </script>
