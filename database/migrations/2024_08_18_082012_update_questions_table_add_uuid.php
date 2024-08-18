@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
         Schema::table('questions', function (Blueprint $table) {
-            $table->string('taxonomy')->nullable()->after('disease_area');
+            $table->uuid()->index()->after('id');
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
         Schema::table('questions', function (Blueprint $table) {
-            $table->dropColumn('taxonomy');
+            $table->dropColumn('uuid');
         });
     }
 };

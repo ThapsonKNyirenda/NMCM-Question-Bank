@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
-
-use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasUuid;
+use App\Traits\Searchable;
+
 
 class Question extends Model
 {
@@ -14,38 +14,31 @@ class Question extends Model
     use Searchable;
     use HasUuid;
 
-    
     protected $fillable = [
         'uuid',
+        'description_id',
         'title',
-        'cadre',
-        'nursing_process',
-        'disease_area',
-        'taxonomy',
-        'syllabus',
-        'question_description',
         'choice_a',
         'choice_b',
         'choice_c',
         'choice_d',
         'correct_answer',
-        'status',
+        'status'       
     ];
 
-    public array $searchable = [
+    protected $searchable = [
+        'uuid',
+        'description_id',
         'title',
-        'cadre',
-        'nursing_process',
-        'taxonomy',
-        'disease_area',
-        'taxonomy',
-        'syllabus',
-        'question_description',
         'choice_a',
         'choice_b',
         'choice_c',
         'choice_d',
         'correct_answer',
-        'status',
+        'status'       
     ];
+
+    public function description(){
+        return $this->belongsTo(Description::class);
+    }
 }

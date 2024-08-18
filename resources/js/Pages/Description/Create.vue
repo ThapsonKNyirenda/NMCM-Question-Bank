@@ -1,5 +1,5 @@
 <template>
-    <Head title="Add Question" />
+    <Head title="Add Question Description" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
@@ -7,7 +7,7 @@
                 <div class="text-base fw-semibold text-muted">Add a question Description</div>
             </div>
         </template>
-        <form method="POST" novalidate class="w-3/4 mx-auto needs-validation"
+        <form method="POST" :action="route('descriptions.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'add the question Description?')">
   
             <div class="mb-4">
@@ -46,7 +46,7 @@
                 <label for="syllabus" class="form-label">Select a Syllabus</label>
                 <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
                     <option disabled value="">Choose a Syllabus</option>
-                    <option v-for="(value, key) in Syllabus" :key="key" :value="key">{{ value }}</option>
+                    <option v-for="(value, key) in syllabusOptions" :key="key" :value="key">{{ value }}</option>
                 </select>
             </div>
 
@@ -67,8 +67,8 @@ import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 
+// Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
-
 const form = useForm({
     cadre: null,
     nursing_process: null,
@@ -78,16 +78,18 @@ const form = useForm({
     question_description: null
 });
 
-const Syllabus = {
+// Hardcoded syllabus options
+const syllabusOptions = {
     "2022-2023": "2022-2023",
     "2023-2024": "2023-2024",
-}
+};
 
 // Destructure props to get dropdown options from the backend
 const props = defineProps(['cadres', 'nursingProcesses', 'diseaseAreas', 'taxonomyLevels']);
 
+// Form submission method
 const inertiaSubmit = () => {
-    console.log(JSON.stringify(form, null, 2));
-    form.post(route('questions.store'));
+    // Submit the form
+    form.post(route('descriptions.store'));
 };
 </script>

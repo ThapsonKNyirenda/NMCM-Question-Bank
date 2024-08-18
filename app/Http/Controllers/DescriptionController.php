@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryStoreRequest;
-use App\Http\Requests\CategoryUpdateRequest;
+use App\Http\Requests\DescriptionStoreRequest;
 use App\Models\Description;
 use App\Models\Cadre;
 use App\Models\NursingProcess;
@@ -67,15 +66,29 @@ class DescriptionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CategoryStoreRequest $request
+     * @param DescriptionStoreRequest $request
      * @return RedirectResponse
      */
-    public function store()
+    public function store(DescriptionStoreRequest $request): RedirectResponse
     {
+ 
         
-
-       
+        // Map the form data to the model's fields
+        $descriptionData = [
+            'cadre_id' => $request->input('cadre'),
+            'nursing_process_id' => $request->input('nursing_process'),
+            'disease_area_id' => $request->input('disease_area'),
+            'taxonomy_level_id' => $request->input('taxonomy'),
+            'syllabus' => $request->input('syllabus'),
+            'description' => $request->input('question_description'),
+        ];
+    
+        // Create a new description record
+        Description::create($descriptionData);
+    
+        return redirect()->route('descriptions.index')->with('success', 'Question successfully created');
     }
+    
 
     /**
      * Display the specified resource.

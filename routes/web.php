@@ -88,7 +88,6 @@ Route::middleware('auth')->group(function () {
     
     //Testing routes
     Route::get('/questionblueprints/show', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionblueprints.display');
-    Route::get('/api/questions/by-ids', [QuestionController1::class, 'getQuestionsByIds']);
 
     
     Route::resources([
@@ -102,7 +101,6 @@ Route::middleware('auth')->group(function () {
         'teams'=> TeamController::class,
         'contracts'=> ContractController::class,
         'email-templates' => EmailTemplateController::class,
-        'questions' => QuestionController1::class,
         'unvettedquestions' => UnvettedQuestionController::class,
         'vettedquestions' => VettedQuestionController::class,
         'questionbank' => QuestionBankController::class,
@@ -111,7 +109,6 @@ Route::middleware('auth')->group(function () {
            
     ]);
 
-    Route::post('questions/submitSelected', [QuestionController1::class, 'submitSelected'])->name('questions.submitSelected');
 });
 
 require __DIR__.'/auth.php';

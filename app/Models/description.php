@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUuid;
 use App\Traits\Searchable;
 
-class description extends Model
+class Description extends Model
 {
     use HasFactory;
     use Searchable;
@@ -19,6 +19,7 @@ class description extends Model
         'nursing_process_id',
         'disease_area_id',
         'taxonomy_level_id',
+        'syllabus',
         'description'        
     ];
 
