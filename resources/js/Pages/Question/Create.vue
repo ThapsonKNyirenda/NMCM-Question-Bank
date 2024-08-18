@@ -4,167 +4,78 @@
         <template #header>
             <div class="flex-col card-title flex-column">
                 <h2 class="mb-1 text-xl font-semibold">Add Question</h2>
-                <div class="text-base fw-semibold text-muted">Add a question to the question bank</div>
+                <div class="text-base fw-semibold text-muted">Add a new question to the description</div>
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'add the question?')">
-  
+            
+            <input type="hidden" v-model="form.description_id" name="description_id">
+            
             <div class="mb-4">
-                <label for="cadre" class="form-label">Select a Cadre</label>
-                <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
-                    <option disabled value="">Choose a cadre</option>
-                    <option v-for="(value, key) in Cadre" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
-                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
-                    <option disabled value="">Choose a Nursing Process</option>
-                    <option v-for="(value, key) in nurseProcess" :key="key" :value="key">{{ value }}</option>
-                </select>
+                <label for="title" class="form-label">Question Title</label>
+                <quill-input v-model="form.title" placeholder="Enter the question title" />
             </div>
 
             <div class="mb-4">
-                <label for="diseaseArea" class="form-label">Select a Disease Area</label>
-                <select v-model="form.disease_area" id="diseaseArea" name="disease_area" class="form-select" required>
-                    <option disabled value="">Choose a Disease Area</option>
-                    <option v-for="(value, key) in diseaseArea" :key="key" :value="key">{{ value }}</option>
-                </select>
+                <label for="choice_a" class="form-label">Choice A</label>
+                <input type="text" v-model="form.choice_a" id="choice_a" name="choice_a" class="form-control" required>
             </div>
 
             <div class="mb-4">
-                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
-                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
-                    <option disabled value="">Choose taxonomy</option>
-                    <option v-for="(value, key) in taxonomy" :key="key" :value="key">{{ value }}</option>
-                </select>
+                <label for="choice_b" class="form-label">Choice B</label>
+                <input type="text" v-model="form.choice_b" id="choice_b" name="choice_b" class="form-control" required>
             </div>
 
             <div class="mb-4">
-                <label for="syllabus" class="form-label">Select a Syllabus</label>
-                <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
-                    <option disabled value="">Choose a Syllabus</option>
-                    <option v-for="(value, key) in Syllabus" :key="key" :value="key">{{ value }}</option>
-                </select>
+                <label for="choice_c" class="form-label">Choice C</label>
+                <input type="text" v-model="form.choice_c" id="choice_c" name="choice_c" class="form-control" required>
             </div>
-
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
-
-            <label class="form-label required">Question Description</label>
-            <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholder="placeholders" />
-            </div>
-
-            <base-form-input type="text" label="Answer Option A" id="Choice_A" name="choice_a" v-model="form.choice_a" required />
-            <base-form-input type="text" label="Answer Option B" id="Choice_B" name="choice_b" v-model="form.choice_b" required />
-            <base-form-input type="text" label="Answer Option C" id="Choice_C" name="choice_c" v-model="form.choice_c" required />
-            <base-form-input type="text" label="Answer Option D" id="Choice_D" name="choice_d" v-model="form.choice_d" required />
 
             <div class="mb-4">
-                <label for="correctAnswer" class="form-label">Select a Correct Answer</label>
-                <select v-model="form.correct_answer" id="correctAnswer" name="correct_answer" class="form-select" required>
-                    <option disabled value="">Choose a Correct Answer</option>
-                    <option v-for="(value, key) in correctAnswer" :key="key" :value="key">{{ value }}</option>
+                <label for="choice_d" class="form-label">Choice D</label>
+                <input type="text" v-model="form.choice_d" id="choice_d" name="choice_d" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="correct_answer" class="form-label">Correct Answer</label>
+                <select v-model="form.correct_answer" id="correct_answer" name="correct_answer" class="form-select" required>
+                    <option disabled value="">Choose the correct answer</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
                 </select>
             </div>
 
-            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Add
-                Question</base-button-submit>
+            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Save</base-button-submit>
         </form>
     </base-card-main>
 </template>
 
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
-import { store } from "@/store.js";
-import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 
-defineOptions({ layout: AuthenticatedLayout });
-
-store.pageTitle = 'Add Question';
-store.setBreadCrumb({ Questions: route('questions.index'), 'Add question': null });
-
+// Initialize the form
 const form = useForm({
-    title: null,
-    cadre: null,
-    nursing_process: null,
-    disease_area: null,
-    taxonomy: null,
-    syllabus: null,
-    question_description: null,
-    choice_a: null,
-    choice_b: null,
-    choice_c: null,
-    choice_d: null,
-    correct_answer: null,
-    status: "Unsubmitted",
+    description_id: null,  // This will be set when the component is created
+    title: '',
+    choice_a: '',
+    choice_b: '',
+    choice_c: '',
+    choice_d: '',
+    correct_answer: ''
 });
 
-const Cadre = {
-    "Registered Nurse": "Registered Nurse",
-    "Licensed Practical Nurse": "Licensed Practical Nurse",
-    "Nurse Practitioner": "Nurse Practitioner"
-}
+const props = defineProps(['description_id']);
 
-const nurseProcess = {
-    Assessment: "Assessment",
-    Diagnosis: "Diagnosis",
-    Planning: "Planning",
-    Implementation: "Implementation",
-    Evaluation: "Evaluation"
-}
+// Set the description_id from the props
+form.description_id = props.description_id;
 
-const taxonomy = {
-    Knowledge: "Knowledge",
-    Comprehension: "Comprehension",
-    Application: "Application",
-    Analysis: "Analysis",
-    Synthesis: "Synthesis",
-    Evaluation: "Evaluation"
-}
-
-const diseaseArea = {
-    Cardiology: "Cardiology",
-    Neurology: "Neurology",
-    Oncology: "Oncology",
-    Pediatrics: "Pediatrics",
-    Orthopedics: "Orthopedics"
-}
-
-const Syllabus = {
-    "2022-2023": "2022-2023",
-    "2023-2024": "2023-2024",
-}
-
-const correctAnswer = {
-    A: "A",
-    B: "B",
-    C: "C",
-    D: "D"
-}
-
+// Form submission method
 const inertiaSubmit = () => {
-    console.log(JSON.stringify(form, null, 2));
+    // Submit the form
     form.post(route('questions.store'));
 };
 </script>
-
-<style scoped>
-.form-select {
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-</style>

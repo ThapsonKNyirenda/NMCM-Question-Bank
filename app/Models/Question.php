@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUuid;
 use App\Traits\Searchable;
 
-
 class Question extends Model
 {
     use HasFactory;

@@ -12,7 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSecurityController;
 use App\Http\Controllers\ProfileSignatureController;
 use App\Http\Controllers\QuestionBlueprintsController;
-use App\Http\Controllers\QuestionController1;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\TeamMemberController;
@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
         'questionbank' => QuestionBankController::class,
         'questionblueprints' => QuestionBlueprintManagerController::class,
         'descriptions' => DescriptionController::class,
+        'questions' => QuestionController::class,
            
     ]);
 

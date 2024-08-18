@@ -58,6 +58,52 @@
             <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Save</base-button-submit>
         </form>
     </base-card-main>
+
+    <!-- Questions Table -->
+    <base-card-main class="mt-6 card-main card-flush" header-classes="mt-6">
+        <template #header>
+            <div class="flex-col card-title flex-column">
+                <h2 class="mb-1 text-xl font-semibold">Questions for Selected Description</h2>
+            </div>
+        </template>
+
+        <!-- Add Question Button -->
+        <div class="card-toolbar">
+                <base-button-new class="btn-light-primary" :href="route('questions.create')"> 
+                    New Question 
+                </base-button-new>
+                
+            </div>
+
+        <!-- Questions Table -->
+        <div v-if="questions.length" class="mt-6">
+            <table class="w-full table-auto">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Title</th>
+                        <th class="px-4 py-2">Choice A</th>
+                        <th class="px-4 py-2">Choice B</th>
+                        <th class="px-4 py-2">Choice C</th>
+                        <th class="px-4 py-2">Choice D</th>
+                        <th class="px-4 py-2">Correct Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="question in questions" :key="question.id">
+                        <td v-text="stripHtmlTags(question.title)"></td>
+                        <td v-text="stripHtmlTags(question.choice_a)"></td>
+                        <td v-text="stripHtmlTags(question.choice_b)"></td>
+                        <td v-text="stripHtmlTags(question.choice_c)"></td>
+                        <td v-text="stripHtmlTags(question.choice_d)"></td>
+                        <td v-text="stripHtmlTags(question.correct_answer)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div v-else class="text-center text-muted">
+            No questions added yet.
+        </div>
+    </base-card-main>
 </template>
 
 <script setup>
@@ -85,11 +131,17 @@ const syllabusOptions = {
 };
 
 // Destructure props to get dropdown options from the backend
-const props = defineProps(['cadres', 'nursingProcesses', 'diseaseAreas', 'taxonomyLevels']);
+const props = defineProps(['cadres', 'nursingProcesses', 'diseaseAreas', 'taxonomyLevels', 'questions', 'descriptionId']);
 
 // Form submission method
 const inertiaSubmit = () => {
     // Submit the form
     form.post(route('descriptions.store'));
 };
+
+const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+};
+
 </script>

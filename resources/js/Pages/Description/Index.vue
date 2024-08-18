@@ -76,6 +76,12 @@ const props = defineProps({
     filters: Object
 });
 
+// Method to strip HTML tags
+const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+};
+
 store.pageTitle = 'Question Descriptions Lists';
 store.setBreadCrumb({ Questions: null });
 

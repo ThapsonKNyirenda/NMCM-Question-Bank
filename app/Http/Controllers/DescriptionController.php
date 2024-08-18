@@ -8,6 +8,7 @@ use App\Models\Cadre;
 use App\Models\NursingProcess;
 use App\Models\TaxonomyLevel;
 use App\Models\DiseaseArea;
+use App\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,20 +49,29 @@ class DescriptionController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
 {
     $cadres = Cadre::pluck('name', 'id');
     $nursingProcesses = NursingProcess::pluck('name', 'id');
     $diseaseAreas = DiseaseArea::pluck('name', 'id');
     $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+    
+    $questions = Question::where('description_id', $request->description_id)->get();
 
     return inertia('Description/Create', [
         'cadres' => $cadres,
         'nursingProcesses' => $nursingProcesses,
         'diseaseAreas' => $diseaseAreas,
-        'taxonomyLevels' => $taxonomyLevels
+        'taxonomyLevels' => $taxonomyLevels,
+        'questions' => $questions,
+        'description_id' => $request->description_id, // Pass the description_id
     ]);
 }
+
+    
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -70,24 +80,21 @@ class DescriptionController extends Controller
      * @return RedirectResponse
      */
     public function store(DescriptionStoreRequest $request): RedirectResponse
-    {
- 
-        
-        // Map the form data to the model's fields
-        $descriptionData = [
-            'cadre_id' => $request->input('cadre'),
-            'nursing_process_id' => $request->input('nursing_process'),
-            'disease_area_id' => $request->input('disease_area'),
-            'taxonomy_level_id' => $request->input('taxonomy'),
-            'syllabus' => $request->input('syllabus'),
-            'description' => $request->input('question_description'),
-        ];
+{
+    $description = Description::create([
+        'cadre_id' => $request->input('cadre'),
+        'nursing_process_id' => $request->input('nursing_process'),
+        'disease_area_id' => $request->input('disease_area'),
+        'taxonomy_level_id' => $request->input('taxonomy'),
+        'syllabus' => $request->input('syllabus'),
+        'description' => $request->input('question_description'),
+    ]);
+
+    return redirect()->route('descriptions.create', ['description_id' => $description->id])
+                     ->with('success', 'Question description added successfully. You can now add questions.');
+}
+
     
-        // Create a new description record
-        Description::create($descriptionData);
-    
-        return redirect()->route('descriptions.index')->with('success', 'Question successfully created');
-    }
     
 
     /**
