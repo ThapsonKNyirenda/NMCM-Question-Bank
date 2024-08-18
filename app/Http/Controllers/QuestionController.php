@@ -17,12 +17,17 @@ class QuestionController extends Controller
      * @param int $description_id
      * @return Response
      */
-    public function create(int $description_id): Response
+
+    public function create(Request $request)
     {
-        return Inertia::render('Question/Create', [
+        // Retrieve the description_id from the query parameters
+        $description_id = $request->query('description_id');
+    
+        return inertia('Question/Create', [
             'description_id' => $description_id,
         ]);
     }
+    
 
     /**
      * Store a newly created question in storage.
@@ -40,10 +45,11 @@ class QuestionController extends Controller
             'choice_c' => 'required|string|max:255',
             'choice_d' => 'required|string|max:255',
             'correct_answer' => 'required|in:A,B,C,D',
+            'status' => 'string',
         ]);
 
         // Create the question
-        Question::create($validatedData);
+        $question = Question::create(array_merge($validatedData, ['status' => 'unset']));
 
         // Redirect back to the description create page with the description_id
         return redirect()->route('descriptions.create', ['description_id' => $validatedData['description_id']])

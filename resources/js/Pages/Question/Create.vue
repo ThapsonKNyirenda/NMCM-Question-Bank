@@ -8,7 +8,7 @@
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
-            @submit.prevent.stop="submit(inertiaSubmit, 'add the question?')">
+        @submit.prevent="inertiaSubmit">
             
             <input type="hidden" v-model="form.description_id" name="description_id">
             
@@ -54,10 +54,12 @@
 </template>
 
 <script setup>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 
-// Initialize the form
+// Set layout and initialize the form
+defineOptions({ layout: AuthenticatedLayout });
 const form = useForm({
     description_id: null,  // This will be set when the component is created
     title: '',

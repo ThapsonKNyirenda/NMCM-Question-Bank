@@ -90,8 +90,8 @@ class DescriptionController extends Controller
         'description' => $request->input('question_description'),
     ]);
 
-    return redirect()->route('descriptions.create', ['description_id' => $description->id])
-                     ->with('success', 'Question description added successfully. You can now add questions.');
+        return redirect()->route('descriptions.create', ['description_id' => $description->id])
+                        ->with('success', 'Question description added successfully. You can now add questions.');
 }
 
     
@@ -100,15 +100,24 @@ class DescriptionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        //
+        // Fetch the description by ID
+        $description = Description::find($id);
+
+        // Check if the description exists
+        if (!$description) {
+            return response()->json(['error' => 'Description not found'], 404);
+        }
+
+        // Return the description data
+        return response()->json($description);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Category $category
+     * @param Description $description
      * @return Response
      */
     public function edit()

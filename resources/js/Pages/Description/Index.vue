@@ -20,7 +20,7 @@
         </template>
         <div class="relative">
             <div class="table-responsive">
-                <table class="table mb-0 align-middle table-row-dashed fs-6 dataTable no-footer gy-3">
+                <table class="table mb-0 table-row-dashed fs-6 dataTable no-footer gy-3">
                     <thead>
                         <tr>
                             <th>C.No</th>
@@ -36,18 +36,18 @@
                     </thead>
                     <tbody class="font-medium text-gray-600">
                         <tr v-for="(description, index) in descriptions.data" :key="description.id">
-        <td v-text="index + 1"></td>
-        <td>{{ description.cadre ? description.cadre.name : 'N/A' }}</td>
-        <td>{{ description.nursing_process ? description.nursing_process.name : 'N/A' }}</td>
-        <td>{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
-        <td>{{ description.taxonomy_level ? description.taxonomy_level.name : 'N/A' }}</td>
-        <td>{{ description.syllabus }}</td>
-        <td>{{ description.status }}</td>
-        <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
-        <td class="text-right">
-            <!-- Actions -->
-        </td>
-    </tr>
+                        <td v-text="index + 1"></td>
+                        <td>{{ description.cadre ? description.cadre.name : 'N/A' }}</td>
+                        <td>{{ description.nursing_process ? description.nursing_process.name : 'N/A' }}</td>
+                        <td>{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
+                        <td>{{ description.taxonomy_level ? description.taxonomy_level.name : 'N/A' }}</td>
+                        <td>{{ description.syllabus }}</td>
+                        <td>{{ description.status }}</td>
+                        <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
+                        <td class="text-right">
+                            <!-- Actions -->
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

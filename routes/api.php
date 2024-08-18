@@ -7,12 +7,16 @@ use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Question;
+use App\Http\Controllers\DescriptionController;
 
 // routes/api.php
 
 // Route::get('questions/descriptions', [QuestionController::class, 'descriptionsByCadre']);
 
-Route::post('/questions', [QuestionController1::class, 'fetchQuestions']);
+// Route::post('/questions', [QuestionController1::class, 'fetchQuestions']);
+
+
+Route::get('/descriptions/{id}', [DescriptionController::class, 'show']);
 
 
 Route::get('/user', function (Request $request) {
