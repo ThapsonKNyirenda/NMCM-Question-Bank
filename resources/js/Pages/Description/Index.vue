@@ -1,5 +1,5 @@
 <template>
-    <Head title="Question Descriptions List" />
+    <Head title="Question Scenarios List" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="w-1/2 card-title">
@@ -23,7 +23,7 @@
                 <table class="table mb-0 table-row-dashed fs-6 dataTable no-footer gy-3">
                     <thead>
                         <tr>
-                            <th>C.No</th>
+                            <th>#</th>
                             <th>Disease Area</th>
                             <th>description</th>
                             <th>Date created</th>
@@ -75,8 +75,8 @@ const stripHtmlTags = (html) => {
     return doc.body.textContent || "";
 };
 
-store.pageTitle = 'Question Descriptions List';
-store.setBreadCrumb({ Descriptions: null });
+store.pageTitle = 'Question Scenarios List';
+store.setBreadCrumb({ Scenarios: null });
 
 const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
 
