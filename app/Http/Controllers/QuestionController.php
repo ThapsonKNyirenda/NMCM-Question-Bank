@@ -22,24 +22,24 @@ class QuestionController extends Controller
      * @return Response
      */
 
-    public function create(Request $request)
-    
-    {
-        //retrieving relationships
-        $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
-        $cadres = Cadre::pluck('name', 'id');
-        $nursingProcesses = NursingProcess::pluck('name', 'id');
-        
-        // Retrieve the description_id from the query parameters
-        $description_id = $request->query('description_id');
-    
-        return inertia('Question/Create', [
-            'cadres' => $cadres,
-            'nursingProcesses' => $nursingProcesses,
-            'taxonomyLevels' => $taxonomyLevels,
-            'description_id' => $description_id,
-        ]);
-    }
+     public function create(Request $request)
+     {
+         // Retrieving relationships
+         $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+         $cadres = Cadre::pluck('name', 'id');
+         $nursingProcesses = NursingProcess::pluck('name', 'id');
+     
+         // Retrieve the description_id from the query parameters
+         $description_id = $request->query('description_id');
+         
+         return inertia('Question/Create', [
+             'cadres' => $cadres,
+             'nursingProcesses' => $nursingProcesses,
+             'taxonomyLevels' => $taxonomyLevels,
+             'description_id' => $description_id,
+         ]);
+     }
+     
     
 
     /**

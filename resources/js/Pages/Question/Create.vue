@@ -16,7 +16,7 @@
                 <label for="cadre" class="form-label">Select a Cadre</label>
                 <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
                     <option disabled value="">Choose a cadre</option>
-                    <option v-for="(value, key) in cadres" :key="key" :value="key"></option>
+                    <option v-for="(value, key) in cadres" :key="key" :value="key">{{ value }}</option>
                 </select>
             </div>
 
@@ -24,7 +24,7 @@
                 <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
                 <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
                     <option disabled value="">Choose a Nursing Process</option>
-                    <option v-for="(value, key) in nursingProcesses" :key="key" :value="key"></option>
+                    <option v-for="(value, key) in nursingProcesses" :key="key" :value="key">{{ value }}</option>
                 </select>
             </div>
 
@@ -32,13 +32,19 @@
                 <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
                 <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
                     <option disabled value="">Choose taxonomy</option>
-                    <option v-for="(value, key) in taxonomyLevels" :key="key" :value="key"></option>
+                    <option v-for="(value, key) in taxonomyLevels" :key="key" :value="key">{{ value }}</option>
                 </select>
             </div>
 
+
             <div class="mb-4">
                 <label for="syllabus" class="form-label">Syllabus</label>
-                <input v-model="form.syllabus" id="syllabus" name="syllabus" type="text" class="form-control" required />
+                <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
+                    <option disabled value="">Choose a syllabus</option>
+                    <option v-for="year in syllabusOptions" :key="year" :value="year">
+                        {{ year }}
+                    </option>
+                </select>
             </div>
             
             <div class="mb-4">
@@ -83,12 +89,14 @@
 </template>
 
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
-import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
+import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue";
+import { ref } from 'vue';
 
 // Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
+
 const form = useForm({
     cadre: null,
     nursing_process: null,
@@ -103,14 +111,22 @@ const form = useForm({
     correct_answer: ''
 });
 
-const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels','description_id']);
+// Receive props
+const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels', 'description_id']);
 
-// Set the description_id from the props
+// Initialize form with description_id
 form.description_id = props.description_id;
+
+const currentYear = new Date().getFullYear();
+const syllabusOptions = ref([
+    `${currentYear}-${currentYear + 1}`,
+    `${currentYear + 1}-${currentYear + 2}`,
+    `${currentYear + 2}-${currentYear + 3}`,
+    `${currentYear + 3}-${currentYear + 4}`,
+]);
 
 // Form submission method
 const inertiaSubmit = () => {
-    // Submit the form
     form.post(route('questions.store'));
 };
 </script>
