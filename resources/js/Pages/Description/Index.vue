@@ -13,7 +13,7 @@
             </div>
             <div class="card-toolbar">
                 <base-button-new class="btn-light-primary" :href="route('descriptions.create')"> 
-                    New Description 
+                    New Question Scenario 
                 </base-button-new>
                 
             </div>
@@ -36,12 +36,9 @@
                         <td>{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
                         <td v-text="stripHtmlTags(description.description)"></td>
                         <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
-                        <td class="text-left">
-                            <td>
-                                <!-- Add your action buttons here -->
-                                <button class="text-green-500 hover:text-blue-700">Edit</button>
-                                <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
-                            </td>
+                        <td>
+                            <button @click="editDescription(description.id)" class="text-green-500 hover:text-blue-700">Edit</button>
+                            <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
                         </td>
                     </tr>
                     </tbody>
@@ -86,4 +83,8 @@ const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
 watch(() => filterBy.per_page, (newVal) => {
     router.get(route('descriptions.index', { search: props.filters.search, ...filterBy }));
 });
+
+const editDescription = (descriptionId) => {
+    router.get(route('descriptions.edit', descriptionId));
+};
 </script>

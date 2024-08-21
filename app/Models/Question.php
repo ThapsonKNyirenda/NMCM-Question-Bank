@@ -15,6 +15,10 @@ class Question extends Model
 
     protected $fillable = [
         'uuid',
+        'cadre_id',
+        'nursing_process_id',
+        'taxonomy_level_id',
+        'syllabus',
         'description_id',
         'title',
         'choice_a',
@@ -27,6 +31,10 @@ class Question extends Model
 
     protected $searchable = [
         'uuid',
+        'cadre_id',
+        'nursing_process_id',
+        'taxonomy_level_id',
+        'syllabus',
         'description_id',
         'title',
         'choice_a',
@@ -34,7 +42,7 @@ class Question extends Model
         'choice_c',
         'choice_d',
         'correct_answer',
-        'status'       
+        'status'    
     ];
 
     public function description(){

@@ -25,7 +25,7 @@ class StoreQuestionRequest extends FormRequest
             'cadre_id' => 'bigint',
             'nursing_process_id' => 'bigint',
             'taxonomy_level_id' => 'bigint',
-            // 'syllabus' => 'string',
+            'syllabus' => 'string',
             'description_id' => 'required|exists:descriptions,id',
             'title' => 'required|string|max:255',
             'choice_a' => 'required|string|max:255',

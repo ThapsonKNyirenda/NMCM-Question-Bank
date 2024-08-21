@@ -98,9 +98,9 @@ import { ref } from 'vue';
 defineOptions({ layout: AuthenticatedLayout });
 
 const form = useForm({
-    cadre: null,
-    nursing_process: null,
-    taxonomy: null,
+    cadre: '',
+    nursing_process: '',
+    taxonomy: '',
     syllabus: '',
     description_id: null,  // This will be set when the component is created
     title: '',
@@ -119,10 +119,10 @@ form.description_id = props.description_id;
 
 const currentYear = new Date().getFullYear();
 const syllabusOptions = ref([
-    `${currentYear}-${currentYear + 1}`,
-    `${currentYear + 1}-${currentYear + 2}`,
-    `${currentYear + 2}-${currentYear + 3}`,
-    `${currentYear + 3}-${currentYear + 4}`,
+    `${currentYear}`,
+    `${currentYear + 1}`,
+    `${currentYear + 2}`,
+    `${currentYear + 3}`,
 ]);
 
 // Form submission method

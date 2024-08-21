@@ -65,6 +65,20 @@ class DescriptionController extends Controller
 }
 
     
+public function edit($id)
+{
+    $description = Description::findOrFail($id);
+    $diseaseAreas = DiseaseArea::pluck('name', 'id');
+    $questions = Question::where('description_id', $id)->get();
+    
+    
+    return Inertia::render('Description/Edit', [
+        'description' => $description,
+        'diseaseAreas' => $diseaseAreas,
+        'description_id' => $id,
+        'questions' => $questions,
+    ]);
+}
 
 
 
@@ -116,10 +130,7 @@ class DescriptionController extends Controller
      * @param Description $description
      * @return Response
      */
-    public function edit()
-    {
-        
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -128,9 +139,20 @@ class DescriptionController extends Controller
      * @param Category $category
      * @return RedirectResponse
      */
-    public function update()
+    public function update(Request $request, $id)
     {
-        
+        $request->validate([
+            'disease_area' => 'required',
+            'question_description' => 'required|string',
+        ]);
+    
+        $description = Description::findOrFail($id);
+        $description->update([
+            'disease_area_id' => $request->disease_area,
+            'description' => $request->question_description,
+        ]);
+    
+        return redirect()->route('descriptions.index')->with('success', 'Description updated successfully');
     }
       
 

@@ -70,11 +70,11 @@
                 <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_c)"></td>
                 <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
                 <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
-                <td class="px-4 py-2 border-b">
-                    <!-- Add your action buttons here -->
-                    <button class="text-blue-500 hover:text-blue-700">Edit</button>
+                <td>
+                    <button class="text-green-500 hover:text-blue-700">Edit</button>
                     <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
                 </td>
+
             </tr>
         </tbody>
     </table>
@@ -103,8 +103,7 @@ const props = defineProps(['diseaseAreas', 'questions', 'description_id']);
 
 // Initialize form with default values or fetched values
 const form = useForm({
-    disease_area: null,
-    syllabus: null,
+    disease_area: '',
     question_description: null
 });
 
@@ -125,6 +124,7 @@ const fetchDescriptionData = async (description_id) => {
     form.question_description = description.description; // Updated to match your database column
     
 };
+
 
 if (props.description_id) {
     // Fetch data for the given description_id and populate the form fields

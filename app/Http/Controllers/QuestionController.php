@@ -62,10 +62,10 @@ class QuestionController extends Controller
             'title' => $request->input('title'),
             'choice_a' => $request->input('choice_a'),
             'choice_b' => $request->input('choice_b'),
-            'choice_c' => $request->input('choice'),
+            'choice_c' => $request->input('choice_c'),
             'choice_d' => $request->input('choice_d'),
             'correct_answer' => $request->input('correct_answer'),
-            // 'syllabus' => $request->input('syllabus'),
+            'syllabus' => $request->input('syllabus'),
             'status' => 'unset'
 
         ]);
