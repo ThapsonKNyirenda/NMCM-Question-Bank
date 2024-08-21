@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use App\Models\Description;
+use App\Models\TaxonomyLevel;
+use App\Models\NursingProcess;
+use App\Models\Cadre;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Requests\StoreQuestionRequest;
 
 class QuestionController extends Controller
 {
@@ -19,11 +23,20 @@ class QuestionController extends Controller
      */
 
     public function create(Request $request)
+    
     {
+        //retrieving relationships
+        $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+        $cadres = Cadre::pluck('name', 'id');
+        $nursingProcesses = NursingProcess::pluck('name', 'id');
+        
         // Retrieve the description_id from the query parameters
         $description_id = $request->query('description_id');
     
         return inertia('Question/Create', [
+            'cadres' => $cadres,
+            'nursingProcesses' => $nursingProcesses,
+            'taxonomyLevels' => $taxonomyLevels,
             'description_id' => $description_id,
         ]);
     }
@@ -32,27 +45,33 @@ class QuestionController extends Controller
     /**
      * Store a newly created question in storage.
      *
-     * @param Request $request
+     * @param StoreQuestionRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreQuestionRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'description_id' => 'required|exists:descriptions,id',
-            'title' => 'required|string|max:255',
-            'choice_a' => 'required|string|max:255',
-            'choice_b' => 'required|string|max:255',
-            'choice_c' => 'required|string|max:255',
-            'choice_d' => 'required|string|max:255',
-            'correct_answer' => 'required|in:A,B,C,D',
-            'status' => 'string',
-        ]);
 
         // Create the question
-        $question = Question::create(array_merge($validatedData, ['status' => 'unset']));
+        //$question = Question::create(array_merge($validatedData, ['status' => 'unset']));
 
+        $question = Question::create([
+            'cadre_id' => $request->input('cadre'),
+            'nursing_process_id' => $request->input('nursing_process'),
+            'taxonomy_level_id' => $request->input('taxonomy'),
+            'description_id' => $request->input('description_id'),
+            'title' => $request->input('title'),
+            'choice_a' => $request->input('choice_a'),
+            'choice_b' => $request->input('choice_b'),
+            'choice_c' => $request->input('choice'),
+            'choice_d' => $request->input('choice_d'),
+            'correct_answer' => $request->input('correct_answer'),
+            // 'syllabus' => $request->input('syllabus'),
+            'status' => 'unset'
+
+        ]);
+        
         // Redirect back to the description create page with the description_id
-        return redirect()->route('descriptions.create', ['description_id' => $validatedData['description_id']])
+        return redirect()->route('descriptions.create', ['description_id' => $question['description_id']])
                          ->with('success', 'Question added successfully');
     }
 }

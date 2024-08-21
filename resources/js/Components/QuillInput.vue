@@ -31,7 +31,8 @@ const options = {
             ['link', 'image'],
         ],
     },
-    theme: 'snow'
+    theme: 'snow',
+    direction: 'ltr' // Ensure LTR by default
 };
 
 let quill = null;
@@ -40,7 +41,7 @@ onMounted(() => {
     quill = new Quill('#quill-editor', options);
     
     // Initialize with the value from v-model
-    quill.root.innerHTML = props.modelValue;
+    quill.root.innerHTML = props.modelValue || '';
 
     // Update v-model when the editor content changes
     quill.on('text-change', () => {
@@ -50,18 +51,15 @@ onMounted(() => {
 
 // Watch for changes in modelValue prop to update the editor
 watch(() => props.modelValue, (newValue) => {
-    if (quill) {
+    if (quill && quill.root.innerHTML !== newValue) {
         quill.root.innerHTML = newValue;
     }
 });
-
-// Optional: method to insert placeholder text
-const insert = (placeholder) => {
-    if (quill) {
-        const range = quill.getSelection();
-        if (range) {
-            quill.insertText(range.index, placeholder, 'normal', true);
-        }
-    }
-};
 </script>
+
+<style scoped>
+.quill-editor {
+    direction: ltr;
+    text-align: left;
+}
+</style>

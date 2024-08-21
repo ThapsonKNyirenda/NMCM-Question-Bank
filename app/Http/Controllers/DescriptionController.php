@@ -33,7 +33,7 @@ class DescriptionController extends Controller
     public function index(Request $request)
     {
         // Eager load related models
-        $descriptions = Description::with(['cadre', 'nursingProcess', 'diseaseArea', 'taxonomyLevel'])
+        $descriptions = Description::with(['diseaseArea'])
                             ->paginate($request->get('per_page', 10));
 
     
@@ -51,18 +51,14 @@ class DescriptionController extends Controller
      */
     public function create(Request $request)
 {
-    $cadres = Cadre::pluck('name', 'id');
-    $nursingProcesses = NursingProcess::pluck('name', 'id');
+    
     $diseaseAreas = DiseaseArea::pluck('name', 'id');
-    $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+
     
     $questions = Question::where('description_id', $request->description_id)->get();
 
-    return inertia('Description/Create', [
-        'cadres' => $cadres,
-        'nursingProcesses' => $nursingProcesses,
+    return inertia('Description/Create', [ 
         'diseaseAreas' => $diseaseAreas,
-        'taxonomyLevels' => $taxonomyLevels,
         'questions' => $questions,
         'description_id' => $request->description_id, // Pass the description_id
     ]);
@@ -84,14 +80,14 @@ class DescriptionController extends Controller
     $description = Description::create([
         'cadre_id' => $request->input('cadre'),
         'nursing_process_id' => $request->input('nursing_process'),
-        'disease_area_id' => $request->input('disease_area'),
         'taxonomy_level_id' => $request->input('taxonomy'),
         'syllabus' => $request->input('syllabus'),
+        'disease_area_id' => $request->input('disease_area'),
         'description' => $request->input('question_description'),
     ]);
 
         return redirect()->route('descriptions.create', ['description_id' => $description->id])
-                        ->with('success', 'Question description added successfully. You can now add questions.');
+                        ->with('success', 'Question Scenario added successfully. You can now add questions.');
 }
 
     

@@ -1,30 +1,14 @@
 <template>
-    <Head title="Add Question Description" />
+    <Head title="Add Question Scenario" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
-                <h2 class="mb-1 text-xl font-semibold">Add Question Description</h2>
-                <div class="text-base fw-semibold text-muted">Add a question Description</div>
+                <h2 class="mb-1 text-xl font-semibold">Add Question Scenario</h2>
+                <div class="text-base fw-semibold text-muted">Add a question Scenario</div>
             </div>
         </template>
         <form method="POST" :action="route('descriptions.store')" novalidate class="w-3/4 mx-auto needs-validation"
-            @submit.prevent.stop="submit(inertiaSubmit, 'add the question Description?')">
-
-            <div class="mb-4">
-                <label for="cadre" class="form-label">Select a Cadre</label>
-                <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" :disabled="description_id" required>
-                    <option disabled value="">Choose a cadre</option>
-                    <option v-for="(value, key) in cadres" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
-                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" :disabled="description_id" required>
-                    <option disabled value="">Choose a Nursing Process</option>
-                    <option v-for="(value, key) in nursingProcesses" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
+            @submit.prevent.stop="submit(inertiaSubmit, 'add the question Scenario?')">
 
             <div class="mb-4">
                 <label for="diseaseArea" class="form-label">Select a Disease Area</label>
@@ -34,20 +18,7 @@
                 </select>
             </div>
 
-            <div class="mb-4">
-                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
-                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" :disabled="description_id" required>
-                    <option disabled value="">Choose taxonomy</option>
-                    <option v-for="(value, key) in taxonomyLevels" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="syllabus" class="form-label">Syllabus</label>
-                <input v-model="form.syllabus" id="syllabus" name="syllabus" type="text" class="form-control" :disabled="description_id" required />
-            </div>
-
-            <label class="form-label required">Question Description</label>
+            <label class="form-label required">Question Scenario</label>
             <div class="mandatory-fields">
                 <quill-input v-model="form.question_description" :placeholder="placeholders"/>
             </div>
@@ -61,7 +32,7 @@
     <base-card-main class="mt-6 card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
-                <h2 class="mb-1 text-xl font-semibold">Questions for Selected Description</h2>
+                <h2 class="mb-1 text-xl font-semibold">Questions for Selected Scenario</h2>
             </div>
         </template>
 
@@ -125,17 +96,14 @@ import { computed } from 'vue';
 // Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
 
-store.pageTitle = 'Question Description';
-store.setBreadCrumb({ Descriptions: route('descriptions.index') });
+store.pageTitle = 'Question Scenario';
+store.setBreadCrumb({ Scenarios: route('descriptions.index') });
 
-const props = defineProps(['cadres', 'nursingProcesses', 'diseaseAreas', 'taxonomyLevels', 'questions', 'description_id']);
+const props = defineProps(['diseaseAreas', 'questions', 'description_id']);
 
 // Initialize form with default values or fetched values
 const form = useForm({
-    cadre: null,
-    nursing_process: null,
     disease_area: null,
-    taxonomy: null,
     syllabus: null,
     question_description: null
 });

@@ -15,20 +15,13 @@ class Description extends Model
 
     protected $fillable = [
         'uuid',
-        'cadre_id',
-        'nursing_process_id',
         'disease_area_id',
-        'taxonomy_level_id',
-        'syllabus',
         'description'        
     ];
 
     public array $searchable = [
         'uuid',
-        'cadre_id',
-        'nursing_process_id',
         'disease_area_id',
-        'taxonomy_level_id',
         'description'  
     ];
 

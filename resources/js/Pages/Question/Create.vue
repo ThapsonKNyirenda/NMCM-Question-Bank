@@ -4,13 +4,42 @@
         <template #header>
             <div class="flex-col card-title flex-column">
                 <h2 class="mb-1 text-xl font-semibold">Add Question</h2>
-                <div class="text-base fw-semibold text-muted">Add a new question to the description</div>
+                <div class="text-base fw-semibold text-muted">Add a new question to the Scenario</div>
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
         @submit.prevent="inertiaSubmit">
             
             <input type="hidden" v-model="form.description_id" name="description_id">
+
+            <div class="mb-4">
+                <label for="cadre" class="form-label">Select a Cadre</label>
+                <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
+                    <option disabled value="">Choose a cadre</option>
+                    <option v-for="(value, key) in cadres" :key="key" :value="key"></option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
+                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
+                    <option disabled value="">Choose a Nursing Process</option>
+                    <option v-for="(value, key) in nursingProcesses" :key="key" :value="key"></option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
+                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
+                    <option disabled value="">Choose taxonomy</option>
+                    <option v-for="(value, key) in taxonomyLevels" :key="key" :value="key"></option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="syllabus" class="form-label">Syllabus</label>
+                <input v-model="form.syllabus" id="syllabus" name="syllabus" type="text" class="form-control" required />
+            </div>
             
             <div class="mb-4">
                 <label for="title" class="form-label">Question Title</label>
@@ -61,6 +90,10 @@ import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
 // Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
 const form = useForm({
+    cadre: null,
+    nursing_process: null,
+    taxonomy: null,
+    syllabus: '',
     description_id: null,  // This will be set when the component is created
     title: '',
     choice_a: '',
@@ -70,7 +103,7 @@ const form = useForm({
     correct_answer: ''
 });
 
-const props = defineProps(['description_id']);
+const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels','description_id']);
 
 // Set the description_id from the props
 form.description_id = props.description_id;

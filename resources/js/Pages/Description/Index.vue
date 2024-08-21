@@ -24,12 +24,8 @@
                     <thead>
                         <tr>
                             <th>C.No</th>
-                            <th>Cadre</th>
-                            <th>Nursing Process</th>
                             <th>Disease Area</th>
-                            <th>Taxonomy</th>
-                            <th>Syllabus</th>
-                            <th>Status</th>
+                            <th>description</th>
                             <th>Date created</th>
                             <th>Actions</th>
                         </tr>
@@ -37,15 +33,11 @@
                     <tbody class="font-medium text-gray-600">
                         <tr v-for="(description, index) in descriptions.data" :key="description.id">
                         <td v-text="index + 1"></td>
-                        <td>{{ description.cadre ? description.cadre.name : 'N/A' }}</td>
-                        <td>{{ description.nursing_process ? description.nursing_process.name : 'N/A' }}</td>
                         <td>{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
-                        <td>{{ description.taxonomy_level ? description.taxonomy_level.name : 'N/A' }}</td>
-                        <td>{{ description.syllabus }}</td>
-                        <td>{{ description.status }}</td>
+                        <td v-text="stripHtmlTags(description.description)"></td>
                         <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
-                        <td class="text-right">
-                            <td class="px-4 py-2 border-b">
+                        <td class="text-left">
+                            <td>
                                 <!-- Add your action buttons here -->
                                 <button class="text-green-500 hover:text-blue-700">Edit</button>
                                 <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>

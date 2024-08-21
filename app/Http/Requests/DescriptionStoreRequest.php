@@ -22,11 +22,8 @@ class DescriptionStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cadre_id' => 'bigint',
-            'nursing_process_id' => 'bigint',
+
             'disease_area_id' => 'bigint',
-            'taxonomy_level_id' => 'bigint',
-            'syllabus' => 'string',
             'description' =>'text'
         ];
     }
