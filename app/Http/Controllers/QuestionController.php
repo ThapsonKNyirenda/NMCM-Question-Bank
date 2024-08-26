@@ -71,7 +71,6 @@ class QuestionController extends Controller
         ]);
         
         // Redirect back to the description create page with the description_id
-        return redirect()->route('descriptions.create', ['description_id' => $question['description_id']])
-                         ->with('success', 'Question added successfully');
+        return back()->with('success', 'Question added successfully');
     }
 }
