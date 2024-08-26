@@ -16,13 +16,15 @@ class Description extends Model
     protected $fillable = [
         'uuid',
         'disease_area_id',
-        'description'        
+        'description',
+        'status'        
     ];
 
     public array $searchable = [
         'uuid',
         'disease_area_id',
-        'description'  
+        'description' ,
+        'status' 
     ];
 
     

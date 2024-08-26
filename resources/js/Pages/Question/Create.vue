@@ -3,8 +3,8 @@
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
-                <h2 class="mb-1 text-xl font-semibold">Add Question</h2>
-                <div class="text-base fw-semibold text-muted">Add a new question to the Scenario</div>
+                <h2 class="mb-1 text-xl font-semibold">Add Question Item</h2>
+                <div class="text-base fw-semibold text-muted">Add a new question item to the scenario</div>
             </div>
         </template>
         <form method="POST" :action="route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
@@ -48,7 +48,7 @@
             </div>
             
             <div class="mb-4">
-                <label for="title" class="form-label">Question Title</label>
+                <label for="title" class="form-label">Question Item Title</label>
                 <quill-input v-model="form.title" placeholder="Enter the question title" />
             </div>
 

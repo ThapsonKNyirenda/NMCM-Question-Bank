@@ -21,7 +21,7 @@
 
                 <SidebarMenuItem :href="route('descriptions.index')" >
                     <template #icon><i class="ri-question-mark"></i> </template>
-                    Descriptions
+                    Questions
                 </SidebarMenuItem>
 
                 <SidebarMenuItem :href="route('unvettedquestions.index')"

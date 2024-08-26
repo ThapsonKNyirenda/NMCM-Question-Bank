@@ -98,6 +98,7 @@ public function edit($id)
         'syllabus' => $request->input('syllabus'),
         'disease_area_id' => $request->input('disease_area'),
         'description' => $request->input('question_description'),
+        'status'=>'saved',
     ]);
 
         return redirect()->route('descriptions.create', ['description_id' => $description->id])

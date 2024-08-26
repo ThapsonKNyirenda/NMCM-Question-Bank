@@ -25,7 +25,8 @@
                         <tr>
                             <th>#</th>
                             <th>Disease Area</th>
-                            <th>description</th>
+                            <th>Description</th>
+                            <th>Status</th>
                             <th>Date created</th>
                             <th>Actions</th>
                         </tr>
@@ -35,6 +36,7 @@
                         <td v-text="index + 1"></td>
                         <td>{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
                         <td v-text="stripHtmlTags(description.description)"></td>
+                        <td v-text="stripHtmlTags(description.status)"></td>
                         <td>{{ new Date(description.created_at).toLocaleDateString() }}</td>
                         <td>
                             <button @click="editDescription(description.id)" class="text-green-500 hover:text-blue-700">Edit</button>

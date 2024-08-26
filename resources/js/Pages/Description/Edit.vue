@@ -32,7 +32,7 @@
     <base-card-main class="mt-6 card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
-                <h2 class="mb-1 text-xl font-semibold">Questions for Selected Scenario</h2>
+                <h2 class="mb-1 text-xl font-semibold">Question Items for Selected Scenario</h2>
             </div>
         </template>
 
@@ -43,7 +43,7 @@
                 class="btn-light-primary"
                 :href="createQuestionUrl"
             >
-                New Question
+                New Question Item
             </base-button-new>
         </div>
 

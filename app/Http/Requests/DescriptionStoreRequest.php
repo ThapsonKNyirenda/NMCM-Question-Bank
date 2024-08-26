@@ -24,7 +24,8 @@ class DescriptionStoreRequest extends FormRequest
         return [
 
             'disease_area_id' => 'bigint',
-            'description' =>'text'
+            'description' =>'text',
+            'status'=>''
         ];
     }
 
