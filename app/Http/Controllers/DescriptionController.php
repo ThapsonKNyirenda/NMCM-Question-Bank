@@ -35,7 +35,9 @@ class DescriptionController extends Controller
         Description::whereIn('id', $request->ids)->update(['status' => $request->status]);
 
         // Return a success response
-        return response()->json(['message' => 'Status updated successfully']);
+        // return response()->json(['message' => 'Status updated successfully']);
+
+        return redirect()->route('descriptions.index')->with('success', 'Successfully Submitted the questions');
     }
 
 

@@ -1,6 +1,9 @@
 <template>
     <Head title="Question Scenarios List" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
+        <div v-if="successMessage" class="alert alert-success">
+            {{ successMessage }}
+        </div>
         <template #header>
             <div class="w-1/2 card-title">
                 <div class="relative flex items-center w-full my-1 mr-5">
@@ -12,9 +15,9 @@
                 </div>
             </div>
             <div class="flex space-x-4 card-toolbar">
-                <!-- Submit Button -->
-                <button @click="submitUnvetted" class="btn btn-danger">Mark as Unvetted</button>
-                <!-- New Question Scenario Button -->
+                <button @click="submitUnvetted" class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    Submit
+                </button>
                 <base-button-new class="btn-light-primary" :href="route('descriptions.create')"> 
                     New Question Scenario 
                 </base-button-new>
@@ -49,8 +52,12 @@
                             <td class="px-4 py-3">{{ new Date(description.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
                             <td class="px-4 py-3">{{ new Date(description.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
                             <td class="flex px-4 py-3 space-x-2">
-                                <button @click="editDescription(description.id)" class="text-green-500 hover:text-green-700">Edit</button>
-                                <button @click="deleteDescription(description.id)" class="text-red-500 hover:text-red-700">Delete</button>
+                                <button @click="editDescription(description.id)" class="text-green-500 hover:text-green-700">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button @click="confirmDelete(description.id)" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash-alt"></i>Delete
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -72,10 +79,29 @@
 import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { store } from "@/store.js";
-import { reactive, ref, watch } from "vue";
+import { reactive, ref, watch, onMounted } from "vue";
 import axios from 'axios';
 
 defineOptions({ layout: AuthenticatedLayout });
+
+const successMessage = ref(route().params.successMessage || '');
+
+watch(() => route().params.successMessage, (newValue) => {
+    if (newValue) {
+        successMessage.value = newValue;
+        setTimeout(() => {
+            successMessage.value = '';
+        }, 3000); // Adjust the time as needed
+    }
+});
+
+onMounted(() => {
+    if (successMessage.value) {
+        setTimeout(() => {
+            successMessage.value = '';
+        }, 3000); // Adjust the time as needed
+    }
+});
 
 const props = defineProps({
     descriptions: Object,
@@ -114,22 +140,40 @@ const submitUnvetted = async () => {
     try {
         const payload = { ids: selectedRows.value, status: 'unvetted' };
         const response = await axios.post(route('descriptions.update-status'), payload);
-        alert(response.data.message); // Show success notification
-        // Optionally, refresh the page or the data
+        router.get(route('descriptions.index'), {
+            preserveScroll: true,
+            successMessage: 'Successfully Submitted the questions',
+        });
     } catch (error) {
-        alert('Failed to update status.'); // Show error notification
+        console.error('Error:', error); // Debugging log
+        // alert('Failed to update status.');
     }
 };
 
+// Method to confirm and delete a description
+const confirmDelete = (descriptionId) => {
+    if (confirm('Are you sure you want to delete this description?')) {
+        deleteDescription(descriptionId);
+    }
+};
+
+// Method to delete a description
+const deleteDescription = async (descriptionId) => {
+    try {
+        await axios.delete(route('descriptions.destroy', descriptionId));
+        // Optionally, you can refresh the page or update the data
+        router.get(route('descriptions.index'), {
+            preserveScroll: true,
+            successMessage: 'Description deleted successfully',
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        // alert('Failed to delete description.');
+    }
+};
 
 // Method to edit a description
 const editDescription = (descriptionId) => {
     router.get(route('descriptions.edit', descriptionId));
-};
-
-// Method to delete a description
-const deleteDescription = (descriptionId) => {
-    // Replace with your actual delete method
-    console.log('Deleting row with ID:', descriptionId);
 };
 </script>

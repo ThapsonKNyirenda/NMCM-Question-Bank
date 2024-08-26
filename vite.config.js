@@ -20,4 +20,9 @@ export default defineConfig({
     // optimizeDeps: {
     //     exclude: ['vue-select']
     // }
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
+    },
 });

@@ -117,9 +117,9 @@ const vetSelectedQuestions = () => {
         console.log('Selected Questions:', selectedQuestions.value); // Debugging log
         router.post(route('unvettedquestions.bulkVet'), { uuids: selectedQuestions.value })
             .then(response => {
-                console.log('Response:', response); // Debugging log
-                selectedQuestions.value = []; // Clear the selected questions
-                router.reload(); // Reload the page to reflect changes
+                console.log('Response:', response); 
+                selectedQuestions.value = [];
+                router.reload(); 
             })
             .catch(error => {
                 console.error('Error:', error); // Debugging log
