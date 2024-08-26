@@ -23,6 +23,21 @@ class DescriptionController extends Controller
          //$this->authorizeResource( Category ::class, 'category');
     }
 
+    public function updateStatus(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'ids' => 'required|array',
+            'status' => 'required|string'
+        ]);
+
+        // Retrieve the selected descriptions and update their status
+        Description::whereIn('id', $request->ids)->update(['status' => $request->status]);
+
+        // Return a success response
+        return response()->json(['message' => 'Status updated successfully']);
+    }
+
 
     /**
      * Display a listing of the resource.

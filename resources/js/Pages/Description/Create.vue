@@ -97,7 +97,7 @@ import { computed } from 'vue';
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'Question Scenario';
-store.setBreadCrumb({ Scenarios: route('descriptions.index') });
+store.setBreadCrumb({ Scenarios: route('descriptions.index')});
 
 const props = defineProps(['diseaseAreas', 'questions', 'description_id']);
 

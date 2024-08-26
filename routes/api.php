@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Question;
 use App\Http\Controllers\DescriptionController;
 
+
 // routes/api.php
 
 // Route::get('questions/descriptions', [QuestionController::class, 'descriptionsByCadre']);
@@ -17,6 +18,7 @@ use App\Http\Controllers\DescriptionController;
 
 
 Route::get('/descriptions/{id}', [DescriptionController::class, 'show']);
+Route::post('/descriptions/update-status', [DescriptionController::class, 'updateStatus'])->name('descriptions.update-status');
 
 
 Route::get('/user', function (Request $request) {
