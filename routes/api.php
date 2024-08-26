@@ -19,6 +19,7 @@ use App\Http\Controllers\DescriptionController;
 
 Route::get('/descriptions/{id}', [DescriptionController::class, 'show']);
 Route::post('/descriptions/update-status', [DescriptionController::class, 'updateStatus'])->name('descriptions.update-status');
+Route::delete('/descriptions/{id}', [DescriptionController::class, 'destroy']);
 
 
 Route::get('/user', function (Request $request) {

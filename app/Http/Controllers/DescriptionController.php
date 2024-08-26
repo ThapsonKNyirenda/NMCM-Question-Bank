@@ -177,8 +177,22 @@ public function edit($id)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy($id)
     {
+        try {
+            $description = Description::findOrFail($id);
+            $description->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Description deleted successfully'
+            ]);
 
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete description'
+            ]);
+        }
     }
 }

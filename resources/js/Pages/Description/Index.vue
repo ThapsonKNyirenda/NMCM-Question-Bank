@@ -18,6 +18,7 @@
                 <button @click="submitUnvetted" class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
                     Submit
                 </button>
+
                 <base-button-new class="btn-light-primary" :href="route('descriptions.create')"> 
                     New Question Scenario 
                 </base-button-new>
@@ -51,14 +52,15 @@
                             <td class="px-4 py-3" v-text="stripHtmlTags(description.status)"></td>
                             <td class="px-4 py-3">{{ new Date(description.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
                             <td class="px-4 py-3">{{ new Date(description.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
-                            <td class="flex px-4 py-3 space-x-2">
-                                <button @click="editDescription(description.id)" class="text-green-500 hover:text-green-700">
-                                    <i class="fas fa-edit"></i> Edit
+                            <td class="flex px-4 py-3 space-x-4">
+                                <button @click="editDescription(description.id)" class="flex items-center text-green-500 hover:text-green-700">
+                                    <i class="mr-2 text-xl fas fa-edit"></i>
                                 </button>
-                                <button @click="confirmDelete(description.id)" class="text-red-500 hover:text-red-700">
-                                    <i class="fas fa-trash-alt"></i>Delete
+                                <button @click="confirmDelete(description.id)" class="flex items-center text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
+
                         </tr>
                     </tbody>
                 </table>
@@ -79,8 +81,12 @@
 import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { store } from "@/store.js";
-import { reactive, ref, watch, onMounted } from "vue";
+import { reactive, ref, watch } from "vue";
 import axios from 'axios';
+import { onMounted } from 'vue';
+import Swal from 'sweetalert2';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 defineOptions({ layout: AuthenticatedLayout });
 
@@ -140,6 +146,7 @@ const submitUnvetted = async () => {
     try {
         const payload = { ids: selectedRows.value, status: 'unvetted' };
         const response = await axios.post(route('descriptions.update-status'), payload);
+        // Navigate to the index page and pass the success message as a parameter
         router.get(route('descriptions.index'), {
             preserveScroll: true,
             successMessage: 'Successfully Submitted the questions',
@@ -150,24 +157,34 @@ const submitUnvetted = async () => {
     }
 };
 
-// Method to confirm and delete a description
+// Method to handle the confirmation and deletion of a description
 const confirmDelete = (descriptionId) => {
-    if (confirm('Are you sure you want to delete this description?')) {
-        deleteDescription(descriptionId);
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won’t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteDescription(descriptionId);
+        }
+    });
 };
 
 // Method to delete a description
 const deleteDescription = async (descriptionId) => {
     try {
         await axios.delete(route('descriptions.destroy', descriptionId));
-        // Optionally, you can refresh the page or update the data
+        // Reload the page or update the list of descriptions after successful deletion
         router.get(route('descriptions.index'), {
             preserveScroll: true,
             successMessage: 'Description deleted successfully',
         });
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error:', error); // Debugging log
         // alert('Failed to delete description.');
     }
 };
