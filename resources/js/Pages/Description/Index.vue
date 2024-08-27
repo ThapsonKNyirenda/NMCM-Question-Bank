@@ -48,7 +48,7 @@
                             </td>
                             <td class="px-4 py-3" v-text="index + 1"></td>
                             <td class="px-4 py-3">{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
-                            <td class="px-4 py-3" v-text="stripHtmlTags(description.description)"></td>
+                            <td class="px-4 py-3" v-text="truncateText(stripHtmlTags(description.description), 100)"></td>
                             <td class="px-4 py-3" v-text="stripHtmlTags(description.status)"></td>
                             <td class="px-4 py-3">{{ new Date(description.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
                             <td class="px-4 py-3">{{ new Date(description.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
@@ -120,6 +120,11 @@ const stripHtmlTags = (html) => {
     return doc.body.textContent || "";
 };
 
+// Method to truncate text
+const truncateText = (text, length) => {
+    return text.length > length ? text.substring(0, length) + '...' : text;
+};
+
 store.pageTitle = 'Question Scenarios List';
 store.setBreadCrumb({ Scenarios: null });
 
@@ -181,7 +186,7 @@ const deleteDescription = async (descriptionId) => {
         // Reload the page or update the list of descriptions after successful deletion
         router.get(route('descriptions.index'), {
             preserveScroll: true,
-            successMessage: 'Description deleted successfully',
+            successMessage: 'Question scenario deleted successfully',
         });
     } catch (error) {
         console.error('Error:', error); // Debugging log
