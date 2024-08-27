@@ -95,4 +95,42 @@ class QuestionController extends Controller
     ]);
 }
 
+public function update(Request $request, $id): RedirectResponse
+{
+    // Validate the request data
+    $validatedData = $request->validate([
+        'cadre' => 'required|exists:cadres,id',
+        'nursing_process' => 'required|exists:nursing_processes,id',
+        'taxonomy' => 'required|exists:taxonomy_levels,id',
+        'syllabus' => 'required|string|max:4',
+        'title' => 'required|string|max:255',
+        'choice_a' => 'required|string|max:255',
+        'choice_b' => 'required|string|max:255',
+        'choice_c' => 'required|string|max:255',
+        'choice_d' => 'required|string|max:255',
+        'correct_answer' => 'required|string|in:A,B,C,D',
+    ]);
+
+    // Find the question by ID
+    $question = Question::findOrFail($id);
+
+    // Update the question with the validated data
+    $question->update([
+        'cadre_id' => $validatedData['cadre'],
+        'nursing_process_id' => $validatedData['nursing_process'],
+        'taxonomy_level_id' => $validatedData['taxonomy'],
+        'syllabus' => $validatedData['syllabus'],
+        'title' => $validatedData['title'],
+        'choice_a' => $validatedData['choice_a'],
+        'choice_b' => $validatedData['choice_b'],
+        'choice_c' => $validatedData['choice_c'],
+        'choice_d' => $validatedData['choice_d'],
+        'correct_answer' => $validatedData['correct_answer'],
+    ]);
+
+    // Redirect back to the description creation page with a success message
+    return redirect()->route('descriptions.create', ['description_id' => $question->description_id])
+                     ->with('success', 'Question updated successfully');
+}
+
 }

@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
     //Testing routes
     Route::get('/questionblueprints/show', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionblueprints.display');
 
+    Route::put('questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
     
     Route::resources([
         'roles' => RoleController::class,

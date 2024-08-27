@@ -4,12 +4,15 @@
         <template #header>
             <div class="flex-col card-title flex-column">
                 <h2 class="mb-1 text-xl font-semibold">Edit Question Item</h2>
-                <div class="text-base fw-semibold text-muted">Edit the question item in the scenario</div>
+                <div class="text-base fw-semibold text-muted">Update the question item</div>
             </div>
         </template>
-        <form method="POST" :action="form.id ? route('questions.update', form.id) : route('questions.store')" novalidate class="w-3/4 mx-auto needs-validation"
+        <form method="POST" :action="route('questions.update', question.id)" novalidate class="w-3/4 mx-auto needs-validation"
         @submit.prevent="inertiaSubmit">
+           
+
             <input type="hidden" v-model="form.description_id" name="description_id">
+
             <div class="mb-4">
                 <label for="cadre" class="form-label">Select a Cadre</label>
                 <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
@@ -18,11 +21,70 @@
                 </select>
             </div>
 
-            <!-- Other form fields remain the same -->
+            <div class="mb-4">
+                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
+                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
+                    <option disabled value="">Choose a Nursing Process</option>
+                    <option v-for="(value, key) in nursingProcesses" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
 
-            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">
-                {{ form.id ? 'Update' : 'Save' }}
-            </base-button-submit>
+            <div class="mb-4">
+                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
+                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
+                    <option disabled value="">Choose taxonomy</option>
+                    <option v-for="(value, key) in taxonomyLevels" :key="key" :value="key">{{ value }}</option>
+                </select>
+            </div>
+
+
+            <div class="mb-4">
+                <label for="syllabus" class="form-label">Syllabus</label>
+                <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
+                    <option disabled value="">Choose a syllabus</option>
+                    <option v-for="year in syllabusOptions" :key="year" :value="year">
+                        {{ year }}
+                    </option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="title" class="form-label">Question Item Title</label>
+                <quill-input v-model="form.title" placeholder="Enter the question title" />
+            </div>
+
+            <div class="mb-4">
+                <label for="choice_a" class="form-label">Choice A</label>
+                <input type="text" v-model="form.choice_a" id="choice_a" name="choice_a" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="choice_b" class="form-label">Choice B</label>
+                <input type="text" v-model="form.choice_b" id="choice_b" name="choice_b" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="choice_c" class="form-label">Choice C</label>
+                <input type="text" v-model="form.choice_c" id="choice_c" name="choice_c" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="choice_d" class="form-label">Choice D</label>
+                <input type="text" v-model="form.choice_d" id="choice_d" name="choice_d" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="correct_answer" class="form-label">Correct Answer</label>
+                <select v-model="form.correct_answer" id="correct_answer" name="correct_answer" class="form-select" required>
+                    <option disabled value="">Choose the correct answer</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+
+            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Update</base-button-submit>
         </form>
     </base-card-main>
 </template>
@@ -30,28 +92,42 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
-import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue";
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 // Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
 
+const form = useForm({
+    cadre: '',
+    nursing_process: '',
+    taxonomy: '',
+    syllabus: '',
+    description_id: null,  // This will be set when the component is created
+    title: '',
+    choice_a: '',
+    choice_b: '',
+    choice_c: '',
+    choice_d: '',
+    correct_answer: ''
+});
+
+// Receive props
 const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels', 'description_id', 'question']);
 
-const form = useForm({
-    id: props.question ? props.question.id : null,
-    cadre: props.question ? props.question.cadre_id : '',
-    nursing_process: props.question ? props.question.nursing_process_id : '',
-    taxonomy: props.question ? props.question.taxonomy_level_id : '',
-    syllabus: props.question ? props.question.syllabus : '',
-    description_id: props.description_id,  // This will be set when the component is created
-    title: props.question ? props.question.title : '',
-    choice_a: props.question ? props.question.choice_a : '',
-    choice_b: props.question ? props.question.choice_b : '',
-    choice_c: props.question ? props.question.choice_c : '',
-    choice_d: props.question ? props.question.choice_d : '',
-    correct_answer: props.question ? props.question.correct_answer : ''
-});
+form.id = props.question.id;  
+
+// Initialize form with the existing question data
+form.cadre = props.question.cadre_id;
+form.nursing_process = props.question.nursing_process_id;
+form.taxonomy = props.question.taxonomy_level_id;
+form.syllabus = props.question.syllabus;
+form.description_id = props.question.description_id;
+form.title = props.question.title;
+form.choice_a = props.question.choice_a;
+form.choice_b = props.question.choice_b;
+form.choice_c = props.question.choice_c;
+form.choice_d = props.question.choice_d;
+form.correct_answer = props.question.correct_answer;
 
 const currentYear = new Date().getFullYear();
 const syllabusOptions = ref([
@@ -63,10 +139,6 @@ const syllabusOptions = ref([
 
 // Form submission method
 const inertiaSubmit = () => {
-    if (form.id) {
-        form.put(route('questions.update', form.id));
-    } else {
-        form.post(route('questions.store'));
-    }
+    form.put(route('questions.update', form.id));
 };
 </script>
