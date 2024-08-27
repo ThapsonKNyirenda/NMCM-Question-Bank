@@ -71,9 +71,19 @@
                 <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
                 <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
                 <td>
-                    <button class="text-green-500 hover:text-blue-700">Edit</button>
-                    <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
+                    <button 
+                        class="text-green-500 hover:text-blue-700"
+                        @click="editQuestion(question.id, description_id)"
+                    >
+                        Edit
+                    </button>
+                    <button 
+                        class="ml-2 text-red-500 hover:text-red-700"
+                    >
+                        Delete
+                    </button>
                 </td>
+
 
             </tr>
         </tbody>
@@ -148,5 +158,10 @@ const createQuestionUrl = computed(() => {
     }
     return '#'; // Return a fallback URL if description_id is not available
 });
+
+const editQuestion = (questionId, descriptionId) => {
+    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId });
+    window.location.href = editUrl;
+};
 
 </script>

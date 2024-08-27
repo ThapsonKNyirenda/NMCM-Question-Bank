@@ -74,4 +74,25 @@ class QuestionController extends Controller
         return redirect()->route('descriptions.create', ['description_id' => $question['description_id']])
                          ->with('success', 'Question added successfully');
     }
+
+    public function edit($id, Request $request)
+{
+    // Retrieve the question by ID
+    $question = Question::findOrFail($id);
+
+    // Retrieve relationships
+    $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+    $cadres = Cadre::pluck('name', 'id');
+    $nursingProcesses = NursingProcess::pluck('name', 'id');
+
+    // Pass the question data and relationships to the edit form
+    return inertia('Question/Edit', [
+        'question' => $question,
+        'cadres' => $cadres,
+        'nursingProcesses' => $nursingProcesses,
+        'taxonomyLevels' => $taxonomyLevels,
+        'description_id' => $question->description_id,
+    ]);
+}
+
 }
