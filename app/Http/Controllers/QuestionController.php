@@ -133,4 +133,21 @@ public function update(Request $request, $id): RedirectResponse
                      ->with('success', 'Question updated successfully');
 }
 
+public function destroy($id): RedirectResponse
+{
+    // Find the question by ID
+    $question = Question::findOrFail($id);
+
+    // Store the description_id before deleting the question
+    $description_id = $question->description_id;
+
+    // Delete the question
+    $question->delete();
+
+    // Redirect back to the description creation page with the description_id and a success message
+    return redirect()->route('descriptions.create', ['description_id' => $description_id])
+                     ->with('success', 'Question deleted successfully');
+}
+
+
 }

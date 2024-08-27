@@ -90,6 +90,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/questionblueprints/show', [QuestionBlueprintManagerController::class, 'showQuestionPaper'])->name('questionblueprints.display');
 
     Route::put('questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
+    Route::delete('questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+    
     
     Route::resources([
         'roles' => RoleController::class,

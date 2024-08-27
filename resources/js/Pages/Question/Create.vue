@@ -127,6 +127,6 @@ const syllabusOptions = ref([
 
 // Form submission method
 const inertiaSubmit = () => {
-    form.put(route('questions.update', { question: form.id }));  // Pass question ID here
+    form.post(route('questions.store'));
 };
 </script>

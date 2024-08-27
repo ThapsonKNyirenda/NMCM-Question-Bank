@@ -23,7 +23,6 @@
                 <quill-input v-model="form.question_description" :placeholder="placeholders"/>
             </div>
 
-
             <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing" :disabled="description_id">Save</base-button-submit>
         </form>
     </base-card-main>
@@ -38,7 +37,6 @@
 
         <!-- Add Question Button -->
         <div class="card-toolbar">
-        <!-- Button only visible if description_id is set -->
             <base-button-new
                 v-if="description_id"
                 class="btn-light-primary"
@@ -51,43 +49,42 @@
         <!-- Questions Table -->
         <div v-if="questions.length" class="mt-6">
             <table class="w-full bg-white border border-gray-200 rounded-lg shadow-sm table-auto">
-        <thead>
-            <tr class="text-gray-600 bg-gray-100">
-                <th class="px-4 py-2 border-b">Title</th>
-                <th class="px-4 py-2 border-b">Choice A</th>
-                <th class="px-4 py-2 border-b">Choice B</th>
-                <th class="px-4 py-2 border-b">Choice C</th>
-                <th class="px-4 py-2 border-b">Choice D</th>
-                <th class="px-4 py-2 border-b">Correct Answer</th>
-                <th class="px-4 py-2 border-b">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="question in questions" :key="question.id" class="hover:bg-gray-50">
-                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.title)"></td>
-                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_a)"></td>
-                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_b)"></td>
-                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_c)"></td>
-                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
-                <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
-                <td>
-                    <button 
-                        class="text-green-500 hover:text-blue-700"
-                        @click="editQuestion(question.id, description_id)"
-                    >
-                        Edit
-                    </button>
-                    <button 
-                        class="ml-2 text-red-500 hover:text-red-700"
-                    >
-                        Delete
-                    </button>
-                </td>
-
-
-            </tr>
-        </tbody>
-    </table>
+                <thead>
+                    <tr class="text-gray-600 bg-gray-100">
+                        <th class="px-4 py-2 border-b">Title</th>
+                        <th class="px-4 py-2 border-b">Choice A</th>
+                        <th class="px-4 py-2 border-b">Choice B</th>
+                        <th class="px-4 py-2 border-b">Choice C</th>
+                        <th class="px-4 py-2 border-b">Choice D</th>
+                        <th class="px-4 py-2 border-b">Correct Answer</th>
+                        <th class="px-4 py-2 border-b">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="question in questions" :key="question.id" class="hover:bg-gray-50">
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.title)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_a)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_b)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_c)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
+                        <td class="flex items-center justify-start gap-2 px-4 py-2 border-b">
+                            <button 
+                                class="text-green-500 hover:text-blue-700"
+                                @click="editQuestion(question.id, description_id)"
+                            >
+                                <i class="mr-2 text-xl fas fa-edit"></i>
+                            </button>
+                            <button 
+                                class="ml-2 text-red-500 hover:text-red-700"
+                                @click="confirmDelete(question.id)"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div v-else class="text-center text-muted">
             No questions added yet.
@@ -96,48 +93,37 @@
 </template>
 
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { store } from "@/store.js";
 import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
-import QuillInput from "@/Components/QuillInput.vue"
+import QuillInput from "@/Components/QuillInput.vue";
 import { computed } from 'vue';
+import Swal from 'sweetalert2';
+import '@fortawesome/fontawesome-free/css/all.css';
 
-// Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'Question Scenario';
 store.setBreadCrumb({ Scenarios: route('descriptions.index')});
 
 const props = defineProps(['diseaseAreas', 'questions', 'description_id']);
-
-// Initialize form with default values or fetched values
 const form = useForm({
     disease_area: '',
     question_description: null
 });
 
 const fetchDescriptionData = async (description_id) => {
-    // Fetch data from the API
     const response = await fetch(`/api/descriptions/${description_id}`);
     const description = await response.json();
     
-    // Log the fetched data to the console
     console.log("Fetched Description Data:", description);
 
-    // Update the form fields with the fetched data
-    form.cadre = description.cadre_id; // Assuming you need to map this to your form field
-    form.nursing_process = description.nursing_process_id; // Assuming you need to map this to your form field
-    form.disease_area = description.disease_area_id; // Assuming you need to map this to your form field
-    form.taxonomy = description.taxonomy_level_id; // Assuming you need to map this to your form field
-    form.syllabus = description.syllabus; // This matches the form field name
-    form.question_description = description.description; // Updated to match your database column
-    
+    form.disease_area = description.disease_area_id;
+    form.question_description = description.description;
 };
 
-
 if (props.description_id) {
-    // Fetch data for the given description_id and populate the form fields
     fetchDescriptionData(props.description_id);
 }
 
@@ -146,9 +132,7 @@ const stripHtmlTags = (html) => {
     return doc.body.textContent || "";
 };
 
-// Form submission method
 const inertiaSubmit = () => {
-    // Submit the form
     form.post(route('descriptions.store'));
 };
 
@@ -156,7 +140,7 @@ const createQuestionUrl = computed(() => {
     if (props.description_id) {
         return route('questions.create', { description_id: props.description_id });
     }
-    return '#'; // Return a fallback URL if description_id is not available
+    return '#';
 });
 
 const editQuestion = (questionId, descriptionId) => {
@@ -164,4 +148,19 @@ const editQuestion = (questionId, descriptionId) => {
     window.location.href = editUrl;
 };
 
+const confirmDelete = (questionId) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route('questions.destroy', questionId));
+        }
+    });
+};
 </script>
