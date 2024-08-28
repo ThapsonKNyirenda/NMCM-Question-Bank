@@ -100,6 +100,7 @@ import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Components/QuillInput.vue"
 import { computed, ref, onMounted } from 'vue';
+import Swal from 'sweetalert2';
 
 defineOptions({ layout: AuthenticatedLayout });
 

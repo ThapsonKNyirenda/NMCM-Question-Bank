@@ -100,11 +100,12 @@ import { submit } from "@/helpers/form_helpers.js";
 import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Components/QuillInput.vue"
 import { computed, ref, onMounted } from 'vue';
+import Swal from 'sweetalert2';
 
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'Edit Question Scenario';
-store.setBreadCrumb({ Questions: route('descriptions.index') });
+store.setBreadCrumb({ Questions: route('unvettedquestions.index') });
 
 const props = defineProps(['diseaseAreas', 'questions', 'description_id','description']);
 
@@ -138,14 +139,14 @@ const createQuestionUrl = computed(() => {
     if (props.description_id) {
         return route('questions.create', {
             description_id: props.description_id,
-            pageType: 'descEdi'
+            pageType: 'unvetEdi'
         });
     }
     return '#';
 });
 
 const editQuestion = (questionId, descriptionId) => {
-    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId }) + `?pageType=descEdi`;
+    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId }) + `?pageType=unvetEdi`;
     window.location.href = editUrl;
 };
 

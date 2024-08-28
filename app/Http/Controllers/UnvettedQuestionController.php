@@ -35,6 +35,25 @@ class UnvettedQuestionController extends Controller
         ]);
     }
 
+    public function updateStatus(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'ids' => 'required|array',
+            'status' => 'required|string'
+        ]);
+
+        // Retrieve the selected descriptions and update their status
+        Description::whereIn('id', $request->ids)->update(['status' => $request->status]);
+
+        // Return a success response
+        // return response()->json(['message' => 'Status updated successfully']);
+
+        return redirect()->back()
+        ->with('success', 'Vetting executed successfully');
+    
+    }
+
     public function bulkVet(Request $request)
     {
         $uuids = $request->input('uuids');

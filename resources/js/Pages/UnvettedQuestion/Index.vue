@@ -145,12 +145,12 @@ const toggleAllCheckboxes = () => {
 // Method to handle the submission and change status to "unvetted"
 const submitUnvetted = async () => {
     try {
-        const payload = { ids: selectedRows.value, status: 'unvetted' };
+        const payload = { ids: selectedRows.value, status: 'vetted' };
         const response = await axios.post(route('descriptions.update-status'), payload);
         // Navigate to the index page and pass the success message as a parameter
-        router.get(route('descriptions.index'), {
+        router.get(route('unvettedquestions.index'), {
             preserveScroll: true,
-            successMessage: 'Successfully Submitted the questions',
+            successMessage: 'Successfully Vetted the questions',
         });
     } catch (error) {
         console.error('Error:', error); // Debugging log

@@ -80,6 +80,9 @@ class QuestionController extends Controller
         } else if ($pageType == 'descEdi'){
             return redirect()->route('descriptions.edit', ['description' => $question['description_id']])
                  ->with('success', 'Question added successfully');
+        }else if ($pageType == 'unvetEdi'){
+            return redirect()->route('unvettedquestions.edit', ['unvettedquestion' => $question['description_id']])
+                 ->with('success', 'Question Item Updated successfully');
         }
        
     }
@@ -150,6 +153,9 @@ public function update(Request $request, $id): RedirectResponse
         } else if ($pageType == 'descEdi'){
             return redirect()->route('descriptions.edit', ['description' => $question->description_id])
                      ->with('success', 'Question updated successfully');
+        } else if  ($pageType == 'unvetEdi') {
+            return redirect()->route('unvettedquestions.edit', ['unvettedquestion' => $question->description_id])
+                     ->with('success', 'Question updated successfully');
         }
 
     // Redirect back to the description creation page with a success message
@@ -167,8 +173,7 @@ public function destroy($id): RedirectResponse
     // Delete the question
     $question->delete();
 
-    // Redirect back to the description creation page with the description_id and a success message
-    return redirect()->route('descriptions.create', ['description_id' => $description_id])
+    return redirect()->back()
                      ->with('success', 'Question deleted successfully');
 }
 

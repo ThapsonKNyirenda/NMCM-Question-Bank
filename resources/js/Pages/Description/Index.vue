@@ -157,7 +157,7 @@ const submitUnvetted = async () => {
             successMessage: 'Successfully Submitted the questions',
         });
     } catch (error) {
-        console.error('Error:', error); // Debugging log
+        console.error('Error:', error); 
         // alert('Failed to update status.');
     }
 };

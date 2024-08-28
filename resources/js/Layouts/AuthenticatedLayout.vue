@@ -4,6 +4,7 @@ import Sidebar from "@/Layouts/Sidebar.vue";
 import BaseValidation from "@/Components/BaseValidation.vue";
 import BaseFlashMessage from "@/Components/BaseFlashMessage.vue";
 import '@fortawesome/fontawesome-free/css/all.css';
+
 </script>
 <template>
     <div>
