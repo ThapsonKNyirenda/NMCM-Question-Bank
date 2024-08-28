@@ -1,144 +1,170 @@
 <template>
-    <Head title="Edit Question" />
+    <Head title="Edit Question Scenario" />
     <base-card-main class="card-main card-flush" header-classes="mt-6">
         <template #header>
             <div class="flex-col card-title flex-column">
-                <h2 class="mb-1 text-xl font-semibold">Edit Question</h2>
-                <div class="text-base fw-semibold text-muted"></div>
+                <h2 class="mb-1 text-xl font-semibold">Edit Question Scenario</h2>
+                <div class="text-base fw-semibold text-muted">Edit the question scenario</div>
             </div>
         </template>
-        <form :action="route('questions.update', props.question.uuid)" method="POST" @submit.prevent="submitForm">
-         
+        <form method="POST" :action="route('descriptions.update', { id: description_id })" novalidate class="w-3/4 mx-auto needs-validation"
+            @submit.prevent.stop="submit(inertiaSubmit, 'update the question Scenario?')">
+            <input type="hidden" name="_method" value="PUT">
             
-            <div class="mb-4">
-                <label for="cadre" class="form-label">Select a Cadre</label>
-                <select v-model="form.cadre" id="cadre" name="cadre" class="form-select" required>
-                    <option disabled value="">Choose a cadre</option>
-                    <option v-for="(value, key) in Cadre" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="nurseProcess" class="form-label">Select a Nursing Process</label>
-                <select v-model="form.nursing_process" id="nurseProcess" name="nursing_process" class="form-select" required>
-                    <option disabled value="">Choose a Nursing Process</option>
-                    <option v-for="(value, key) in nurseProcess" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
             <div class="mb-4">
                 <label for="diseaseArea" class="form-label">Select a Disease Area</label>
                 <select v-model="form.disease_area" id="diseaseArea" name="disease_area" class="form-select" required>
                     <option disabled value="">Choose a Disease Area</option>
-                    <option v-for="(value, key) in diseaseArea" :key="key" :value="key">{{ value }}</option>
+                    <option v-for="(value, key) in diseaseAreas" :key="key" :value="key">{{ value }}</option>
                 </select>
             </div>
 
-            <div class="mb-4">
-                <label for="taxonomy" class="form-label">Select Taxonomy Level</label>
-                <select v-model="form.taxonomy" id="taxonomy" name="taxonomy" class="form-select" required>
-                    <option disabled value="">Choose taxonomy</option>
-                    <option v-for="(value, key) in taxonomy" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="syllabus" class="form-label">Select a Syllabus</label>
-                <select v-model="form.syllabus" id="syllabus" name="syllabus" class="form-select" required>
-                    <option disabled value="">Choose a Syllabus</option>
-                    <option v-for="(value, key) in Syllabus" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-
-            <base-form-input type="text" label="Question Title" id="title" name="title" v-model="form.title" required />
-
-            <label class="form-label required">Question Description</label>
+            <label class="form-label required">Question Scenario</label>
             <div class="mandatory-fields">
-                <quill-input v-model="form.question_description" :placeholder="placeholders" />
+                <quill-input v-model="form.question_description" :placeholder="placeholders"/>
             </div>
 
-            <base-form-input type="text" label="Answer Option A" id="Choice_A" name="choice_a" v-model="form.choice_a" required />
-            <base-form-input type="text" label="Answer Option B" id="Choice_B" name="choice_b" v-model="form.choice_b" required />
-            <base-form-input type="text" label="Answer Option C" id="Choice_C" name="choice_c" v-model="form.choice_c" required />
-            <base-form-input type="text" label="Answer Option D" id="Choice_D" name="choice_d" v-model="form.choice_d" required />
-
-            <div class="mb-4">
-                <label for="correctAnswer" class="form-label">Select a Correct Answer</label>
-                <select v-model="form.correct_answer" id="correctAnswer" name="correct_answer" class="form-select" required>
-                    <option disabled value="">Choose a Correct Answer</option>
-                    <option v-for="(value, key) in correctAnswer" :key="key" :value="key">{{ value }}</option>
-                </select>
-            </div>
-            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Save</base-button-submit>
+            <base-button-submit class="btn-light-primary" type="submit" :form-is-processing="form.processing">Update</base-button-submit>
         </form>
+    </base-card-main>
+
+    <!-- Questions Table -->
+    <base-card-main class="mt-6 card-main card-flush" header-classes="mt-6">
+        <template #header>
+            <div class="flex-col card-title flex-column">
+                <h2 class="mb-1 text-xl font-semibold">Question Items for Selected Scenario</h2>
+            </div>
+        </template>
+
+        <!-- Add Question Button -->
+        <div class="card-toolbar">
+            <base-button-new
+                v-if="description_id"
+                class="btn-light-primary"
+                :href="createQuestionUrl"
+            >
+                New Question Item
+            </base-button-new>
+        </div>
+
+        <!-- Questions Table -->
+        <div v-if="questions.length" class="mt-6">
+            <table class="w-full bg-white border border-gray-200 rounded-lg shadow-sm table-auto">
+                <thead>
+                    <tr class="text-gray-600 bg-gray-100">
+                        <th class="px-4 py-2 border-b">Title</th>
+                        <th class="px-4 py-2 border-b">Choice A</th>
+                        <th class="px-4 py-2 border-b">Choice B</th>
+                        <th class="px-4 py-2 border-b">Choice C</th>
+                        <th class="px-4 py-2 border-b">Choice D</th>
+                        <th class="px-4 py-2 border-b">Correct Answer</th>
+                        <th class="px-4 py-2 border-b">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="question in questions" :key="question.id" class="hover:bg-gray-50">
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.title)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_a)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_b)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_c)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
+                        <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
+                        <td class="flex items-center justify-start gap-2 px-4 py-2 border-b">
+                            <button 
+                                class="text-green-500 hover:text-blue-700"
+                                @click="editQuestion(question.id, description_id)"
+                            >
+                                <i class="mr-2 text-xl fas fa-edit"></i>
+                            </button>
+                            <button 
+                                class="ml-2 text-red-500 hover:text-red-700"
+                                @click="confirmDelete(question.id)"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div v-else class="text-center text-muted">
+            No questions added yet.
+        </div>
     </base-card-main>
 </template>
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
-import { useForm, Head } from "@inertiajs/vue3"
-import QuillInput from "@/Pages/EmailTemplate/Partials/QuillInput.vue"
-import { store } from "@/store.js"
+import { store } from "@/store.js";
+import { submit } from "@/helpers/form_helpers.js";
+import { useForm, Head } from "@inertiajs/vue3";
+import QuillInput from "@/Components/QuillInput.vue"
+import { computed, ref, onMounted } from 'vue';
 
-defineOptions({ layout: AuthenticatedLayout })
+defineOptions({ layout: AuthenticatedLayout });
 
-const props = defineProps({
-    question: Object
-})
+store.pageTitle = 'Edit Question Scenario';
+store.setBreadCrumb({ Scenarios: route('descriptions.index') });
 
-store.pageTitle = 'Edit Question'
-store.setBreadCrumb({ Questions: route('unvettedquestions.index'), 'Edit question': null })
+const props = defineProps(['diseaseAreas', 'questions', 'description_id','description']);
 
-const form = useForm(props.question)
+const form = useForm({
+    disease_area: '',
+    question_description: null
+});
 
-const Cadre = {
-    "Registered Nurse": "Registered Nurse",
-    "Licensed Practical Nurse": "Licensed Practical Nurse",
-    "Nurse Practitioner": "Nurse Practitioner"
+const fetchDescriptionData = async (description_id) => {
+    const response = await fetch(`/api/descriptions/${description_id}`);
+    const description = await response.json();
+
+    form.disease_area = description.disease_area_id;
+    form.question_description = description.description;
+};
+
+if (props.description_id) {
+    fetchDescriptionData(props.description_id);
 }
 
-const nurseProcess = {
-    Assessment: "Assessment",
-    Diagnosis: "Diagnosis",
-    Planning: "Planning",
-    Implementation: "Implementation",
-    Evaluation: "Evaluation"
-}
+const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+};
 
-const diseaseArea = {
-    Cardiology: "Cardiology",
-    Neurology: "Neurology",
-    Oncology: "Oncology",
-    Pediatrics: "Pediatrics",
-    Orthopedics: "Orthopedics"
-}
+const inertiaSubmit = () => {
+    form.patch(route('descriptions.update', { id: props.description_id }));
+};
 
-const taxonomy = {
-    Knowledge: "Knowledge",
-    Comprehension : "Comprehension",
-    Application : "Application",
-    Analysis : "Analysis",
-    Synthesis : "Synthesis",
-    Evaluation :"Evaluation"
-}
+const createQuestionUrl = computed(() => {
+    if (props.description_id) {
+        return route('questions.create', {
+            description_id: props.description_id,
+            pageType: 'descEdi'
+        });
+    }
+    return '#';
+});
 
-const Syllabus = {
-    "2022-2023": "2022-2023",
-    "2023-2024": "2023-2024"
-}
+const editQuestion = (questionId, descriptionId) => {
+    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId }) + `?pageType=descEdi`;
+    window.location.href = editUrl;
+};
 
-const correctAnswer = {
-    A: "A",
-    B: "B",
-    C: "C",
-    D: "D"
-}
 
-const submitForm = () => {
-    form.patch(route('unvettedquestions.update', props.question.uuid), {
-        onSuccess: () => {
-            window.location.href = route('unvettedquestions.index')
+
+
+const confirmDelete = (questionId) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route('questions.destroy', questionId));
         }
-    })
-}
+    });
+};
 </script>

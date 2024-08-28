@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Models\Question;
 use App\Models\Description;
+use App\Models\DiseaseArea;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -76,11 +77,18 @@ class UnvettedQuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return Response
      */
-    public function edit($uuid)
+    public function edit($id)
     {
-        $question = Question::whereUuid($uuid)->firstOrFail();
+        $description = Description::findOrFail($id);
+        $diseaseAreas = DiseaseArea::pluck('name', 'id');
+        $questions = Question::where('description_id', $id)->get();
+        
+        
         return Inertia::render('UnvettedQuestion/Edit', [
-            'question' => $question
+            'description' => $description,
+            'diseaseAreas' => $diseaseAreas,
+            'description_id' => $id,
+            'questions' => $questions,
         ]);
     }
 

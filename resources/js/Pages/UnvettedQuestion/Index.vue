@@ -1,79 +1,72 @@
 <template>
-    <Head title="Questions List" />
+    <Head title="Question Scenarios List" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
+        <div v-if="successMessage" class="alert alert-success">
+            {{ successMessage }}
+        </div>
         <template #header>
-            <div class="flex items-center justify-between w-full card-title">
-                <div class="relative flex items-center w-1/2 my-1 mr-5">
-                    <base-search placeholder="Search Questions"
-                                 :href="route('unvettedquestions.index')"
-                                 :search="filters.search"
-                                 class="w-full"
+            <div class="w-1/2 card-title">
+                <div class="relative flex items-center w-full my-1 mr-5">
+                    <base-search 
+                        placeholder="Search..."
+                        :search="filters.search"
+                        class="w-full"
                     />
                 </div>
-                <button class="btn-vet-selected" @click="vetSelectedQuestions">
+            </div>
+            <div class="flex space-x-4 card-toolbar">
+                <button @click="submitUnvetted" class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
                     Vet Selected
                 </button>
             </div>
         </template>
         <div class="relative">
             <div class="table-responsive">
-                <table class="table mb-0 align-middle table-row-dashed fs-6 dataTable no-footer gy-3">
-                    <thead>
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <thead class="bg-gray-100 border-b">
                         <tr>
-                            <th><input type="checkbox" @change="toggleSelectAll($event)" :checked="isAllSelected" /></th>
-                            <th>C.No</th>
-                            <th>Title</th>
-                            <th>Cadre</th>
-                            <th>Nursing Process</th>
-                            <th>Disease Area</th>
-                            <th>Taxonomy</th>
-                            <th>Syllabus</th>
-                            <th>Status</th>
-                            <th>Date created</th>
-                            <th>Actions</th>
+                            <th class="px-4 py-2">
+                                <input type="checkbox" @change="toggleAllCheckboxes" v-model="selectAll">
+                            </th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">#</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Disease Area</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Description</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Status</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Date Created</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Last Update</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="font-medium text-gray-600">
-                        <tr v-for="(question, index) in questions.data" :key="question.uuid">
-                            <td><input type="checkbox" v-model="selectedQuestions" :value="question.uuid" /></td>
-                            <td v-text="index + 1"></td>
-                            <td>{{ question.title }}</td>
-                            <td>{{ question.cadre }}</td>
-                            <td>{{ question.nursing_process }}</td>
-                            <td>{{ question.taxonomy }}</td>
-                            <td>{{ question.disease_area }}</td>
-                            <td>{{ question.syllabus }}</td>
-                            <td>{{ question.status }}</td>
-                            <td>{{ new Date(question.created_at).toLocaleDateString() }}</td>
-                            <td class="text-right">
-                                <base-button-link
-                                    :href="route('unvettedquestions.edit', [question.uuid])"
-                                    title="Edit"
-                                    class="p-1 pl-2 ml-1 btn-green"
-                                >
-                                    Edit
-                                </base-button-link>
-                                <!-- <base-button-link
-                                    :href="route('unvettedquestions.vet', [question.uuid])"
-                                    title="Vet"
-                                    class="p-1 pl-2 ml-1 btn-yellow"
-                                    :class="question.status === 'Vetted' ? 'disabled' : ''"
-                                    method="POST"
-                                >
-                                    Vet
-                                </base-button-link> -->
+                        <tr v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3">
+                                <input type="checkbox" v-model="selectedRows" :value="description.id">
                             </td>
+                            <td class="px-4 py-3" v-text="index + 1"></td>
+                            <td class="px-4 py-3">{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
+                            <td class="px-4 py-3" v-text="truncateText(stripHtmlTags(description.description), 100)"></td>
+                            <td class="px-4 py-3" v-text="stripHtmlTags(description.status)"></td>
+                            <td class="px-4 py-3">{{ new Date(description.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
+                            <td class="px-4 py-3">{{ new Date(description.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
+                            <td class="flex px-4 py-3 space-x-4">
+                                <button @click="editDescription(description.id)" class="flex items-center text-green-500 hover:text-green-700">
+                                    <i class="mr-2 text-xl fas fa-edit"></i>
+                                </button>
+                                <button @click="confirmDelete(description.id)" class="flex items-center text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-            <div class="grid grid-cols-5 gap-4">
+            <div class="grid grid-cols-5 gap-4 mt-4">
                 <div class="flex items-center justify-center md:justify-start">
                     <base-select-page v-model="filterBy.per_page" />
                 </div>
                 <div class="flex items-center justify-center col-span-4 md:justify-end">
-                    <base-pagination :paginator="questions" :key="questions.total" />
+                    <base-pagination :paginator="descriptions" :key="descriptions.total" />
                 </div>
             </div>
         </div>
@@ -84,92 +77,121 @@
 import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { store } from "@/store.js";
-import { reactive, ref, watch, defineProps, defineOptions, computed } from "vue";
+import { reactive, ref, watch } from "vue";
+import axios from 'axios';
+import { onMounted } from 'vue';
+import Swal from 'sweetalert2';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 defineOptions({ layout: AuthenticatedLayout });
 
+const successMessage = ref(route().params.successMessage || '');
+
+watch(() => route().params.successMessage, (newValue) => {
+    if (newValue) {
+        successMessage.value = newValue;
+        setTimeout(() => {
+            successMessage.value = '';
+        }, 3000); // Adjust the time as needed
+    }
+});
+
+onMounted(() => {
+    if (successMessage.value) {
+        setTimeout(() => {
+            successMessage.value = '';
+        }, 3000); // Adjust the time as needed
+    }
+});
+
 const props = defineProps({
-    questions: Object,
+    descriptions: Object,
     filters: Object
 });
 
-store.pageTitle = 'Questions Lists';
-store.setBreadCrumb({ Unvetted: null });
+// Method to strip HTML tags
+const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+};
+
+// Method to truncate text
+const truncateText = (text, length) => {
+    return text.length > length ? text.substring(0, length) + '...' : text;
+};
+
+store.pageTitle = 'Question Scenarios List';
+store.setBreadCrumb({ Scenarios: null });
 
 const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
-const selectedQuestions = ref([]);
+const selectedRows = ref([]);
+const selectAll = ref(false);
 
+// Watch for per_page changes
 watch(() => filterBy.per_page, (newVal) => {
-    router.get(route('unvettedquestions.index', { search: props.filters.search, ...filterBy }));
+    router.get(route('descriptions.index', { search: props.filters.search, ...filterBy }));
 });
 
-const isAllSelected = computed(() => {
-    return selectedQuestions.value.length === props.questions.data.length;
-});
-
-const toggleSelectAll = (event) => {
-    selectedQuestions.value = event.target.checked ? props.questions.data.map(q => q.uuid) : [];
-};
-
-const vetSelectedQuestions = () => {
-    console.log('Button clicked'); // Debugging log
-    if (selectedQuestions.value.length > 0) {
-        console.log('Selected Questions:', selectedQuestions.value); // Debugging log
-        router.post(route('unvettedquestions.bulkVet'), { uuids: selectedQuestions.value })
-            .then(response => {
-                console.log('Response:', response); 
-                selectedQuestions.value = [];
-                router.reload(); 
-            })
-            .catch(error => {
-                console.error('Error:', error); // Debugging log
-            });
+// Toggle all checkboxes
+const toggleAllCheckboxes = () => {
+    if (selectAll.value) {
+        selectedRows.value = props.descriptions.data.map(description => description.id);
     } else {
-        console.log('No questions selected'); // Debugging log
+        selectedRows.value = [];
     }
 };
+
+// Method to handle the submission and change status to "unvetted"
+const submitUnvetted = async () => {
+    try {
+        const payload = { ids: selectedRows.value, status: 'unvetted' };
+        const response = await axios.post(route('descriptions.update-status'), payload);
+        // Navigate to the index page and pass the success message as a parameter
+        router.get(route('descriptions.index'), {
+            preserveScroll: true,
+            successMessage: 'Successfully Submitted the questions',
+        });
+    } catch (error) {
+        console.error('Error:', error); // Debugging log
+        // alert('Failed to update status.');
+    }
+};
+
+// Method to handle the confirmation and deletion of a description
+const confirmDelete = (descriptionId) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won’t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteDescription(descriptionId);
+        }
+    });
+};
+
+// Method to delete a description
+const deleteDescription = async (descriptionId) => {
+    try {
+        await axios.delete(route('descriptions.destroy', descriptionId));
+        // Reload the page or update the list of descriptions after successful deletion
+        router.get(route('descriptions.index'), {
+            preserveScroll: true,
+            successMessage: 'Question scenario deleted successfully',
+        });
+    } catch (error) {
+        console.error('Error:', error); // Debugging log
+        // alert('Failed to delete description.');
+    }
+};
+
+// Method to edit a description
+const editDescription = (descriptionId) => {
+    router.get(route('unvettedquestions.edit', descriptionId));
+};
 </script>
-
-<style>
-.btn-yellow {
-    background-color: rgb(255, 170, 0);
-    color: white;
-    cursor: pointer;
-}
-
-.btn-yellow:hover {
-    background-color: rgb(202, 135, 1);
-    color: white;
-}
-
-.btn-green:hover {
-    background-color: rgb(0, 255, 136);
-    color: white; 
-}
-
-.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn-vet-selected {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none; /* No border */
-    padding: 5px 7px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Get the element to line up correctly */
-    font-size: 14px; /* Increase font size */
-    margin: 4px 2px; /* Add some margin */
-    cursor: pointer; /* Add a pointer cursor on hover */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add some shadow */
-    transition: 0.3s; /* Smooth transition on hover */
-}
-
-.btn-vet-selected:hover {
-    background-color: #45a049; /* Darker green on hover */
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
-}
-</style>
