@@ -153,8 +153,6 @@ public function edit($id)
     /**
      * Update the specified resource in storage.
      *
-     * @param CategoryUpdateRequest $request
-     * @param Category $category
      * @return RedirectResponse
      */
     public function update(Request $request, $id)
@@ -170,7 +168,8 @@ public function edit($id)
             'description' => $request->question_description,
         ]);
     
-        return redirect()->route('descriptions.index')->with('success', 'Description updated successfully');
+        return redirect()->route('descriptions.edit', ['description' => $id])
+                     ->with('success', 'Question scenario updated successfully');
     }
       
 

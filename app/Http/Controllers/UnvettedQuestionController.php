@@ -92,12 +92,22 @@ class UnvettedQuestionController extends Controller
         ]);
     }
 
-    public function update(UpdateQuestionRequest $request, $uuid): RedirectResponse
+    public function update(Request $request, $id)
     {
-        $question = Question::whereUuid($uuid)->firstOrFail();
-        $question->update($request->validated());
+        $request->validate([
+            'disease_area' => 'required',
+            'question_description' => 'required|string',
+        ]);
     
-        return redirect()->route('unvettedquestions.index')->with('success', 'Question successfully updated');
+        $description = Description::findOrFail($id);
+        $description->update([
+            'disease_area_id' => $request->disease_area,
+            'description' => $request->question_description,
+        ]);
+
+        return redirect()->route('unvettedquestions.edit', ['unvettedquestion' => $id])
+                     ->with('success', 'Question scenario updated successfully');
+    
     }
     
     /**

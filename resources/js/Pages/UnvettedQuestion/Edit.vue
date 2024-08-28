@@ -7,7 +7,7 @@
                 <div class="text-base fw-semibold text-muted">Edit the question scenario</div>
             </div>
         </template>
-        <form method="POST" :action="route('descriptions.update', { id: description_id })" novalidate class="w-3/4 mx-auto needs-validation"
+        <form method="POST" :action="route('unvettedquestions.update', { id: description_id })" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'update the question Scenario?')">
             <input type="hidden" name="_method" value="PUT">
             
@@ -104,7 +104,7 @@ import { computed, ref, onMounted } from 'vue';
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'Edit Question Scenario';
-store.setBreadCrumb({ Scenarios: route('descriptions.index') });
+store.setBreadCrumb({ Questions: route('descriptions.index') });
 
 const props = defineProps(['diseaseAreas', 'questions', 'description_id','description']);
 
@@ -131,7 +131,7 @@ const stripHtmlTags = (html) => {
 };
 
 const inertiaSubmit = () => {
-    form.patch(route('descriptions.update', { id: props.description_id }));
+    form.patch(route('unvettedquestions.update', { id: props.description_id }));
 };
 
 const createQuestionUrl = computed(() => {
