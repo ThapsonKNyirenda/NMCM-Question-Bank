@@ -69,10 +69,16 @@ class QuestionController extends Controller
             'status' => 'unset'
 
         ]);
-        
-        // Redirect back to the description create page with the description_id
-        return redirect()->route('descriptions.create', ['description_id' => $question['description_id']])
-                         ->with('success', 'Question added successfully');
+
+        $pageType = $request->input('pageType');
+
+        if ($pageType == 'descAdd') {
+            return redirect()->route('descriptions.create', ['description_id' => $question['description_id']])
+            ->with('success', 'Question added successfully');
+        } else if ($pageType == 'descAdd'){
+            
+        }
+       
     }
 
     public function edit($id, Request $request)
@@ -190,8 +196,9 @@ public function sceCreate(Request $request)
         ]);
         
         // Redirect back to the description create page with the description_id
-        return redirect()->route('descriptions.edit', ['description_id' => $question['description_id']])
-                         ->with('success', 'Question added successfully');
+        return redirect()->route('descriptions.edit', ['description' => $question['description_id']])
+                 ->with('success', 'Question added successfully');
+
     }
 
 }

@@ -11,6 +11,7 @@
         @submit.prevent="inertiaSubmit">
             
             <input type="hidden" v-model="form.description_id" name="description_id">
+            <input type="hidden" v-model="form.pageType" name="pageType">
 
             <div class="mb-4">
                 <label for="cadre" class="form-label">Select a Cadre</label>
@@ -108,7 +109,8 @@ const form = useForm({
     choice_b: '',
     choice_c: '',
     choice_d: '',
-    correct_answer: ''
+    correct_answer: '',
+    pageType: 'descAdd',
 });
 
 // Receive props
