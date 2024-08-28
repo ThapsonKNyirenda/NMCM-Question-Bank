@@ -15,35 +15,12 @@ class UnvettedQuestion extends Model
 
     
     protected $fillable = [
-        'uuid',
-        'title',
-        'cadre',
-        'nursing_process',
-        'disease_area',
-        'taxonomy',
-        'syllabus',
-        'question_description',
-        'choice_a',
-        'choice_b',
-        'choice_c',
-        'choice_d',
-        'correct_answer',
-        'status',
+        
     ];
 
     public array $searchable = [
-        'title',
-        'cadre',
-        'nursing_process',
-        'disease_area',
-        'taxonomy',
-        'syllabus',
-        'question_description',
-        'choice_a',
-        'choice_b',
-        'choice_c',
-        'choice_d',
-        'correct_answer',
-        'status'
+        
     ];
+
+    
 }

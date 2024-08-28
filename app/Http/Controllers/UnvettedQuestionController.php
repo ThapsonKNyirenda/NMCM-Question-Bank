@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Models\Question;
+use App\Models\Description;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,12 +24,13 @@ class UnvettedQuestionController extends Controller
     
     public function index(Request $request)
     {
-        return Inertia::render('UnvettedQuestion/Index', [
-            'questions' => Question::where('status', 'Unvetted')
-                ->whenSearch($request->input('search'))
-                ->paginate(10)
-                ->withQueryString(),
-            'filters' => $request->only(['search']) ?? [],
+        $descriptions = Description::with(['diseaseArea'])
+                            ->paginate($request->get('per_page', 10));
+
+    
+        return inertia('UnvettedQuestion/Index', [
+            'descriptions' => $descriptions,
+            'filters' => $request->only(['search', 'per_page']),
         ]);
     }
 

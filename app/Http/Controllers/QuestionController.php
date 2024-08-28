@@ -143,14 +143,13 @@ public function update(Request $request, $id): RedirectResponse
 
     $pageType = $request->input('pageType');
     
-    dd($pageType);
-    
 
         if ($pageType == 'descAdd') {
             return redirect()->route('descriptions.create', ['description_id' => $question->description_id])
                      ->with('success', 'Question updated successfully');
         } else if ($pageType == 'descEdi'){
-            
+            return redirect()->route('descriptions.edit', ['description' => $question->description_id])
+                     ->with('success', 'Question updated successfully');
         }
 
     // Redirect back to the description creation page with a success message

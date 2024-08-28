@@ -111,13 +111,14 @@ const form = useForm({
     choice_c: '',
     choice_d: '',
     correct_answer: '',
-    pageType: props.pageType,
+    pageType: '',
 });
 
 // Receive props
 const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels', 'description_id', 'question','pageType']);
 
 form.id = props.question.id;  
+form.pageType = props.pageType;  
 
 // Initialize form with the existing question data
 form.cadre = props.question.cadre_id;

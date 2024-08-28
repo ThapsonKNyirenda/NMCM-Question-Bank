@@ -148,9 +148,11 @@ const createQuestionUrl = computed(() => {
 
 
 const editQuestion = (questionId, descriptionId) => {
-    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId, pageType: 'descAdd' });
+    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId }) + `?pageType=descAdd`;
     window.location.href = editUrl;
 };
+
+
 
 
 const confirmDelete = (questionId) => {

@@ -3,15 +3,16 @@ import Header from "@/Layouts/Header.vue";
 import Sidebar from "@/Layouts/Sidebar.vue";
 import BaseValidation from "@/Components/BaseValidation.vue";
 import BaseFlashMessage from "@/Components/BaseFlashMessage.vue";
+import '@fortawesome/fontawesome-free/css/all.css';
 </script>
 <template>
     <div>
         <div class="flex flex-col flex-1 " scroll-region>
            <div class="flex flex-[1_0_auto] flex-col">
                <Header />
-               <div class="app-wrapper flex-col flex-auto min-w-0" >
+               <div class="flex-col flex-auto min-w-0 app-wrapper" >
                    <Sidebar />
-                   <div class="app-main flex flex-auto min-w-0 flex-col" >
+                   <div class="flex flex-col flex-auto min-w-0 app-main" >
                        <div class="flex flex-col  flex-[1_0_auto]" >
                            <div class="app-content flex-[1_0_auto] min-h-50vh" >
                                <div class="app-container">
@@ -23,18 +24,18 @@ import BaseFlashMessage from "@/Components/BaseFlashMessage.vue";
                        </div>
                        <div class="app-footer ">
                            <!--begin::Footer container-->
-                           <div class="app-container w-full flex flex-col md:flex-row justify-center items-center md:justify-between py-3 ">
+                           <div class="flex flex-col items-center justify-center w-full py-3 app-container md:flex-row md:justify-between ">
                                <!--begin::Copyright-->
-                               <div class="text-gray-900 order-2 md:order-1">
-                                   <span class="text-muted font-medium mr-1">2024©</span>
+                               <div class="order-2 text-gray-900 md:order-1">
+                                   <span class="mr-1 font-medium text-muted">2024©</span>
                                    <a href="" target="_blank" class="text-gray-800 text-hover-primary">NMCM QUESTION BANK</a>
                                </div>
                                <!--end::Copyright-->
 
                                <!--begin::Menu-->
-                               <ul class="menu menu-gray-600 menu-hover-primary font-medium order-1">
-                                   <li class="menu-item"><a href="#" target="_blank" class="menu-link px-2">About</a></li>
-                                   <li class="menu-item"><a href="#" target="_blank" class="menu-link px-2">Support</a></li>
+                               <ul class="order-1 font-medium menu menu-gray-600 menu-hover-primary">
+                                   <li class="menu-item"><a href="#" target="_blank" class="px-2 menu-link">About</a></li>
+                                   <li class="menu-item"><a href="#" target="_blank" class="px-2 menu-link">Support</a></li>
 
                                </ul>
                                <!--end::Menu-->

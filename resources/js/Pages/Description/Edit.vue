@@ -69,9 +69,19 @@
                         <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_c)"></td>
                         <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.choice_d)"></td>
                         <td class="px-4 py-2 border-b" v-text="stripHtmlTags(question.correct_answer)"></td>
-                        <td class="px-4 py-2 border-b">
-                            <button class="text-blue-500 hover:text-blue-700">Edit</button>
-                            <button class="ml-2 text-red-500 hover:text-red-700">Delete</button>
+                        <td class="flex items-center justify-start gap-2 px-4 py-2 border-b">
+                            <button 
+                                class="text-green-500 hover:text-blue-700"
+                                @click="editQuestion(question.id, description_id)"
+                            >
+                                <i class="mr-2 text-xl fas fa-edit"></i>
+                            </button>
+                            <button 
+                                class="ml-2 text-red-500 hover:text-red-700"
+                                @click="confirmDelete(question.id)"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -91,7 +101,6 @@ import { useForm, Head } from "@inertiajs/vue3";
 import QuillInput from "@/Components/QuillInput.vue"
 import { computed, ref, onMounted } from 'vue';
 
-// Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'Edit Question Scenario';
@@ -135,5 +144,27 @@ const createQuestionUrl = computed(() => {
     return '#';
 });
 
+const editQuestion = (questionId, descriptionId) => {
+    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId }) + `?pageType=descEdi`;
+    window.location.href = editUrl;
+};
 
+
+
+
+const confirmDelete = (questionId) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route('questions.destroy', questionId));
+        }
+    });
+};
 </script>
