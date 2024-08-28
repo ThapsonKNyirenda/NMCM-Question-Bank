@@ -149,5 +149,49 @@ public function destroy($id): RedirectResponse
                      ->with('success', 'Question deleted successfully');
 }
 
+public function sceCreate(Request $request)
+     {
+         // Retrieving relationships
+         $taxonomyLevels = TaxonomyLevel::pluck('name', 'id');
+         $cadres = Cadre::pluck('name', 'id');
+         $nursingProcesses = NursingProcess::pluck('name', 'id');
+     
+         // Retrieve the description_id from the query parameters
+         $description_id = $request->query('description_id');
+         
+         return inertia('Question/SceCreate', [
+             'cadres' => $cadres,
+             'nursingProcesses' => $nursingProcesses,
+             'taxonomyLevels' => $taxonomyLevels,
+             'description_id' => $description_id,
+         ]);
+     }
+
+     public function sceStore(StoreQuestionRequest $request): RedirectResponse
+    {
+
+        // Create the question
+        //$question = Question::create(array_merge($validatedData, ['status' => 'unset']));
+
+        $question = Question::create([
+            'cadre_id' => $request->input('cadre'),
+            'nursing_process_id' => $request->input('nursing_process'),
+            'taxonomy_level_id' => $request->input('taxonomy'),
+            'description_id' => $request->input('description_id'),
+            'title' => $request->input('title'),
+            'choice_a' => $request->input('choice_a'),
+            'choice_b' => $request->input('choice_b'),
+            'choice_c' => $request->input('choice_c'),
+            'choice_d' => $request->input('choice_d'),
+            'correct_answer' => $request->input('correct_answer'),
+            'syllabus' => $request->input('syllabus'),
+            'status' => 'unset'
+
+        ]);
+        
+        // Redirect back to the description create page with the description_id
+        return redirect()->route('descriptions.edit', ['description_id' => $question['description_id']])
+                         ->with('success', 'Question added successfully');
+    }
 
 }

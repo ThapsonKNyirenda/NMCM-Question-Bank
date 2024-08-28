@@ -9,7 +9,7 @@
         </template>
         <form method="POST" :action="route('descriptions.update', { id: description_id })" novalidate class="w-3/4 mx-auto needs-validation"
             @submit.prevent.stop="submit(inertiaSubmit, 'update the question Scenario?')">
-            <input type="hidden" name="_method" value="PUT"> <!-- To support Laravel's PUT request -->
+            <input type="hidden" name="_method" value="PUT">
             
             <div class="mb-4">
                 <label for="diseaseArea" class="form-label">Select a Disease Area</label>
@@ -127,9 +127,10 @@ const inertiaSubmit = () => {
 
 const createQuestionUrl = computed(() => {
     if (props.description_id) {
-        return route('questions.create', { description_id: props.description_id });
+        return route('questions.scecreate', { description_id: props.description_id });
     }
     return '#';
 });
+
 
 </script>

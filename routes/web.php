@@ -92,6 +92,10 @@ Route::middleware('auth')->group(function () {
     Route::put('questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
     Route::delete('questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
     
+    //For Scenario edit page
+    Route::get('/questions/scecreate', [QuestionController::class, 'sceCreate'])->name('questions.scecreate');
+    Route::post('/questions/scestore', [QuestionController::class, 'sceStore'])->name('questions.scestore');
+
     
     Route::resources([
         'roles' => RoleController::class,
