@@ -138,15 +138,20 @@ const inertiaSubmit = () => {
 
 const createQuestionUrl = computed(() => {
     if (props.description_id) {
-        return route('questions.create', { description_id: props.description_id });
+        return route('questions.create', {
+            description_id: props.description_id,
+            pageType: 'descAdd'
+        });
     }
     return '#';
 });
 
+
 const editQuestion = (questionId, descriptionId) => {
-    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId });
+    const editUrl = route('questions.edit', { id: questionId, description_id: descriptionId, pageType: 'descAdd' });
     window.location.href = editUrl;
 };
+
 
 const confirmDelete = (questionId) => {
     Swal.fire({

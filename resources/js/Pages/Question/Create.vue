@@ -110,14 +110,15 @@ const form = useForm({
     choice_c: '',
     choice_d: '',
     correct_answer: '',
-    pageType: 'descAdd',
+    pageType: '',
 });
 
 // Receive props
-const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels', 'description_id']);
+const props = defineProps(['cadres', 'nursingProcesses', 'taxonomyLevels', 'description_id', 'pageType']);
 
 // Initialize form with description_id
 form.description_id = props.description_id;
+form.pageType = props.pageType;
 
 const currentYear = new Date().getFullYear();
 const syllabusOptions = ref([

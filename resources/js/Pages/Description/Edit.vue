@@ -127,7 +127,10 @@ const inertiaSubmit = () => {
 
 const createQuestionUrl = computed(() => {
     if (props.description_id) {
-        return route('questions.scecreate', { description_id: props.description_id });
+        return route('questions.create', {
+            description_id: props.description_id,
+            pageType: 'descEdi'
+        });
     }
     return '#';
 });
