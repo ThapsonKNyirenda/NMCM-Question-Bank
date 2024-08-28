@@ -50,8 +50,9 @@ class DescriptionController extends Controller
     public function index(Request $request)
     {
         // Eager load related models
-        $descriptions = Description::with(['diseaseArea'])
-                            ->paginate($request->get('per_page', 10));
+        $descriptions = Description::where('status', 'saved')
+        ->with(['diseaseArea'])
+        ->paginate($request->get('per_page', 10));
 
     
         return inertia('Description/Index', [

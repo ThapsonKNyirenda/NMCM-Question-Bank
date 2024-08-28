@@ -25,8 +25,9 @@ class UnvettedQuestionController extends Controller
     
     public function index(Request $request)
     {
-        $descriptions = Description::with(['diseaseArea'])
-                            ->paginate($request->get('per_page', 10));
+        $descriptions = Description::where('status', 'unvetted')
+        ->with(['diseaseArea'])
+        ->paginate($request->get('per_page', 10));
 
     
         return inertia('UnvettedQuestion/Index', [
