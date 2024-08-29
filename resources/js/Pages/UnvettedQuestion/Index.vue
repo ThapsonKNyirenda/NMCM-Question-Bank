@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody class="font-medium text-gray-600">
-                        <tr v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
+                        <tr @click="viewDescription(description.id)" v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
                             <td class="px-4 py-3">
                                 <input type="checkbox" v-model="selectedRows" :value="description.id">
                             </td>
