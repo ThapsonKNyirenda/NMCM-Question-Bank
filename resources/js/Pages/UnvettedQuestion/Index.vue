@@ -1,5 +1,5 @@
 <template>
-    <Head title="Question Scenarios List" />
+    <Head title="Unvetted Questions" />
     <base-card-main class="shadow-sm card-main card-flush" header-classes="mt-6">
         <div v-if="successMessage" class="alert alert-success">
             {{ successMessage }}

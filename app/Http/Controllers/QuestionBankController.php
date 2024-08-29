@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Question;
+use App\Models\Description;
+use App\Models\DiseaseArea;
 
 class QuestionBankController extends Controller
 {
@@ -19,12 +21,14 @@ class QuestionBankController extends Controller
     }
     public function index(Request $request)
     {
-        return Inertia::render('QuestionBank/Index', [
-            'questions' => Question::where('status', 'Vetted')
-                ->whenSearch($request->input('search'))
-                ->paginate(10)
-                ->withQueryString(),
-            'filters' => $request->only(['search']) ?? [],
+        $descriptions = Description::where('status', 'unvetted')
+        ->with(['diseaseArea'])
+        ->paginate($request->get('per_page', 10));
+
+    
+        return inertia('QuestionBank/Index', [
+            'descriptions' => $descriptions,
+            'filters' => $request->only(['search', 'per_page']),
         ]);
     }
 
@@ -60,9 +64,19 @@ class QuestionBankController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $description = Description::findOrFail($id);
+        $diseaseAreas = DiseaseArea::pluck('name', 'id');
+        $questions = Question::where('description_id', $id)->get();
+        
+        
+        return Inertia::render('Viewing/Index', [
+            'description' => $description,
+            'diseaseAreas' => $diseaseAreas,
+            'description_id' => $id,
+            'questions' => $questions,
+        ]);
     }
 
     /**
