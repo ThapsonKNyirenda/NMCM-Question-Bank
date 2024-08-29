@@ -135,22 +135,20 @@ class UnvettedQuestionController extends Controller
  * @param  string  $uuid
  * @return \Inertia\Response
  */
-public function show($uuid)
-{
-    // Retrieve the question using the UUID
-    $question = Question::whereUuid($uuid)->firstOrFail();
-
-    // Update the status to "Vetted"
-    $question->status = 'Vetted';
-
-    // Save the changes to the database
-    $question->save();
-
-    // Redirect to the index page using Inertia
-    return Inertia::render('UnvettedQuestion/Index', [
-        'questions' => Question::all()  // Adjust this to fit your index page data requirements
-    ]);
-}
+public function show($id)
+    {
+        $description = Description::findOrFail($id);
+        $diseaseAreas = DiseaseArea::pluck('name', 'id');
+        $questions = Question::where('description_id', $id)->get();
+        
+        
+        return Inertia::render('Viewing/Index', [
+            'description' => $description,
+            'diseaseAreas' => $diseaseAreas,
+            'description_id' => $id,
+            'questions' => $questions,
+        ]);
+    }
 
 
 /**

@@ -32,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody class="font-medium text-gray-600">
-                        <tr v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
+                        <tr @click="editDescription(description.id)" v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
                             
                             <td class="px-4 py-3" v-text="index + 1"></td>
                             <td class="px-4 py-3">{{ description.disease_area ? description.disease_area.name : 'N/A' }}</td>
@@ -42,7 +42,7 @@
                             <td class="px-4 py-3">{{ new Date(description.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
                             <td class="flex px-4 py-3 space-x-4">
                                 <button @click="editDescription(description.id)" class="flex items-center text-green-500 hover:text-green-700">
-                                    <i class="mr-2 text-xl fas fa-edit"></i>
+                                    <i class="fa-solid fa-eye"></i>
                                 </button>
                                 
                             </td>

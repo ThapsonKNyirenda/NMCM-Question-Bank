@@ -19,7 +19,7 @@
                     Questions
                 </SidebarMenuItem> -->
 
-                <SidebarMenuItem :href="route('descriptions.index')" >
+                <SidebarMenuItem :href="route('descriptions.index')" :is-active="$page.props.activeMenu === 'Questions'" >
                     <template #icon><i class="ri-question-mark"></i> </template>
                     Questions
                 </SidebarMenuItem>

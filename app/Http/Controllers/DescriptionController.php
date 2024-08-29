@@ -19,7 +19,7 @@ class DescriptionController extends Controller
 {
     public function __construct()
     {
-        //  Inertia::share('activeMenu', 'Category');
+         Inertia::share('activeMenu', 'Questions');
          //$this->authorizeResource( Category ::class, 'category');
     }
 

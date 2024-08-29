@@ -55,6 +55,9 @@
                                 <button @click="confirmDelete(description.id)" class="flex items-center text-red-500 hover:text-red-700">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
+                                <button @click="viewDescription(description.id)" class="flex items-center text-green-500 hover:text-green-700">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
                             </td>
 
                         </tr>
@@ -193,5 +196,9 @@ const deleteDescription = async (descriptionId) => {
 // Method to edit a description
 const editDescription = (descriptionId) => {
     router.get(route('unvettedquestions.edit', descriptionId));
+};
+
+const viewDescription = (descriptionId) => {
+    router.get(route('unvettedquestions.show', descriptionId));
 };
 </script>

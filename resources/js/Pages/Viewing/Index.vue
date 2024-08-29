@@ -40,20 +40,7 @@
                         <p>D) {{ stripHtmlTags(question.choice_d) }}</p>
                     </div>
 
-                    <div class="flex gap-4 mt-2">
-                        <button 
-                            class="text-green-500 hover:text-blue-700"
-                            @click="editQuestion(question.id, description_id)"
-                        >
-                            <i class="mr-2 text-xl fas fa-edit"></i> Edit
-                        </button>
-                        <button 
-                            class="text-red-500 hover:text-red-700"
-                            @click="confirmDelete(question.id)"
-                        >
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
             <div v-else class="text-center text-muted">
@@ -78,7 +65,7 @@ import Swal from 'sweetalert2';
 defineOptions({ layout: AuthenticatedLayout });
 
 store.pageTitle = 'View Question Scenario';
-store.setBreadCrumb({ Questions: route('questionbank.index') });
+store.setBreadCrumb({ Questions: null });
 
 const props = defineProps(['diseaseAreas', 'questions', 'description_id', 'description']);
 
