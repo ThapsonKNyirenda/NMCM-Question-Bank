@@ -21,7 +21,7 @@ class QuestionBankController extends Controller
     }
     public function index(Request $request)
     {
-        $descriptions = Description::where('status', 'unvetted')
+        $descriptions = Description::where('status', 'vetted')
         ->with(['diseaseArea'])
         ->paginate($request->get('per_page', 10));
 
