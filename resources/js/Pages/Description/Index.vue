@@ -34,7 +34,7 @@
                             </th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">#</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Disease Area</th>
-                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Description</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Scenario</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Status</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Date Created</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Last Update</th>

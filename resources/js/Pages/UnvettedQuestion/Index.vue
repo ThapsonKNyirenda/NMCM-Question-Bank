@@ -30,7 +30,7 @@
                             </th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">#</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Disease Area</th>
-                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Description</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Scenario</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Status</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Date Created</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Last Update</th>
@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody class="font-medium text-gray-600">
-                        <tr @click="viewDescription(description.id)" v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
+                        <tr v-for="(description, index) in descriptions.data" :key="description.id" class="border-b hover:bg-gray-50">
                             <td class="px-4 py-3">
                                 <input type="checkbox" v-model="selectedRows" :value="description.id">
                             </td>

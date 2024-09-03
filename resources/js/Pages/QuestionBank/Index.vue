@@ -24,7 +24,7 @@
                             
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">#</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Disease Area</th>
-                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Description</th>
+                            <th class="px-4 py-2 font-semibold text-left text-gray-600">Scenario</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Status</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Date Created</th>
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Last Update</th>
@@ -72,7 +72,7 @@ import { onMounted } from 'vue';
 import Swal from 'sweetalert2';
 import '@fortawesome/fontawesome-free/css/all.css';
 
-
+//Authenticated layer
 defineOptions({ layout: AuthenticatedLayout });
 
 const successMessage = ref(route().params.successMessage || '');
