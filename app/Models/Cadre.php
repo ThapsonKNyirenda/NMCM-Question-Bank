@@ -22,5 +22,10 @@ class Cadre extends Model
         'uuid',
         'name'
     ];
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
     
 }

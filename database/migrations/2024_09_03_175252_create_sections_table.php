@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreignId('question_id')->constrained()->onDelete('cascade');
             $table->string('paper_code');
             $table->string('title');
-            $table->string('number_of_questions');
+            $table->integer('number_of_questions');
             $table->timestamps();
+
         });
     }
 

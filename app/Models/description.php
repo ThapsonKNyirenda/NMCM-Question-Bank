@@ -34,6 +34,11 @@ class Description extends Model
         return $this->belongsTo(DiseaseArea::class);
     }
 
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
+
 
     
 }
