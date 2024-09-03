@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Cadre;
 use App\Models\DiseaseArea;
+use App\Models\Description;
 use Illuminate\Http\Request;
 
 class SectionController extends Controller
@@ -18,5 +19,12 @@ class SectionController extends Controller
         'diseaseAreas' => $diseaseAreas,
     ]);
 }
+
+public function getDescriptionsByDiseaseArea($diseaseAreaId)
+{
+    $descriptions = Description::where('disease_area_id', $diseaseAreaId)->pluck('description', 'id');
+    return response()->json($descriptions);
+}
+
 
 }
