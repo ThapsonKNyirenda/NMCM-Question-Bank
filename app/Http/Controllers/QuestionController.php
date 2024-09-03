@@ -22,6 +22,15 @@ class QuestionController extends Controller
      * @return Response
      */
 
+     public function getQuestionsByDescriptionId($descriptionId)
+    {
+        return $questions = Question::where('description_id', $descriptionId)
+        ->select('id', 'title')
+        ->get();
+    
+    }
+
+
      public function create(Request $request)
      {
          // Retrieving relationships

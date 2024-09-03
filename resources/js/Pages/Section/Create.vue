@@ -28,7 +28,6 @@
                     required
                 />
             </div>
-
             <div class="mb-4">
                 <label for="disease_area" class="form-label"
                     >Select a Disease Area</label
@@ -39,6 +38,7 @@
                     name="disease_area_id"
                     class="form-select"
                     required
+                    @change="fetchDescriptions"
                 >
                     <option disabled value="">Choose a disease area</option>
                     <option
@@ -71,7 +71,6 @@
                 </select>
             </div>
 
-           
             <div class="mb-4">
                 <label for="title" class="form-label">Section Title</label>
                 <input
@@ -99,6 +98,40 @@
                 />
             </div>
 
+            <div v-if="Object.keys(descriptions).length">
+                <h3 class="m-2 text-lg font-semibold " style="text-decoration: underline;">
+    Select questions under each Scenario
+</h3>
+
+                <div
+                    v-for="(description, descriptionId) in descriptions"
+                    :key="descriptionId"
+                    class="mb-4"
+                >
+                    <div class="font-semibold" v-html="description"></div>
+                    <div v-if="questions[descriptionId]">
+                        <div
+                            v-for="question in questions[descriptionId]"
+                            :key="question.id"
+                            class="m-2 form-check"
+                        >
+                            <input
+                                type="checkbox"
+                                :value="question.id"
+                                v-model="form.selectedQuestions"
+                                class="form-check-input"
+                                :id="`question_${question.id}`"
+                            />
+                            <label
+                                :for="`question_${question.id}`"
+                                class="form-check-label text-dark"
+                                v-html="question.title"
+                            ></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <base-button-submit
                 class="btn-light-primary"
                 type="submit"
@@ -112,6 +145,8 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
+import { ref } from "vue";
+import axios from "axios";
 
 // Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
@@ -122,10 +157,57 @@ const form = useForm({
     title: "",
     paper_code: "",
     number_of_questions: 0,
+    selectedDescriptions: [],
+    selectedQuestions: [],
 });
+
+const descriptions = ref({});
+const questions = ref({});
 
 // Receive props
 const props = defineProps(["cadres", "diseaseAreas"]);
+
+// Method to fetch descriptions by disease area
+const fetchDescriptions = async () => {
+    if (form.disease_area_id) {
+        try {
+            const response = await axios.get(
+                `/api/descriptions/disease-area/${form.disease_area_id}`
+            );
+            console.log("Fetched Descriptions:", response.data);
+            descriptions.value = response.data;
+            // Fetch questions for each description
+            for (const descriptionId of Object.keys(response.data)) {
+                await fetchQuestions(descriptionId);
+            }
+        } catch (error) {
+            console.error("Error fetching descriptions:", error);
+        }
+    } else {
+        descriptions.value = {};
+        questions.value = {};
+    }
+};
+
+// Method to fetch questions by description ID
+const fetchQuestions = async (descriptionId) => {
+    try {
+        const response = await axios.get(`/api/questions/${descriptionId}`);
+        console.log(
+            `Fetched Questions for Description ${descriptionId}:`,
+            response.data
+        );
+        questions.value = {
+            ...questions.value,
+            [descriptionId]: response.data,
+        };
+    } catch (error) {
+        console.error(
+            `Error fetching questions for description ${descriptionId}:`,
+            error
+        );
+    }
+};
 
 // Form submission method
 const inertiaSubmit = () => {

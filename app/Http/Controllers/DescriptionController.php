@@ -23,6 +23,13 @@ class DescriptionController extends Controller
          //$this->authorizeResource( Category ::class, 'category');
     }
 
+    public function getDescriptionsByDiseaseArea($diseaseAreaId)
+{
+    $descriptions = Description::where('disease_area_id', $diseaseAreaId)->pluck('description', 'id');
+    return response()->json($descriptions);
+}
+
+
     public function updateStatus(Request $request)
     {
         // Validate the request data

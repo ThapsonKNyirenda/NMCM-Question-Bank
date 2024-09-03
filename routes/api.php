@@ -21,6 +21,8 @@ Route::get('/descriptions/{id}', [DescriptionController::class, 'show']);
 Route::post('/descriptions/update-status', [DescriptionController::class, 'updateStatus'])->name('descriptions.update-status');
 Route::post('/unvettedquestions/update-status', [UnvettedQuestionController::class, 'updateStatus'])->name('unvettedquestions.update-status');
 Route::delete('/descriptions/{id}', [DescriptionController::class, 'destroy']);
+Route::get('/descriptions/disease-area/{diseaseAreaId}', [DescriptionController::class, 'getDescriptionsByDiseaseArea']);
+Route::get('/questions/{descriptionId}', [QuestionController::class, 'getQuestionsByDescriptionId']);
 
 
 Route::get('/user', function (Request $request) {
