@@ -100,7 +100,7 @@
 
             <div v-if="Object.keys(descriptions).length">
                 <h3 class="m-2 text-lg font-semibold " style="text-decoration: underline;">
-    Select questions under each Scenario
+    Select desirable questions under each Scenario
 </h3>
 
                 <div
