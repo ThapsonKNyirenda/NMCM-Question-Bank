@@ -36,6 +36,7 @@ use App\Http\Controllers\QuestionBlueprintController;
 use App\Http\Controllers\QuestionPaper;
 use App\Http\Controllers\QuestionBlueprintManagerController;
 use App\Http\Controllers\DescriptionController;
+use App\Http\Controllers\SectionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -114,6 +115,7 @@ Route::middleware('auth')->group(function () {
         'questionblueprints' => QuestionBlueprintManagerController::class,
         'descriptions' => DescriptionController::class,
         'questions' => QuestionController::class,
+        'sections' => SectionController::class,
            
     ]);
 

@@ -8,8 +8,8 @@
         </div>
       </div>
       <div class="card-toolbar">
-        <base-button-new class="btn-light-primary" :href="route('questionblueprints.create')">
-          New Paper Blueprint
+        <base-button-new class="btn-light-primary" :href="route('sections.create')">
+          New Section
         </base-button-new>
       </div>
     </template>
