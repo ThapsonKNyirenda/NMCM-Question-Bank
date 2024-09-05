@@ -25,7 +25,6 @@ class QuestionController extends Controller
      public function getQuestionsByDescriptionId($descriptionId)
     {
         return $questions = Question::where('description_id', $descriptionId)
-        ->select('id', 'title')
         ->get();
     
     }

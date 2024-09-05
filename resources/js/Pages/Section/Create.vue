@@ -113,9 +113,9 @@
                     class="mb-4"
                 >
                     <div class="font-semibold" v-html="description"></div>
-                    <div v-if="questions[descriptionId]">
+                    <div v-if="filteredQuestions[descriptionId]">
                         <div
-                            v-for="question in questions[descriptionId]"
+                            v-for="question in filteredQuestions[descriptionId]"
                             :key="question.id"
                             class="m-2 form-check"
                         >
@@ -149,7 +149,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import axios from "axios";
 
 // Set layout and initialize the form
@@ -167,6 +167,7 @@ const form = useForm({
 
 const descriptions = ref({});
 const questions = ref({});
+const filteredQuestions = ref({}); // This will store the filtered questions based on cadre
 
 // Receive props
 const props = defineProps(["cadres", "diseaseAreas"]);
@@ -190,6 +191,7 @@ const fetchDescriptions = async () => {
     } else {
         descriptions.value = {};
         questions.value = {};
+        filteredQuestions.value = {};
     }
 };
 
@@ -205,6 +207,7 @@ const fetchQuestions = async (descriptionId) => {
             ...questions.value,
             [descriptionId]: response.data,
         };
+        filterQuestionsByCadre(); // Apply cadre filter when questions are fetched
     } catch (error) {
         console.error(
             `Error fetching questions for description ${descriptionId}:`,
@@ -213,29 +216,35 @@ const fetchQuestions = async (descriptionId) => {
     }
 };
 
-const fetchCadreQuestions = async () => {
+// Filter questions by the selected cadre
+const filterQuestionsByCadre = () => {
     if (form.cadre_id) {
-        try {
-            const response = await axios.get(
-                `/api/questions/cadre/${form.cadre_id}`
-            );
-            console.log(
-                `Fetched Questions for Cadre ${form.cadre_id}:`,
-                response.data
-            );
+        console.log("Selected Cadre ID:", form.cadre_id); // Log the selected cadre_id
+        
+        // Filter questions for each description based on the selected cadre
+        const filtered = {};
+        Object.keys(questions.value).forEach((descriptionId) => {
+            console.log(`Questions for Description ${descriptionId}:`, questions.value[descriptionId]);
 
-            // Filter questions based on cadre
-            questions.value = response.data;
-        } catch (error) {
-            console.error(
-                `Error fetching questions for cadre ${form.cadre_id}:`,
-                error
+            filtered[descriptionId] = questions.value[descriptionId].filter(
+                (question) => {
+                    console.log(`Question ID: ${question.id}, Cadre ID: ${question.cadre_id}`);
+                    return question.cadre_id == form.cadre_id;
+                }
             );
-        }
+        });
+
+        console.log("Filtered Questions:", filtered);
+        filteredQuestions.value = filtered;
     } else {
-        questions.value = {};
+        console.log("No Cadre selected. Showing all questions.");
+        filteredQuestions.value = questions.value; // If no cadre is selected, show all questions
     }
 };
+
+
+// Watch for cadre selection and re-apply the filter
+watch(() => form.cadre_id, filterQuestionsByCadre);
 
 // Form submission method
 const inertiaSubmit = () => {
