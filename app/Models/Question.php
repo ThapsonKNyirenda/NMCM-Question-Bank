@@ -60,9 +60,10 @@ class Question extends Model
     }
 
     public function taxonomyLevel()
-    {
-        return $this->belongsTo(TaxonomyLevel::class);
-    }
+{
+    return $this->belongsTo(TaxonomyLevel::class);
+}
+
     
     public function sections()
     {

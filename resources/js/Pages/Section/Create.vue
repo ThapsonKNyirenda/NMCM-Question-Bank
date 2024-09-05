@@ -75,7 +75,9 @@
 
             <!-- Section Label Dropdown -->
             <div class="mb-4">
-                <label for="section_label" class="form-label">Section Label</label>
+                <label for="section_label" class="form-label"
+                    >Section Label</label
+                >
                 <select
                     v-model="form.section_label"
                     id="section_label"
@@ -133,10 +135,14 @@
                     </div>
 
                     <!-- Show questions only when the description is selected -->
-                    <div v-if="form.selectedDescriptions.includes(descriptionId)">
+                    <div
+                        v-if="form.selectedDescriptions.includes(descriptionId)"
+                    >
                         <div v-if="filteredQuestions[descriptionId]">
                             <div
-                                v-for="question in filteredQuestions[descriptionId]"
+                                v-for="question in filteredQuestions[
+                                    descriptionId
+                                ]"
                                 :key="question.id"
                                 class="m-2 form-check"
                             >
@@ -147,11 +153,26 @@
                                     class="w-5 h-5 border border-gray-300 rounded-md appearance-none form-check-input"
                                     :id="`question_${question.id}`"
                                 />
+                                <!-- Display question title along with taxonomy level and syllabus -->
                                 <label
                                     :for="`question_${question.id}`"
                                     class="form-check-label text-dark"
-                                    v-html="question.title"
-                                ></label>
+                                >
+                                    <span v-html="question.title"></span>
+                                    <span>
+                                        (Taxonomy Level:
+                                        {{ question.taxonomy_level.name}},
+                                        Syllabus: {{ question.syllabus }})
+                                    </span>
+                                </label>
+
+                                <!-- Display choices below the question -->
+                                <div class="ml-4">
+                                    <p>A. {{ question.choice_a }}</p>
+                                    <p>B. {{ question.choice_b }}</p>
+                                    <p>C. {{ question.choice_c }}</p>
+                                    <p>D. {{ question.choice_d }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -223,7 +244,10 @@ const fetchQuestions = async (descriptionId) => {
         };
         filterQuestionsByCadre();
     } catch (error) {
-        console.error(`Error fetching questions for description ${descriptionId}:`, error);
+        console.error(
+            `Error fetching questions for description ${descriptionId}:`,
+            error
+        );
     }
 };
 

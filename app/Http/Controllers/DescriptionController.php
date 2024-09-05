@@ -118,9 +118,6 @@ public function edit($id)
 {
     $description = Description::create([
         'cadre_id' => $request->input('cadre'),
-        'nursing_process_id' => $request->input('nursing_process'),
-        'taxonomy_level_id' => $request->input('taxonomy'),
-        'syllabus' => $request->input('syllabus'),
         'disease_area_id' => $request->input('disease_area'),
         'description' => $request->input('question_description'),
         'status'=>'saved',
