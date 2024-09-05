@@ -59,6 +59,7 @@
                     name="cadre_id"
                     class="form-select"
                     required
+                    @change="fetchCadreQuestions"
                 >
                     <option disabled value="">Choose a cadre</option>
                     <option
@@ -99,9 +100,12 @@
             </div>
 
             <div v-if="Object.keys(descriptions).length">
-                <h3 class="m-2 text-lg font-semibold " style="text-decoration: underline;">
-    Select desirable questions under each Scenario
-</h3>
+                <h3
+                    class="m-2 text-lg font-semibold"
+                    style="text-decoration: underline"
+                >
+                    Select desirable questions under each Scenario
+                </h3>
 
                 <div
                     v-for="(description, descriptionId) in descriptions"
@@ -206,6 +210,30 @@ const fetchQuestions = async (descriptionId) => {
             `Error fetching questions for description ${descriptionId}:`,
             error
         );
+    }
+};
+
+const fetchCadreQuestions = async () => {
+    if (form.cadre_id) {
+        try {
+            const response = await axios.get(
+                `/api/questions/cadre/${form.cadre_id}`
+            );
+            console.log(
+                `Fetched Questions for Cadre ${form.cadre_id}:`,
+                response.data
+            );
+
+            // Filter questions based on cadre
+            questions.value = response.data;
+        } catch (error) {
+            console.error(
+                `Error fetching questions for cadre ${form.cadre_id}:`,
+                error
+            );
+        }
+    } else {
+        questions.value = {};
     }
 };
 

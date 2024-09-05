@@ -23,6 +23,7 @@ Route::post('/unvettedquestions/update-status', [UnvettedQuestionController::cla
 Route::delete('/descriptions/{id}', [DescriptionController::class, 'destroy']);
 Route::get('/descriptions/disease-area/{diseaseAreaId}', [DescriptionController::class, 'getDescriptionsByDiseaseArea']);
 Route::get('/questions/{descriptionId}', [QuestionController::class, 'getQuestionsByDescriptionId']);
+Route::get('/api/questions/cadre/{cadreId}', [QuestionController::class, 'getQuestionsByCadre']);
 
 
 Route::get('/user', function (Request $request) {

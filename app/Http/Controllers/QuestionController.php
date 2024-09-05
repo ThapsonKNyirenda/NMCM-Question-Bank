@@ -30,6 +30,15 @@ class QuestionController extends Controller
     
     }
 
+    public function getQuestionsByCadre($cadreId)
+{
+    // Fetch questions where cadre_id matches the selected cadre
+    $questions = Question::where('cadre_id', $cadreId)->get();
+
+    // Return the questions in a format Vue can consume
+    return response()->json($questions);
+}
+
 
      public function create(Request $request)
      {
