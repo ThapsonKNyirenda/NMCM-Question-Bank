@@ -28,6 +28,7 @@
                     required
                 />
             </div>
+
             <div class="mb-4">
                 <label for="disease_area" class="form-label"
                     >Select a Disease Area</label
@@ -72,17 +73,19 @@
                 </select>
             </div>
 
+            <!-- Section Label Dropdown -->
             <div class="mb-4">
-                <label for="title" class="form-label">Section Title</label>
-                <input
-                    type="text"
-                    v-model="form.title"
-                    id="title"
-                    name="title"
-                    class="form-control"
-                    placeholder="Enter the section title"
+                <label for="section_label" class="form-label">Section Label</label>
+                <select
+                    v-model="form.section_label"
+                    id="section_label"
+                    name="section_label"
+                    class="form-select"
                     required
-                />
+                >
+                    <option disabled value="">Choose a section label</option>
+                    <option v-for="n in 9" :key="n" :value="n">{{ n }}</option>
+                </select>
             </div>
 
             <div class="mb-4">
@@ -104,7 +107,7 @@
                     class="m-2 text-lg font-semibold"
                     style="text-decoration: underline"
                 >
-                    Select desirable questions under each Scenario
+                    Select Descriptions and Questions
                 </h3>
 
                 <div
@@ -112,25 +115,44 @@
                     :key="descriptionId"
                     class="mb-4"
                 >
-                    <div class="font-semibold" v-html="description"></div>
-                    <div v-if="filteredQuestions[descriptionId]">
-                        <div
-                            v-for="question in filteredQuestions[descriptionId]"
-                            :key="question.id"
-                            class="m-2 form-check"
-                        >
-                            <input
-                                type="checkbox"
-                                :value="question.id"
-                                v-model="form.selectedQuestions"
-                                class="form-check-input"
-                                :id="`question_${question.id}`"
-                            />
-                            <label
-                                :for="`question_${question.id}`"
-                                class="form-check-label text-dark"
-                                v-html="question.title"
-                            ></label>
+                    <div class="m-2 form-check">
+                        <!-- Checkbox for the description -->
+                        <input
+                            type="checkbox"
+                            :value="descriptionId"
+                            v-model="form.selectedDescriptions"
+                            class="w-5 h-5 border border-gray-300 rounded-md appearance-none form-check-input"
+                            :id="`description_${descriptionId}`"
+                            @change="toggleQuestions(descriptionId)"
+                        />
+                        <label
+                            :for="`description_${descriptionId}`"
+                            class="font-semibold form-check-label text-dark"
+                            v-html="description"
+                        ></label>
+                    </div>
+
+                    <!-- Show questions only when the description is selected -->
+                    <div v-if="form.selectedDescriptions.includes(descriptionId)">
+                        <div v-if="filteredQuestions[descriptionId]">
+                            <div
+                                v-for="question in filteredQuestions[descriptionId]"
+                                :key="question.id"
+                                class="m-2 form-check"
+                            >
+                                <input
+                                    type="checkbox"
+                                    :value="question.id"
+                                    v-model="form.selectedQuestions"
+                                    class="w-5 h-5 border border-gray-300 rounded-md appearance-none form-check-input"
+                                    :id="`question_${question.id}`"
+                                />
+                                <label
+                                    :for="`question_${question.id}`"
+                                    class="form-check-label text-dark"
+                                    v-html="question.title"
+                                ></label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,18 +169,19 @@
 </template>
 
 <script setup>
+// Similar to your original script setup with a few tweaks for the new functionality
+
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 import axios from "axios";
 
-// Set layout and initialize the form
 defineOptions({ layout: AuthenticatedLayout });
 
 const form = useForm({
     cadre_id: "",
     disease_area_id: "",
-    title: "",
+    section_label: "",
     paper_code: "",
     number_of_questions: 0,
     selectedDescriptions: [],
@@ -167,21 +190,17 @@ const form = useForm({
 
 const descriptions = ref({});
 const questions = ref({});
-const filteredQuestions = ref({}); // This will store the filtered questions based on cadre
+const filteredQuestions = ref({});
 
-// Receive props
 const props = defineProps(["cadres", "diseaseAreas"]);
 
-// Method to fetch descriptions by disease area
 const fetchDescriptions = async () => {
     if (form.disease_area_id) {
         try {
             const response = await axios.get(
                 `/api/descriptions/disease-area/${form.disease_area_id}`
             );
-            console.log("Fetched Descriptions:", response.data);
             descriptions.value = response.data;
-            // Fetch questions for each description
             for (const descriptionId of Object.keys(response.data)) {
                 await fetchQuestions(descriptionId);
             }
@@ -195,58 +214,39 @@ const fetchDescriptions = async () => {
     }
 };
 
-// Method to fetch questions by description ID
 const fetchQuestions = async (descriptionId) => {
     try {
         const response = await axios.get(`/api/questions/${descriptionId}`);
-        console.log(
-            `Fetched Questions for Description ${descriptionId}:`,
-            response.data
-        );
         questions.value = {
             ...questions.value,
             [descriptionId]: response.data,
         };
-        filterQuestionsByCadre(); // Apply cadre filter when questions are fetched
+        filterQuestionsByCadre();
     } catch (error) {
-        console.error(
-            `Error fetching questions for description ${descriptionId}:`,
-            error
-        );
+        console.error(`Error fetching questions for description ${descriptionId}:`, error);
     }
 };
 
-// Filter questions by the selected cadre
 const filterQuestionsByCadre = () => {
     if (form.cadre_id) {
-        console.log("Selected Cadre ID:", form.cadre_id); // Log the selected cadre_id
-        
-        // Filter questions for each description based on the selected cadre
         const filtered = {};
         Object.keys(questions.value).forEach((descriptionId) => {
-            console.log(`Questions for Description ${descriptionId}:`, questions.value[descriptionId]);
-
             filtered[descriptionId] = questions.value[descriptionId].filter(
-                (question) => {
-                    console.log(`Question ID: ${question.id}, Cadre ID: ${question.cadre_id}`);
-                    return question.cadre_id == form.cadre_id;
-                }
+                (question) => question.cadre_id == form.cadre_id
             );
         });
-
-        console.log("Filtered Questions:", filtered);
         filteredQuestions.value = filtered;
     } else {
-        console.log("No Cadre selected. Showing all questions.");
-        filteredQuestions.value = questions.value; // If no cadre is selected, show all questions
+        filteredQuestions.value = questions.value;
     }
 };
 
+const toggleQuestions = (descriptionId) => {
+    // You can handle showing/hiding questions here based on selected descriptions
+};
 
-// Watch for cadre selection and re-apply the filter
 watch(() => form.cadre_id, filterQuestionsByCadre);
 
-// Form submission method
 const inertiaSubmit = () => {
     form.post(route("sections.store"));
 };
