@@ -64,6 +64,27 @@
                     <base-pagination :paginator="sections" :key="sections.total" />
                 </div>
             </div>
+
+            <!-- New Form for Selecting Paper Code -->
+            <div class="p-6 mt-8 bg-white border rounded-lg shadow-md">
+                <h3 class="mb-4 text-lg font-semibold text-gray-700">Generate Question Paper</h3>
+                <form @submit.prevent="generatePaper">
+                    <div class="mb-4">
+                        <label for="paper_code" class="block mb-2 text-sm font-medium text-gray-700">Select Paper Code</label>
+                    <select id="paper_code" v-model="selectedPaperCode" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="" disabled>Select Paper Code</option>
+                        <option v-for="(code, index) in uniquePaperCodes" :key="index" :value="code">
+                            {{ code }}
+                        </option>
+                    </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Generate Paper
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </base-card-main>
 </template>
@@ -72,7 +93,7 @@
 import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { store } from "@/store.js";
-import { reactive, ref, watch } from "vue";
+import { reactive, ref, watch, computed } from "vue";
 import axios from 'axios';
 import { onMounted } from 'vue';
 import Swal from 'sweetalert2';
@@ -100,9 +121,12 @@ onMounted(() => {
 });
 
 const props = defineProps({
-    sections: Object,
+    sections: Object, // Using sections from props
     filters: Object
 });
+
+// Data for the new form
+const selectedPaperCode = ref('');
 
 store.pageTitle = 'Sections List';
 
@@ -117,6 +141,15 @@ watch(() => filterBy.per_page, (newVal) => {
 const editSection = (sectionId) => {
     router.get(route('sections.edit', sectionId));
 };
+
+// Extract unique paper codes
+const uniquePaperCodes = computed(() => {
+    if (props.sections && props.sections.data) {
+        const codes = props.sections.data.map(section => section.paper_code);
+        return [...new Set(codes)]; // Return only unique paper codes
+    }
+    return []; // Return an empty array if sections or data is not available
+});
 
 // Method to confirm deletion
 const confirmDelete = (sectionId) => {
@@ -147,4 +180,10 @@ const deleteSection = async (sectionId) => {
         console.error('Error:', error);
     }
 };
+
+// Dummy method for generating question paper (button functionality not yet implemented)
+const generatePaper = () => {
+    console.log("Generate Question Paper for Paper Code:", selectedPaperCode.value);
+};
 </script>
+

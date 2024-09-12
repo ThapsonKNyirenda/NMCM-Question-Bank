@@ -60,7 +60,7 @@ public function store(Request $request)
     $section->questions()->attach($validatedData['selectedQuestions']); 
 
     // Step 3: Redirect back with a success message
-    //return redirect()->route('sections.index')->with('success', 'Section created and questions assigned successfully.');
+    return redirect()->route('sections.index')->with('success', 'Section created and questions assigned successfully.');
 }
 
 
