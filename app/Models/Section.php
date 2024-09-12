@@ -15,8 +15,10 @@ class Section extends Model
         'description_id',
         'question_id',
         'paper_code',
-        'title',
+        'section_label',
         'number_of_questions',
+        'created_at',
+        'updated_at',
     ];
 
     // Define the relationships
@@ -36,8 +38,13 @@ class Section extends Model
         return $this->belongsTo(Description::class);
     }
 
-    public function question()
+    public function questions()
     {
-        return $this->belongsTo(Question::class);
+        return $this->belongsToMany(Question::class, 'section_questions');
     }
+
+    // public function question()
+    // {
+    //     return $this->belongsTo(Question::class);
+    // }
 }

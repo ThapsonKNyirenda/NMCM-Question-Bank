@@ -281,6 +281,6 @@ const inertiaSubmit = () => {
         // Log selected questions
         console.log("Selected Questions:", form.selectedQuestions);
     
-        // form.post(route("sections.store"));
+        form.post(route("sections.store"));
 };
 </script>

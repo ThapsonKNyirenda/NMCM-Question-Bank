@@ -64,9 +64,14 @@ class Question extends Model
     return $this->belongsTo(TaxonomyLevel::class);
 }
 
-    
     public function sections()
     {
-        return $this->hasMany(Section::class);
+        return $this->belongsToMany(Section::class, 'section_questions');
     }
+
+    
+    // public function sections()
+    // {
+    //     return $this->hasMany(Section::class);
+    // }
 }
