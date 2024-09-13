@@ -26,14 +26,29 @@ class SectionController extends Controller
              return response()->json(['error' => 'No sections found'], 404);
          }
      
-         // Retrieve question_ids from section_questions table based on section_ids
-         $questionIds = DB::table('section_questions')
-                         ->whereIn('section_id', $sections->pluck('id'))
-                         ->pluck('question_id');
+         // Initialize an empty array to hold the structured result
+         $result = [];
      
-         // Return the question_ids
-         return response()->json($questionIds);
+         // Loop through the sections
+         foreach ($sections as $section) {
+             // Retrieve question_ids for each section
+             $questionIds = DB::table('section_questions')
+                             ->where('section_id', $section->id)
+                             ->pluck('question_id');
+     
+             // Add each section with its label and questions as an object
+             $result[] = [
+                 'paper_code' => $paper_code,
+                 'section_label' => $section->section_label,
+                 'question_ids' => $questionIds->unique()->values(), // Ensure unique question IDs
+             ];
+         }
+     
+         // Return the structured result
+         return response()->json($result);
      }
+     
+     
      
 
     public function index(Request $request)

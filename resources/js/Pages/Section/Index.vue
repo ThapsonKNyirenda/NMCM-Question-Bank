@@ -182,8 +182,25 @@ const deleteSection = async (sectionId) => {
 };
 
 // Dummy method for generating question paper (button functionality not yet implemented)
-const generatePaper = () => {
-    console.log("Generate Question Paper for Paper Code:", selectedPaperCode.value);
+const generatePaper = async () => {
+    if (!selectedPaperCode.value) {
+        console.log("No paper code selected");
+        return;
+    }
+
+    try {
+        const response = await axios.get(`/api/sections/questions/${selectedPaperCode.value}`);
+        const sectionsData = response.data;
+
+        console.log(sectionsData);
+
+    } catch (error) {
+        console.error("Error fetching grouped question IDs:", error);
+    }
 };
+
+
+
+
 </script>
 
