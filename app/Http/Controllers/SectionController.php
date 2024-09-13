@@ -6,9 +6,35 @@ use App\Models\DiseaseArea;
 use App\Models\Description;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class SectionController extends Controller
 {
+    public function __construct()
+     {
+          Inertia::share('activeMenu', 'Paper Sections');
+         //  $this->authorizeResource( Question ::class, '');
+     }
+
+     public function getQuestionsByPaperCode($paper_code)
+     {
+         // Find all sections by paper_code
+         $sections = Section::where('paper_code', $paper_code)->get();
+     
+         if ($sections->isEmpty()) {
+             return response()->json(['error' => 'No sections found'], 404);
+         }
+     
+         // Retrieve question_ids from section_questions table based on section_ids
+         $questionIds = DB::table('section_questions')
+                         ->whereIn('section_id', $sections->pluck('id'))
+                         ->pluck('question_id');
+     
+         // Return the question_ids
+         return response()->json($questionIds);
+     }
+     
 
     public function index(Request $request)
 {

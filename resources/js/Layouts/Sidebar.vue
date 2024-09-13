@@ -38,10 +38,10 @@
                     Question Bank
                 </SidebarMenuItem>
 
-                <SidebarMenuItem :href="route('questionblueprints.index')"
-                    :is-active="$page.props.activeMenu === 'Question Papers'" v-if="can('Manage question papers')">
+                <SidebarMenuItem :href="route('sections.index')"
+                    :is-active="$page.props.activeMenu === 'Paper Sections'" v-if="can('Manage question papers')">
                     <template #icon><i class="ri-list-check"></i></template>
-                    Paper Blueprints
+                    Paper Sections
                 </SidebarMenuItem>
 
                 <!-- <SidebarMenuItem>
