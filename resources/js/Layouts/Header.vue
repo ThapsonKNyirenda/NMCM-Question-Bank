@@ -59,5 +59,8 @@ import HeaderProfileDropdown from "@/Components/HeaderProfileDropdown.vue";
 import {store} from "@/store.js";
 import { Link } from "@inertiajs/vue3";
 
+const props = defineProps({
+  user: Object, // Ensure that the user is passed as a prop to Header.vue
+});
 
 </script>

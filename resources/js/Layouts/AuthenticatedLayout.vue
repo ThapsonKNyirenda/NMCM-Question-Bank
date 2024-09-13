@@ -5,12 +5,16 @@ import BaseValidation from "@/Components/BaseValidation.vue";
 import BaseFlashMessage from "@/Components/BaseFlashMessage.vue";
 import '@fortawesome/fontawesome-free/css/all.css';
 
+const props = defineProps({
+  user: Object, // Ensure that user is passed from the layout
+});
+
 </script>
 <template>
     <div>
         <div class="flex flex-col flex-1 " scroll-region>
            <div class="flex flex-[1_0_auto] flex-col">
-               <Header />
+            <Header :user="user" />
                <div class="flex-col flex-auto min-w-0 app-wrapper" >
                    <Sidebar />
                    <div class="flex flex-col flex-auto min-w-0 app-main" >

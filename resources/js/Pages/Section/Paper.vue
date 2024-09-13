@@ -5,17 +5,9 @@
             {{ successMessage }}
         </div>
         <template #header>
-            <div class="w-1/2 card-title">
-                <div class="relative flex items-center w-full my-1 mr-5">
-                    <base-search 
-                        placeholder="Search..."
-                        :search="filters.search"
-                        class="w-full"
-                    />
-                </div>
-            </div>
+            
             <div class="flex space-x-4 card-toolbar">
-                <base-button-new class="btn-light-primary" :href="route('sections.create')"> 
+                <base-button-new class="btn-light-primary"> 
                     New Section 
                 </base-button-new>
             </div>
@@ -35,63 +27,10 @@
                             <th class="px-4 py-2 font-semibold text-left text-gray-600">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="font-medium text-gray-600">
-                        <tr v-for="(section, index) in sections.data" :key="section.id" class="border-b hover:bg-gray-50">
-                            <td class="px-4 py-3" v-text="index + 1"></td>
-                            <td class="px-4 py-3">{{ section.paper_code }}</td>
-                            <td class="px-4 py-3">{{ section.cadre ? section.cadre.name : 'N/A' }}</td>
-                            <td class="px-4 py-3">{{ section.disease_area ? section.disease_area.name : 'N/A' }}</td>
-                            <td class="px-4 py-3">{{ section.section_label }}</td>
-                            <td class="px-4 py-3">{{ new Date(section.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
-                            <td class="px-4 py-3">{{ new Date(section.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}</td>
-                            <td class="flex px-4 py-3 space-x-4">
-                                <button @click="editSection(section.id)" class="flex items-center text-green-500 hover:text-green-700">
-                                    <i class="mr-2 text-xl fas fa-edit"></i>
-                                </button>
-                                <button @click="confirmDelete(section.id)" class="flex items-center text-red-500 hover:text-red-700">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    
                 </table>
             </div>
-            <div class="grid grid-cols-5 gap-4 mt-4">
-                <div class="flex items-center justify-center md:justify-start">
-                    <base-select-page v-model="filterBy.per_page" />
-                </div>
-                <div class="flex items-center justify-center col-span-4 md:justify-end">
-                    <base-pagination :paginator="sections" :key="sections.total" />
-                </div>
-            </div>
-
-            <!-- New Form for Selecting Paper Code -->
-            <div class="p-6 mt-8 bg-white border rounded-lg shadow-md">
-                <h3 class="mb-4 text-lg font-semibold text-gray-700">Generate Question Paper</h3>
-                <form @submit.prevent="generatePaper">
-                    <div class="mb-4">
-                        <label for="paper_code" class="block mb-2 text-sm font-medium text-gray-700">Select Paper Code</label>
-                    <select id="paper_code" v-model="selectedPaperCode" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="" disabled>Select Paper Code</option>
-                        <option v-for="(code, index) in uniquePaperCodes" :key="index" :value="code">
-                            {{ code }}
-                        </option>
-                    </select>
-                    </div>
-                    <div>
-
-    <!-- Generate Paper Button -->
-    <button @click="generatePaper" class="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700">
-      Generate Paper
-    </button>
-
-    <!-- View Paper Button, visible after data is fetched -->
-    <button v-if="isDataFetched" @click="viewPaper" class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
-      View Paper
-    </button>
-  </div>
-                </form>
-            </div>
+           
         </div>
     </base-card-main>
 </template>
@@ -128,21 +67,14 @@ onMounted(() => {
 });
 
 const props = defineProps({
-    sections: Object, // Using sections from props
-    filters: Object
+    sectionsData: Array,
+    paper_code: String,
 });
 
 // Data for the new form
 const selectedPaperCode = ref('');
 
 store.pageTitle = 'Sections List';
-
-const filterBy = reactive({ per_page: props.filters.per_page ?? 10 });
-
-// Watch for per_page changes
-watch(() => filterBy.per_page, (newVal) => {
-    router.get(route('sections.index', { search: props.filters.search, ...filterBy }));
-});
 
 // Method to edit a section
 const editSection = (sectionId) => {

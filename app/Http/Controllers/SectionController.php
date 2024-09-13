@@ -6,6 +6,7 @@ use App\Models\DiseaseArea;
 use App\Models\Description;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -47,7 +48,24 @@ class SectionController extends Controller
          // Return the structured result
          return response()->json($result);
      }
+
      
+     public function viewPaper(Request $request)
+     {
+         // The data passed from the Inertia router will be in $request
+         $sectionsData = $request->input('sectionsData');
+         $paperCode = $request->input('paper_code');
+     
+         // You can now pass this data to the Inertia view
+         return Inertia::render('Section/Paper', [
+             'sectionsData' => $sectionsData,
+             'paperCode' => $paperCode,
+             'user' => Auth::user(),
+         ]);
+     }
+     
+
+
      
      
 

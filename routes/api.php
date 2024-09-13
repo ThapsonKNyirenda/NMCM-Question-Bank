@@ -25,6 +25,8 @@ Route::get('/descriptions/disease-area/{diseaseAreaId}', [DescriptionController:
 Route::get('/questions/{descriptionId}', [QuestionController::class, 'getQuestionsByDescriptionId']);
 Route::get('/api/questions/cadre/{cadreId}', [QuestionController::class, 'getQuestionsByCadre']);
 Route::get('/sections/questions/{paper_code}', [SectionController::class, 'getQuestionsByPaperCode']);
+Route::get('/sections/paper/{paper_code}', [SectionController::class, 'paper'])->name('sections.paper');
+Route::get('/paper', [SectionController::class, 'viewPaper'])->name('sections.view-paper');
 
 
 Route::get('/user', function (Request $request) {
