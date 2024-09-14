@@ -205,14 +205,20 @@ const generatePaper = async () => {
 
 // Function to navigate to Paper.vue and pass the data
 const viewPaper = () => {
-  router.visit('/api/paper', {
-    method: 'get', // This specifies the method (GET in this case)
+  console.log("sectionsData:", sectionsData.value);
+  console.log("selectedPaperCode:", selectedPaperCode.value);
+
+  // Navigate to the Paper view with the structured data
+  router.visit('/paper/view', {
+    method: 'get', // GET request
     data: {
-      sectionsData: sectionsData.value, // Pass the fetched sections data
+      sectionsData: sectionsData.value, // Pass the structured sections data
       paper_code: selectedPaperCode.value, // Pass the selected paper code
     },
   });
 };
+
+
 
 
 
