@@ -26,7 +26,7 @@ Route::get('/questions/{descriptionId}', [QuestionController::class, 'getQuestio
 Route::get('/api/questions/cadre/{cadreId}', [QuestionController::class, 'getQuestionsByCadre']);
 Route::get('/sections/questions/{paper_code}', [SectionController::class, 'getQuestionsByPaperCode']);
 Route::get('/sections/paper/{paper_code}', [SectionController::class, 'paper'])->name('sections.paper');
-
+Route::post('/questions/by-ids', [QuestionController::class, 'getQuestionsByIds']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

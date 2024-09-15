@@ -14,7 +14,7 @@ const props = defineProps({
     <div>
         <div class="flex flex-col flex-1 " scroll-region>
            <div class="flex flex-[1_0_auto] flex-col">
-            <Header :user="user" />
+            <Header/>
                <div class="flex-col flex-auto min-w-0 app-wrapper" >
                    <Sidebar />
                    <div class="flex flex-col flex-auto min-w-0 app-main" >

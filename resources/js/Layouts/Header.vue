@@ -38,7 +38,7 @@
                     <!-- <HeaderQuickLink /> -->
                     <!-- <HeaderMessage /> -->
                     <!--end: Notifications -->
-                    <HeaderNotification />
+                    
                     <HeaderProfileDropdown />
                 </div>
             <!--end::Navbar-->

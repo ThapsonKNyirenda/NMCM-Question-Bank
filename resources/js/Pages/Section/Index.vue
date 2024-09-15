@@ -192,28 +192,13 @@ const deleteSection = async (sectionId) => {
 const sectionsData = ref(null); // Store fetched data here
 const isDataFetched = ref(false); // To toggle the View Paper button
 
-// Function to fetch data when Generate Paper is clicked
-const generatePaper = async () => {
-  try {
-    const response = await axios.get(`/api/sections/questions/${selectedPaperCode.value}`);
-    sectionsData.value = response.data; // Store the fetched data
-    isDataFetched.value = true; // Toggle to show View Paper button
-  } catch (error) {
-    console.error('Error fetching paper:', error);
-  }
-};
 
-// Function to navigate to Paper.vue and pass the data
-const viewPaper = () => {
-  console.log("sectionsData:", sectionsData.value);
-  console.log("selectedPaperCode:", selectedPaperCode.value);
+const generatePaper = () => {
 
-  // Navigate to the Paper view with the structured data
   router.visit('/paper/view', {
-    method: 'get', // GET request
+    method: 'get', 
     data: {
-      sectionsData: sectionsData.value, // Pass the structured sections data
-      paper_code: selectedPaperCode.value, // Pass the selected paper code
+      paperCode: selectedPaperCode.value
     },
   });
 };

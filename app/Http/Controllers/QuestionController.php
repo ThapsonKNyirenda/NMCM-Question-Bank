@@ -40,6 +40,22 @@ class QuestionController extends Controller
      }
      
 
+     public function getQuestionsByIds(Request $request)
+{
+    // Retrieve the question IDs from the request
+    $questionIds = $request->input('ids');
+
+    // Fetch the questions from the database where IDs match the passed array
+    // Eager load the description relationship
+    $questions = Question::with('description')
+                         ->whereIn('id', $questionIds)
+                         ->get();
+
+    // Return the fetched questions as JSON response
+    return response()->json($questions);
+}
+
+
 
      public function create(Request $request)
      {

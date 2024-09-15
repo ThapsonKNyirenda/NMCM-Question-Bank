@@ -98,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/questions/scestore', [QuestionController::class, 'sceStore'])->name('questions.scestore');
 
     Route::get('/paper/view', [SectionController::class, 'viewPaper'])->name('paper.view');
-
+    
     
     Route::resources([
         'roles' => RoleController::class,

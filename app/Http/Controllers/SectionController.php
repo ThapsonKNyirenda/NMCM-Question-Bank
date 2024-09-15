@@ -52,16 +52,11 @@ class SectionController extends Controller
      
      public function viewPaper(Request $request)
 {
-    // The data passed from the Inertia router will be in $request
-    $sectionsData = $request->input('sectionsData');
-    $paperCode = $request->input('paper_code');
 
-    // Dump and die (prints data and stops execution)
-    dd($sectionsData, $paperCode);
-
+    $paperCode = $request->input('paperCode');
+ 
     // The code below won't execute if dd is used
     return Inertia::render('Section/Paper', [
-        'sectionsData' => $sectionsData,
         'paperCode' => $paperCode,
     ]);
 }
