@@ -44,10 +44,12 @@
                     Paper Sections
                 </SidebarMenuItem>
 
-                <!-- <SidebarMenuItem>
+                <SidebarMenuItem :href="route('papercover.index')"
+                :is-active="$page.props.activeMenu === 'Paper Covers'">
                     <template #icon><i class="ri-list-check"></i></template>
-                    Question Papers
-                </SidebarMenuItem> -->
+                    Paper Covers
+                </SidebarMenuItem>
+                
                 <!-- <SidebarMenuItem
                     :href="route('questionp.index')"
                     :is-active="$page.props.activeMenu === 'Questionp'"

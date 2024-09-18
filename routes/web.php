@@ -36,6 +36,7 @@ use App\Http\Controllers\QuestionBlueprintController;
 use App\Http\Controllers\QuestionPaper;
 use App\Http\Controllers\QuestionBlueprintManagerController;
 use App\Http\Controllers\DescriptionController;
+use App\Http\Controllers\PaperCoverController;
 use App\Http\Controllers\SectionController;
 
 Route::get('/', function () {
@@ -118,6 +119,7 @@ Route::middleware('auth')->group(function () {
         'descriptions' => DescriptionController::class,
         'questions' => QuestionController::class,
         'sections' => SectionController::class,
+        'papercover' => PaperCoverController::class,
            
     ]);
 
