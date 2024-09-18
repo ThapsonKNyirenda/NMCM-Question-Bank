@@ -67,6 +67,12 @@
 </template>
 
 <script setup>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+
+defineOptions({ layout: AuthenticatedLayout });
+
+import { store } from "@/store.js";
+store.pageTitle = 'Paper Cover';
 const sections = [
     { name: "1 (ANC)", totalScore: 19, scoreObtained: "" },
     { name: "2 (L&D)", totalScore: 46, scoreObtained: "" },
