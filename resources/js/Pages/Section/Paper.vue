@@ -10,10 +10,8 @@
 
     <!-- First Page with Paper Cover and Exam No -->
     <div class="a4-page">
-      
       <!-- Paper cover content on first page -->
       <Papercover />
-
     </div>
 
     <!-- Subsequent Pages for Sections -->
@@ -60,8 +58,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Floating Print Button -->
+    <button class="floating-print-btn" @click="printPage">
+      Print
+    </button>
   </base-card-main>
 </template>
+
 
 
 
@@ -135,6 +139,11 @@ onMounted(() => {
   generatePaper();
 });
 
+// Function to print the page
+const printPage = () => {
+  // window.print();
+};
+
 // Setting the page title
 import { store } from "@/store.js";
 store.pageTitle = 'Generated Paper';
@@ -172,5 +181,60 @@ store.pageTitle = 'Generated Paper';
   font-weight: bold;
   position: relative;
   margin-top: 10mm;
+}
+</style>
+
+<style scoped>
+.a4-page {
+  width: 210mm; /* A4 width */
+  height: 297mm; /* A4 height */
+  margin: 20mm auto; /* Center the page and add some margin */
+  padding: 20mm;
+  border: 1px solid #000;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space the content and footer */
+}
+
+.header {
+  position: relative;
+  text-align: right;
+  margin-bottom: 10mm;
+}
+
+.exam-number {
+  font-weight: bold;
+}
+
+.content {
+  flex-grow: 1; /* Ensure content takes the available space */
+}
+
+.footer {
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+  margin-top: 10mm;
+}
+
+/* Floating print button styling */
+.floating-print-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #348002;
+  color: white;
+  border: none;
+  border-radius: 15%;
+  width: 60px;
+  height: 6%;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.floating-print-btn:hover {
+  background-color: #0c5bb8;
 }
 </style>
