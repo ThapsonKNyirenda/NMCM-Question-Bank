@@ -8,46 +8,68 @@
       </div>
     </template>
 
-    <!-- Display sections and questions -->
+    <!-- First Page with Paper Cover and Exam No -->
+    <div class="a4-page">
+      
+      <!-- Paper cover content on first page -->
+      <Papercover />
+
+    </div>
+
+    <!-- Subsequent Pages for Sections -->
     <div v-if="isDataFetched">
-
-      <div v-for="(section, index) in sectionsData" :key="section.section_label" class="mb-4">
-        <!-- Display Section A, Section B, etc. -->
-        <h3 style="font-size: large; font-weight: bold;">Section {{ getSectionLabel(index) }}:</h3>
-        <div v-for="(questions, descriptionId) in groupQuestionsByDescription(section.section_label)" :key="descriptionId" class="mb-4">
-          <!-- Display the description without the "Description" title -->
-          <div v-if="questions.length > 0 && questions[0].description">
-            <p v-html="questions[0].description.description"></p>
-          </div>
-
-          <!-- Loop through questions with the same description -->
-          <ul>
-            <li v-for="question in questions" :key="question.id" class="mb-4">
-              <!-- Display the question -->
-              <div class="flex items-start">
-                <strong class="mr-2">{{ getQuestionNumber() }}.</strong> 
-                <span v-html="question.title"></span>
+      <div v-for="(section, index) in sectionsData" :key="section.section_label">
+        <!-- Simulate A4 page for subsequent sections -->
+        <div class="a4-page">
+          <!-- Section content -->
+          <div class="content">
+            <h3 style="font-size: large; font-weight: bold;">
+              Section {{ section.section_label }} ({{ section.disease_area_name }}):
+            </h3>
+            <br>
+            <div v-for="(questions, descriptionId) in groupQuestionsByDescription(section.section_label)" :key="descriptionId">
+              <!-- Display description if available -->
+              <div v-if="questions.length > 0 && questions[0].description">
+                <p v-html="questions[0].description.description"></p>
               </div>
 
-              <!-- Display multiple-choice options below the question title -->
-              <ul class="pl-5 mt-2">
-                <li v-if="question.choice_a">A. {{ question.choice_a }}</li>
-                <li v-if="question.choice_b">B. {{ question.choice_b }}</li>
-                <li v-if="question.choice_c">C. {{ question.choice_c }}</li>
-                <li v-if="question.choice_d">D. {{ question.choice_d }}</li>
+              <!-- Loop through questions -->
+              <ul>
+                <li v-for="question in questions" :key="question.id" class="mb-4">
+                  <div class="flex items-start">
+                    <strong class="mr-2">{{ getQuestionNumber() }}.</strong>
+                    <span v-html="question.title"></span>
+                  </div>
+
+                  <!-- Display multiple-choice options below the question -->
+                  <ul class="pl-5 mt-2">
+                    <li v-if="question.choice_a">A. {{ question.choice_a }}</li>
+                    <li v-if="question.choice_b">B. {{ question.choice_b }}</li>
+                    <li v-if="question.choice_c">C. {{ question.choice_c }}</li>
+                    <li v-if="question.choice_d">D. {{ question.choice_d }}</li>
+                  </ul>
+                </li>
               </ul>
-            </li>
-          </ul>
+            </div>
+          </div>
+
+          <!-- Footer with page number -->
+          <div class="footer">
+            Page {{ index + 1 }} <!-- Page number starts from 2 for the subsequent sections -->
+          </div>
         </div>
       </div>
     </div>
   </base-card-main>
 </template>
 
+
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Papercover from "@/Pages/PaperCover/Index.vue";
 
 defineOptions({ layout: AuthenticatedLayout });
 
@@ -103,11 +125,6 @@ const groupQuestionsByDescription = (sectionLabel) => {
   }, {});
 };
 
-// Function to get section labels as Section A, B, C, etc.
-const getSectionLabel = (index) => {
-  return String.fromCharCode(65 + index); // 65 is ASCII for 'A'
-};
-
 // Computed property to get and increment the question number
 const getQuestionNumber = () => {
   return globalQuestionCounter++;
@@ -122,3 +139,38 @@ onMounted(() => {
 import { store } from "@/store.js";
 store.pageTitle = 'Generated Paper';
 </script>
+
+<style scoped>
+.a4-page {
+  width: 210mm; /* A4 width */
+  height: 297mm; /* A4 height */
+  margin: 20mm auto; /* Center the page and add some margin */
+  padding: 20mm;
+  border: 1px solid #000;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space the content and footer */
+}
+
+.header {
+  position: relative;
+  text-align: right;
+  margin-bottom: 10mm;
+}
+
+.exam-number {
+  font-weight: bold;
+}
+
+.content {
+  flex-grow: 1; /* Ensure content takes the available space */
+}
+
+.footer {
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+  margin-top: 10mm;
+}
+</style>

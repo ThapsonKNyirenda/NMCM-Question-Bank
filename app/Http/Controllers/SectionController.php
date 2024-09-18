@@ -21,7 +21,9 @@ class SectionController extends Controller
      public function getQuestionsByPaperCode($paper_code)
      {
          // Find all sections by paper_code
-         $sections = Section::where('paper_code', $paper_code)->get();
+         $sections = Section::where('paper_code', $paper_code)
+                            ->with('diseaseArea') // Eager load the related disease area
+                            ->get();
      
          if ($sections->isEmpty()) {
              return response()->json(['error' => 'No sections found'], 404);
@@ -34,13 +36,14 @@ class SectionController extends Controller
          foreach ($sections as $section) {
              // Retrieve question_ids for each section
              $questionIds = DB::table('section_questions')
-                             ->where('section_id', $section->id)
-                             ->pluck('question_id');
+                              ->where('section_id', $section->id)
+                              ->pluck('question_id');
      
-             // Add each section with its label and questions as an object
+             // Add each section with its label, disease_area_name, and questions as an object
              $result[] = [
                  'paper_code' => $paper_code,
                  'section_label' => $section->section_label,
+                 'disease_area_name' => $section->diseaseArea->name, // Fetch the disease area name
                  'question_ids' => $questionIds->unique()->values(), // Ensure unique question IDs
              ];
          }
@@ -48,6 +51,7 @@ class SectionController extends Controller
          // Return the structured result
          return response()->json($result);
      }
+     
 
      
      public function viewPaper(Request $request)
