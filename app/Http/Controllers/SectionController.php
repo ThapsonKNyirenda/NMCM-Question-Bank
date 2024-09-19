@@ -128,4 +128,23 @@ public function getDescriptionsByDiseaseArea($diseaseAreaId)
 }
 
 
+public function destroy($id)
+    {
+        try {
+            $description = Description::findOrFail($id);
+            $description->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Section deleted successfully'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete Section'
+            ]);
+        }
+    }
+
 }
