@@ -29,7 +29,7 @@
           <!-- Section content -->
           <div class="content">
             <h3 style="font-size: large; font-weight: bold;">
-              Section {{ section.section_label }} ({{ section.disease_area_name }}):
+              Section {{ section.section_label }} : {{ section.disease_area_name }}
             </h3>
             <br>
             <div v-for="(questions, descriptionId) in groupQuestionsByDescription(section.section_label)" :key="descriptionId">

@@ -131,8 +131,8 @@ public function getDescriptionsByDiseaseArea($diseaseAreaId)
 public function destroy($id)
     {
         try {
-            $description = Description::findOrFail($id);
-            $description->delete();
+            $section = Section::findOrFail($id);
+            $section->delete();
             
             return response()->json([
                 'success' => true,
