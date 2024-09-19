@@ -19,9 +19,9 @@
                     Questions
                 </SidebarMenuItem> -->
 
-                <SidebarMenuItem :href="route('descriptions.index')" :is-active="$page.props.activeMenu === 'Questions'" >
+                <SidebarMenuItem :href="route('descriptions.index')" :is-active="$page.props.activeMenu === 'Questions'" v-if="can('Manage Question Scenarios')" >
                     <template #icon><i class="ri-question-mark"></i> </template>
-                    Questions
+                    Question Scenarios
                 </SidebarMenuItem>
 
                 <SidebarMenuItem :href="route('unvettedquestions.index')"
@@ -39,7 +39,7 @@
                 </SidebarMenuItem>
 
                 <SidebarMenuItem :href="route('sections.index')"
-                    :is-active="$page.props.activeMenu === 'Paper Sections'" v-if="can('Manage question papers')">
+                    :is-active="$page.props.activeMenu === 'Paper Sections'" v-if="can('Manage paper sections')">
                     <template #icon><i class="ri-list-check"></i></template>
                     Paper Sections
                 </SidebarMenuItem>
