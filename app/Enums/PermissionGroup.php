@@ -11,6 +11,8 @@ enum PermissionGroup: string
     case UserManagement = 'User Management';
     case Questions = 'Questions';
     case QuestionBank = 'Question Bank';
+    case Sections = 'Sections';
+    case Descriptions = 'Descriptions';
 
     
 }
