@@ -19,6 +19,8 @@ class Section extends Model
         'number_of_questions',
         'created_at',
         'updated_at',
+        'selected_descriptions',
+        'selected_questions'
     ];
 
     // Define the relationships

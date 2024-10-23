@@ -117,7 +117,7 @@ public function edit($id)
     public function store(DescriptionStoreRequest $request): RedirectResponse
 {
     $description = Description::create([
-        'cadre_id' => $request->input('cadre'),
+        // 'cadre_id' => $request->input('cadre'),
         'disease_area_id' => $request->input('disease_area'),
         'description' => $request->input('question_description'),
         'status'=>'saved',

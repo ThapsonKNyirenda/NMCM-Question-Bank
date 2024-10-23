@@ -272,14 +272,6 @@ const toggleQuestions = (descriptionId) => {
 watch(() => form.cadre_id, filterQuestionsByCadre);
 
 const inertiaSubmit = () => {
-        // Log form values to the console
-        console.log("Form Values:", form);
-
-        // Log selected descriptions
-        console.log("Selected Descriptions:", form.selectedDescriptions);
-
-        // Log selected questions
-        console.log("Selected Questions:", form.selectedQuestions);
     
         form.post(route("sections.store"));
 };

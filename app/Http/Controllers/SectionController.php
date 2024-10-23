@@ -24,21 +24,21 @@ class SectionController extends Controller
          $sections = Section::where('paper_code', $paper_code)
                             ->with('diseaseArea') // Eager load the related disease area
                             ->get();
-     
+
          if ($sections->isEmpty()) {
              return response()->json(['error' => 'No sections found'], 404);
          }
-     
+
          // Initialize an empty array to hold the structured result
          $result = [];
-     
+
          // Loop through the sections
          foreach ($sections as $section) {
              // Retrieve question_ids for each section
              $questionIds = DB::table('section_questions')
                               ->where('section_id', $section->id)
                               ->pluck('question_id');
-     
+
              // Add each section with its label, disease_area_name, and questions as an object
              $result[] = [
                  'paper_code' => $paper_code,
@@ -47,25 +47,25 @@ class SectionController extends Controller
                  'question_ids' => $questionIds->unique()->values(), // Ensure unique question IDs
              ];
          }
-     
+
          // Return the structured result
          return response()->json($result);
      }
-     
 
-     
+
+
      public function viewPaper(Request $request)
 {
 
     $paperCode = $request->input('paperCode');
- 
+
     // The code below won't execute if dd is used
     return Inertia::render('Section/Paper', [
         'paperCode' => $paperCode,
     ]);
 }
 
-     
+
 
     public function index(Request $request)
 {
@@ -100,8 +100,8 @@ public function store(Request $request)
         'section_label' => 'required|integer',
         'paper_code' => 'required|string',
         'number_of_questions' => 'required|integer',
-        'selectedQuestions' => 'required|array', // Validate the selected questions
-        'selectedDescriptions' => 'required|array', // Validate the selected descriptions
+        'selectedQuestions' => 'required|array',
+        'selectedDescriptions' => 'required|array',
     ]);
 
     // Step 1: Store the section data in the 'sections' table
@@ -111,10 +111,12 @@ public function store(Request $request)
         'section_label' => $validatedData['section_label'],
         'paper_code' => $validatedData['paper_code'],
         'number_of_questions' => $validatedData['number_of_questions'],
+        'selected_descriptions' => implode(',', $validatedData['selectedDescriptions']),
+        'selected_questions' => implode(',', $validatedData['selectedQuestions']),
     ]);
 
     // Step 2: Attach the selected questions to the section in the 'section_questions' table
-    $section->questions()->attach($validatedData['selectedQuestions']); 
+    $section->questions()->attach($validatedData['selectedQuestions']);
 
     // Step 3: Redirect back with a success message
     return redirect()->route('sections.index')->with('success', 'Section created and questions assigned successfully.');
@@ -133,7 +135,7 @@ public function destroy($id)
         try {
             $section = Section::findOrFail($id);
             $section->delete();
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'Section deleted successfully'
