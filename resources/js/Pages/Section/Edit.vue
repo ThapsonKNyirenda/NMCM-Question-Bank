@@ -243,7 +243,6 @@ const descriptions = ref({});
 const questions = ref({});
 const filteredQuestions = ref({});
 
-// Fetch descriptions when disease area is selected
 const fetchDescriptions = async () => {
     if (form.disease_area_id) {
         try {
@@ -258,9 +257,7 @@ const fetchDescriptions = async () => {
             }
 
             // Automatically expand the pre-selected descriptions
-            form.selectedDescriptions.forEach((descriptionId) => {
-                toggleQuestions(descriptionId);
-            });
+            expandSelectedDescriptions();
         } catch (error) {
             console.error("Error fetching descriptions:", error);
         }
@@ -270,6 +267,17 @@ const fetchDescriptions = async () => {
         filteredQuestions.value = {};
     }
 };
+
+const expandSelectedDescriptions = () => {
+    form.selectedDescriptions.forEach((descriptionId) => {
+        toggleQuestions(descriptionId);
+    });
+};
+
+// Call this after fetching descriptions
+fetchDescriptions().then(() => {
+    expandSelectedDescriptions();
+});
 
 const fetchQuestions = async (descriptionId) => {
     try {

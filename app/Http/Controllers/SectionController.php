@@ -160,9 +160,9 @@ class SectionController extends Controller
 
         // Return the inertia view with the section data and related options
         return inertia('Section/Edit', [
-            'section' => $section, // Section data
-            'cadres' => $cadres, // Cadres list
-            'diseaseAreas' => $diseaseAreas, // Disease Areas list
+            'section' => $section,
+            'cadres' => $cadres, 
+            'diseaseAreas' => $diseaseAreas, 
         ]);
     }
 
