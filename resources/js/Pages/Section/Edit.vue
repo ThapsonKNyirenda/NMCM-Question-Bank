@@ -212,6 +212,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm, Head } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 import axios from "axios";
+import { onMounted } from "vue";
 
 // Ensure props are properly defined to include 'section', 'cadres', and 'diseaseAreas'
 const props = defineProps({
@@ -243,6 +244,12 @@ const descriptions = ref({});
 const questions = ref({});
 const filteredQuestions = ref({});
 
+onMounted(() => {
+    form.selectedDescriptions.forEach((descriptionId) => {
+        toggleQuestions(descriptionId);
+    });
+});
+
 const fetchDescriptions = async () => {
     if (form.disease_area_id) {
         try {
@@ -258,6 +265,9 @@ const fetchDescriptions = async () => {
 
             // Automatically expand the pre-selected descriptions
             expandSelectedDescriptions();
+            form.selectedDescriptions.forEach((descriptionId) => {
+                toggleQuestions(descriptionId);
+            });
         } catch (error) {
             console.error("Error fetching descriptions:", error);
         }
@@ -270,13 +280,31 @@ const fetchDescriptions = async () => {
 
 const expandSelectedDescriptions = () => {
     form.selectedDescriptions.forEach((descriptionId) => {
-        toggleQuestions(descriptionId);
+        const descriptionCheckbox = document.getElementById(
+            `description_${descriptionId}`
+        );
+
+        toggleQuestions(descriptionId); // Ensure questions are visible
+
+        // Select all questions under the description
+        if (filteredQuestions.value[descriptionId]) {
+            filteredQuestions.value[descriptionId].forEach((question) => {
+                if (!form.selectedQuestions.includes(question.id)) {
+                    form.selectedQuestions.push(question.id);
+                }
+            });
+        }
     });
 };
 
 // Call this after fetching descriptions
 fetchDescriptions().then(() => {
+    console.log("fetch description is called");
     expandSelectedDescriptions();
+    form.selectedDescriptions.forEach((descriptionId) => {
+        toggleQuestions(descriptionId);
+    });
+    filterQuestionsByCadre(); // Apply cadre filter after expanding descriptions
 });
 
 const fetchQuestions = async (descriptionId) => {
@@ -287,6 +315,9 @@ const fetchQuestions = async (descriptionId) => {
             [descriptionId]: response.data,
         };
         filterQuestionsByCadre();
+        form.selectedDescriptions.forEach((descriptionId) => {
+            toggleQuestions(descriptionId);
+        });
     } catch (error) {
         console.error(
             `Error fetching questions for description ${descriptionId}:`,
@@ -309,11 +340,30 @@ const filterQuestionsByCadre = () => {
     }
 };
 
-const toggleQuestions = (descriptionId) => {
-    if (!form.selectedDescriptions.includes(descriptionId)) {
+const toggleQuestions = async (descriptionId) => {
+    // If the description is checked, show the questions
+    if (form.selectedDescriptions.includes(descriptionId)) {
+        if (!filteredQuestions.value[descriptionId]) {
+            // Fetch questions if they haven't been fetched yet
+            await fetchQuestions(descriptionId);
+        }
+
+        // Mark the questions that are already selected as checked
+        const selectedQuestionsForDescription = questions.value[
+            descriptionId
+        ]?.filter((question) => form.selectedQuestions.includes(question.id));
+
+        // Automatically check those questions
+        selectedQuestionsForDescription.forEach((question) => {
+            if (!form.selectedQuestions.includes(question.id)) {
+                form.selectedQuestions.push(question.id);
+            }
+        });
+    } else {
+        // If the description is unchecked, remove its questions from selected
         form.selectedQuestions = form.selectedQuestions.filter(
             (qId) =>
-                !filteredQuestions.value[descriptionId].find(
+                !filteredQuestions.value[descriptionId]?.find(
                     (q) => q.id === qId
                 )
         );
@@ -326,6 +376,14 @@ watch(
         if (form.cadre_id && Object.keys(descriptions.value).length) {
             filterQuestionsByCadre();
         }
+    }
+);
+
+watch(
+    () => form.disease_area_id,
+    async () => {
+        await fetchDescriptions();
+        expandSelectedDescriptions(); // Ensure selected descriptions are expanded
     }
 );
 
